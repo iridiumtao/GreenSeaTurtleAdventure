@@ -2,6 +2,8 @@ import pygame
 import model
 from eventmanager import *
 
+BACKGROUND_BLUE = (93, 189, 245)
+
 class GraphicalView(object):
     """
     Draws the model state onto the screen.
@@ -11,14 +13,14 @@ class GraphicalView(object):
         """
         evManager (EventManager): Allows posting messages to the event queue.
         model (GameEngine): a strong reference to the game Model.
-                
+
         Attributes:
         isinitialized (bool): pygame is ready to draw.
         screen (pygame.Surface): the screen surface.
         clock (pygame.time.Clock): keeps the fps constant.
         smallfont (pygame.Font): a small font.
         """
-        
+
         self.evManager = evManager
         evManager.RegisterListener(self)
         self.model = model
@@ -26,10 +28,10 @@ class GraphicalView(object):
         self.screen = None
         self.clock = None
         self.smallfont = None
-    
+
     def notify(self, event):
         """
-        Receive events posted to the message queue. 
+        Receive events posted to the message queue.
         """
 
         if isinstance(event, InitializeEvent):
@@ -50,43 +52,43 @@ class GraphicalView(object):
                 self.renderhelp()
             # limit the redraw speed to 30 frames per second
             self.clock.tick(30)
-    
+
     def rendermenu(self):
         """
         Render the game menu.
         """
 
-        self.screen.fill((0, 0, 0))
+        self.screen.fill(BACKGROUND_BLUE)
         somewords = self.smallfont.render(
-                    'You are in the Menu. Space to play. Esc exits.', 
-                    True, (0, 255, 0))
+                    'You are in the Menu. Space to play. Esc exits.',
+                    True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         pygame.display.flip()
-        
+
     def renderplay(self):
         """
         Render the game play.
         """
 
-        self.screen.fill((0, 0, 0))
+        self.screen.fill(BACKGROUND_BLUE)
         somewords = self.smallfont.render(
-                    'You are Playing the game. F1 for help.', 
-                    True, (0, 255, 0))
+                    'You are Playing the game. F1 for help.',
+                    True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         pygame.display.flip()
-        
+
     def renderhelp(self):
         """
         Render the help screen.
         """
 
-        self.screen.fill((0, 0, 0))
+        self.screen.fill(BACKGROUND_BLUE)
         somewords = self.smallfont.render(
-                    'Help is here. space, escape or return.', 
-                    True, (0, 255, 0))
+                    'Help is here. space, escape or return. 中文字測試',
+                    True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         pygame.display.flip()
-        
+
     def initialize(self):
         """
         Set up the pygame graphical display and loads graphical resources.
@@ -94,8 +96,8 @@ class GraphicalView(object):
 
         result = pygame.init()
         pygame.font.init()
-        pygame.display.set_caption('demo game')
-        self.screen = pygame.display.set_mode((600, 60))
+        pygame.display.set_caption('Green Sea Turtle Adventure')
+        self.screen = pygame.display.set_mode((1920, 1080))
         self.clock = pygame.time.Clock()
-        self.smallfont = pygame.font.Font(None, 40)
+        self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True

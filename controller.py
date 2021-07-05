@@ -18,7 +18,7 @@ class Keyboard(object):
 
     def notify(self, event):
         """
-        Receive events posted to the message queue. 
+        Receive events posted to the message queue.
         """
 
         if isinstance(event, TickEvent):
@@ -44,23 +44,23 @@ class Keyboard(object):
         """
         Handles menu key events.
         """
-        
+
         # escape pops the menu
         if event.key == pygame.K_ESCAPE:
             self.evManager.Post(StateChangeEvent(None))
         # space plays the game
         if event.key == pygame.K_SPACE:
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
-    
+
     def keydownhelp(self, event):
         """
         Handles help key events.
         """
-        
+
         # space, enter or escape pops help
         if event.key in [pygame.K_ESCAPE, pygame.K_SPACE, pygame.K_RETURN]:
             self.evManager.Post(StateChangeEvent(None))
-    
+
     def keydownplay(self, event):
         """
         Handles play key events.
@@ -69,7 +69,7 @@ class Keyboard(object):
         if event.key == pygame.K_ESCAPE:
             self.evManager.Post(StateChangeEvent(None))
         # F1 shows the help
-        if event.key == pygame.K_F1:    
+        if event.key == pygame.K_F1:
             self.evManager.Post(StateChangeEvent(model.STATE_HELP))
         else:
             self.evManager.Post(InputEvent(event.unicode, None))
