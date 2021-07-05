@@ -8,7 +8,7 @@ class TurtleMC(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h, image):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load(image).convert_alpha()
+        self.image = pygame.transform.scale((pygame.image.load(image).convert_alpha()), (w,h))
 
         # self.image1 = pygame.transform.scale((pygame.image.load(image1).convert_alpha()), (w,h))
         # self.image2 = pygame.transform.scale((pygame.image.load(image2).convert_alpha()), (w,h))
