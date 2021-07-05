@@ -59,4 +59,3 @@ class TurtleMC(pygame.sprite.Sprite):
         #     self.image = self.images[self.flapIndex]
         #     self.flapIndex += 1
         
-
