@@ -97,7 +97,7 @@ class GraphicalView(object):
         result = pygame.init()
         pygame.font.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
-        self.screen = pygame.display.set_mode((1920, 1080))
+        self.screen = pygame.display.set_mode((1280, 720))
         self.clock = pygame.time.Clock()
         self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
