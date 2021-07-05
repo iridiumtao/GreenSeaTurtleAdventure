@@ -1,6 +1,9 @@
 import pygame
+import os, sys
 import model
 from eventmanager import *
+import TurtleMC
+import src
 
 BACKGROUND_BLUE = (93, 189, 245)
 #screenFlags = pygame.FULLSCREEN | pygame.SCALED
@@ -30,6 +33,12 @@ class GraphicalView(object):
         self.screen = None
         self.clock = None
         self.smallfont = None
+
+        #turtle
+        self.creature = pygame.sprite.Group()
+        self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png", "src/Turtle-0-up.png", "src/Turtle-1-down.png", "src/Turtle-1-down.png", "src/Turtle-die.png"))
+
+
 
     def notify(self, event):
         """
@@ -97,11 +106,19 @@ class GraphicalView(object):
         """
         Render the game play.
         """
-
         self.screen.fill(BACKGROUND_BLUE)
         somewords = self.smallfont.render(
                     'You are Playing the game. F1 for help.',
                     True, (0, 0, 0))
+
+
+
+        #self.dave.update()
+
+
+
+
+        self.creature.blit(self.screen)
         self.screen.blit(somewords, (0, 0))
         pygame.display.flip()
 
@@ -123,7 +140,9 @@ class GraphicalView(object):
         """
 
         result = pygame.init()
+        pygame.init()
         pygame.font.init()
+        pygame.display.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
         self.screen = pygame.display.set_mode((1280, 720))
         self.clock = pygame.time.Clock()
