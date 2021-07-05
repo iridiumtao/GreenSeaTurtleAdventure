@@ -37,6 +37,7 @@ class GraphicalView(object):
         self.clock = None
         self.smallfont = None
 
+        self.turtleCounter = 0
 
 
 
@@ -112,11 +113,13 @@ class GraphicalView(object):
                     True, (0, 0, 0))
         #turtle
         self.creature = pygame.sprite.Group()
-        self.creature.add(TurtleMC.TurtleMC(10, 100, 290, 227, "src/Turtle-0-down.png"))
+        self.dave = TurtleMC.TurtleMC(10, 100, 290, 227, "src/Turtle-0-down.png", "src/Turtle-0-up.png", "src/Turtle-1-down.png", "src/Turtle-1-down.png", "src/Turtle-die.png", self.turtleCounter)
+        self.creature.add(self.dave)
 
 
 
-
+        self.creature.update()
+        self.turtleCounter += 10
 
 
         
