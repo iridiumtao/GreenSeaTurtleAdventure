@@ -131,3 +131,6 @@ dmypy.json
 # System hidden files
 .DS_Store
 desktop.ini
+
+# config
+config.ini
