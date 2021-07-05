@@ -28,6 +28,7 @@ class GraphicalView(object):
         clock (pygame.time.Clock): keeps the fps constant.
         smallfont (pygame.Font): a small font.
         """
+        pygame.init()
 
         self.evManager = evManager
         evManager.RegisterListener(self)
@@ -39,7 +40,7 @@ class GraphicalView(object):
 
         #turtle
         self.creature = pygame.sprite.Group()
-        self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png", "src/Turtle-0-up.png", "src/Turtle-1-down.png", "src/Turtle-1-down.png", "src/Turtle-die.png"))
+        self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png"))
 
 
 
@@ -116,7 +117,6 @@ class GraphicalView(object):
 
 
 
-        #self.dave.update()
 
 
 
@@ -160,7 +160,7 @@ class GraphicalView(object):
         result = pygame.init()
         pygame.init()
         pygame.font.init()
-        pygame.display.init()
+        #pygame.display.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
         self.screen = pygame.display.set_mode((resolutionWidth, resolutionHeight), screenFlags)
         self.clock = pygame.time.Clock()
