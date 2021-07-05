@@ -142,20 +142,13 @@ class GraphicalView(object):
         Set up the pygame graphical display and loads graphical resources.
         """
 
-        # file = open("basic_setting.txt", encoding="utf-8")
-        # lines = fp.readline()
-        #
-        # while lines:
-        #     line = fp.readline()
-
         if not os.path.isfile('config.ini'):
+            resolutionWidth = 1280
+            resolutionHeight = 720
+            screenFlags = 0
             self.generateConfig()
         else:
-
             resolutionWidth, resolutionHeight, screenFlags = self.applyConfig()
-
-
-
 
         result = pygame.init()
         pygame.init()
@@ -168,31 +161,38 @@ class GraphicalView(object):
         self.isinitialized = True
 
     def generateConfig(self):
-        config = configparser.ConfigParser()
+        config = configparser.ConfigParser(allow_no_value=True)
         config['SCREEN'] = {'RESOLUTION_WIDTH' : '1280',
                             'RESOLUTION_HEIGHT' : '720',
-                            'FULLSCREEN' : 'TRUE',
-                            'SCALED' : 'FALSE',
+                            '# 將全螢幕設為TRUE可能會造成系統解析度的問題' : None,
+                            '# Set fullscreen to TRUE may cause some problem on system resolution.' : None,
+                            'FULLSCREEN' : 'FALSE',
+                            'SCALED' : 'TRUE',
                             'NOFRAME' : 'FALSE'}
 
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
 
     def applyConfig(self):
-        config = configparser.ConfigParser()
-        config.read('config.ini')
+        try:
+            config = configparser.ConfigParser()
+            config.read('config.ini')
 
-        screen = config['SCREEN']
-        resolutionWidth = int(screen['resolution_width'])
-        resolutionHeight = int(screen['resolution_height'])
-        isFullscreen = screen.getboolean('fullscreen')
-        screenFlags = 0
-        if isFullscreen:
-            screenFlags = pygame.FULLSCREEN
-        isScaled = screen.getboolean('scaled')
-        if isScaled:
-            screenFlags = screenFlags | pygame.SCALED
-        isNoframe = screen.getboolean('noframe')
-        if isNoframe:
-            screenFlags = screenFlags | pygame.NOFRAME
-        return resolutionWidth, resolutionHeight, screenFlags
+            screen = config['SCREEN']
+        
+            resolutionWidth = int(screen['resolution_width'])
+            resolutionHeight = int(screen['resolution_height'])
+            isFullscreen = screen.getboolean('fullscreen')
+            screenFlags = 0
+            if isFullscreen:
+                screenFlags = pygame.FULLSCREEN
+            isScaled = screen.getboolean('scaled')
+            if isScaled:
+                screenFlags = screenFlags | pygame.SCALED
+            isNoframe = screen.getboolean('noframe')
+            if isNoframe:
+                screenFlags = screenFlags | pygame.NOFRAME
+            return resolutionWidth, resolutionHeight, screenFlags
+        except:
+            self.generateConfig()
+            return 1280, 720, 0
