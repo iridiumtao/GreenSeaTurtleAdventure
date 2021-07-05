@@ -39,7 +39,7 @@ class GraphicalView(object):
 
         #turtle
         self.creature = pygame.sprite.Group()
-        # self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png"))
+        self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png"))
 
 
 
