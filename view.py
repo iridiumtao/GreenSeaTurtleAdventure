@@ -3,6 +3,8 @@ import model
 from eventmanager import *
 
 BACKGROUND_BLUE = (93, 189, 245)
+#screenFlags = pygame.FULLSCREEN | pygame.SCALED
+screenFlags = pygame.SCALED
 
 class GraphicalView(object):
     """
@@ -58,11 +60,37 @@ class GraphicalView(object):
         Render the game menu.
         """
 
+        """
+        todo:
+        1.
+
+        """
         self.screen.fill(BACKGROUND_BLUE)
-        somewords = self.smallfont.render(
+        white = (255, 255, 255)
+        select = []
+
+        # self.smallfont.render(text, antialias, color, background=None) -> Surface
+        titleText = self.smallfont.render(
                     'You are in the Menu. Space to play. Esc exits.',
                     True, (0, 0, 0))
-        self.screen.blit(somewords, (0, 0))
+        self.screen.blit(titleText, (0, 0))
+        displaySettingText = self.smallfont.render(
+                    'Resolution:',
+                    True, (0, 0, 0))
+        displaySettingText2 = self.smallfont.render(
+                    '1920x1080',
+                    True, (0, 0, 0))
+        displaySettingText3 = self.smallfont.render(
+                    '1366x768',
+                    True, (0, 0, 0))
+        displaySettingText4 = self.smallfont.render(
+                    '3840x2160',
+                    True, (0, 0, 0))
+        self.screen.blit(displaySettingText, (0, 40))
+        self.screen.blit(displaySettingText2, (40, 80))
+        self.screen.blit(displaySettingText3, (40, 120))
+        self.screen.blit(displaySettingText4, (40, 160))
+
         pygame.display.flip()
 
     def renderplay(self):
@@ -97,7 +125,7 @@ class GraphicalView(object):
         result = pygame.init()
         pygame.font.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
-        self.screen = pygame.display.set_mode((1920, 1080))
+        self.screen = pygame.display.set_mode((1920, 1080), screenFlags)
         self.clock = pygame.time.Clock()
         self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
