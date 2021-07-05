@@ -4,6 +4,9 @@ import model
 from eventmanager import *
 import TurtleMC
 import src
+import configparser
+import os.path
+
 
 BACKGROUND_BLUE = (93, 189, 245)
 #screenFlags = pygame.FULLSCREEN | pygame.SCALED
@@ -139,12 +142,57 @@ class GraphicalView(object):
         Set up the pygame graphical display and loads graphical resources.
         """
 
+        # file = open("basic_setting.txt", encoding="utf-8")
+        # lines = fp.readline()
+        #
+        # while lines:
+        #     line = fp.readline()
+
+        if not os.path.isfile('config.ini'):
+            self.generateConfig()
+        else:
+
+            resolutionWidth, resolutionHeight, screenFlags = self.applyConfig()
+
+
+
+
         result = pygame.init()
         pygame.init()
         pygame.font.init()
         pygame.display.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
-        self.screen = pygame.display.set_mode((1280, 720))
+        self.screen = pygame.display.set_mode((resolutionWidth, resolutionHeight), screenFlags)
         self.clock = pygame.time.Clock()
         self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
+
+    def generateConfig(self):
+        config = configparser.ConfigParser()
+        config['SCREEN'] = {'RESOLUTION_WIDTH' : '1280',
+                            'RESOLUTION_HEIGHT' : '720',
+                            'FULLSCREEN' : 'TRUE',
+                            'SCALED' : 'FALSE',
+                            'NOFRAME' : 'FALSE'}
+
+        with open('config.ini', 'w') as configfile:
+            config.write(configfile)
+
+    def applyConfig(self):
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+
+        screen = config['SCREEN']
+        resolutionWidth = int(screen['resolution_width'])
+        resolutionHeight = int(screen['resolution_height'])
+        isFullscreen = screen.getboolean('fullscreen')
+        screenFlags = 0
+        if isFullscreen:
+            screenFlags = pygame.FULLSCREEN
+        isScaled = screen.getboolean('scaled')
+        if isScaled:
+            screenFlags = screenFlags | pygame.SCALED
+        isNoframe = screen.getboolean('noframe')
+        if isNoframe:
+            screenFlags = screenFlags | pygame.NOFRAME
+        return resolutionWidth, resolutionHeight, screenFlags
