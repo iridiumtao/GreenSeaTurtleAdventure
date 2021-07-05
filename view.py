@@ -9,8 +9,6 @@ import os.path
 
 
 BACKGROUND_BLUE = (93, 189, 245)
-#screenFlags = pygame.FULLSCREEN | pygame.SCALED
-screenFlags = pygame.SCALED
 
 class GraphicalView(object):
     """
@@ -122,7 +120,7 @@ class GraphicalView(object):
         self.turtleCounter += 10
 
 
-        
+
         self.screen.blit(somewords, (0, 0))
         self.creature.draw(self.screen)
         pygame.display.flip()
