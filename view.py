@@ -29,7 +29,6 @@ class GraphicalView(object):
         smallfont (pygame.Font): a small font.
         """
         pygame.init()
-
         self.evManager = evManager
         evManager.RegisterListener(self)
         self.model = model
@@ -40,7 +39,7 @@ class GraphicalView(object):
 
         #turtle
         self.creature = pygame.sprite.Group()
-        self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png"))
+        # self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png"))
 
 
 
