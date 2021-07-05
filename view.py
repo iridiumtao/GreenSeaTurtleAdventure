@@ -28,7 +28,7 @@ class GraphicalView(object):
         clock (pygame.time.Clock): keeps the fps constant.
         smallfont (pygame.Font): a small font.
         """
-        pygame.init()
+        #pygame.init()
         self.evManager = evManager
         evManager.RegisterListener(self)
         self.model = model
@@ -37,9 +37,7 @@ class GraphicalView(object):
         self.clock = None
         self.smallfont = None
 
-        #turtle
-        self.creature = pygame.sprite.Group()
-        # self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png"))
+
 
 
 
@@ -113,7 +111,9 @@ class GraphicalView(object):
         somewords = self.smallfont.render(
                     'You are Playing the game. F1 for help.',
                     True, (0, 0, 0))
-
+        #turtle
+        self.creature = pygame.sprite.Group()
+        self.creature.add(TurtleMC.TurtleMC(100, 100, 290, 227, "src/Turtle-0-down.png"))
 
 
 
@@ -178,7 +178,7 @@ class GraphicalView(object):
             config.read('config.ini')
 
             screen = config['SCREEN']
-        
+
             resolutionWidth = int(screen['resolution_width'])
             resolutionHeight = int(screen['resolution_height'])
             isFullscreen = screen.getboolean('fullscreen')
