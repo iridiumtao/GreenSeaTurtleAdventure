@@ -130,18 +130,22 @@ class GraphicalView(object):
 
     def renderRight(self):
         self.dave.rect.x += 10
+        self.screen.fill(BACKGROUND_BLUE)
         self.screen.blit(self.dave.image, self.dave.rect)
         pygame.display.flip()
     def renderLeft(self):
         self.dave.rect.x -= 10
+        self.screen.fill(BACKGROUND_BLUE)
         self.screen.blit(self.dave.image, self.dave.rect)
         pygame.display.flip()
     def renderUp(self):
         self.dave.rect.y -= 10
+        self.screen.fill(BACKGROUND_BLUE)
         self.screen.blit(self.dave.image, self.dave.rect)
         pygame.display.flip()
     def renderDown(self):
         self.dave.rect.y += 10
+        self.screen.fill(BACKGROUND_BLUE)
         self.screen.blit(self.dave.image, self.dave.rect)
         pygame.display.flip()
 
