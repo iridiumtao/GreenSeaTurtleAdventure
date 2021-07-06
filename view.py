@@ -50,7 +50,7 @@ class GraphicalView(object):
         if isinstance(event, InitializeEvent):
             self.initialize()
             # add turtle object
-            self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, "src/Turtle-0-down.png")
+            self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.screen)
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -150,28 +150,28 @@ class GraphicalView(object):
         """
         角色向右移動
         """
-        self.creature.rect.x += 10
+        self.creature.move("right")
         self.refresh()
 
     def renderLeft(self):
         """
         角色向左移動
         """
-        self.creature.rect.x -= 10
+        self.creature.move("left")
         self.refresh()
 
     def renderUp(self):
         """
         角色向上移動
         """
-        self.creature.rect.y -= 10
+        self.creature.move("up")
         self.refresh()
 
     def renderDown(self):
         """
         角色向下移動
         """
-        self.creature.rect.y += 10
+        self.creature.move("down")
         self.refresh()
 
     def refresh(self):
