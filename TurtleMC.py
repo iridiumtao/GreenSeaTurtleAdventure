@@ -43,7 +43,7 @@ class TurtleMC(pygame.sprite.Sprite):
             self.rect.x = self.rect.x
             self.rect.y = self.rect.y
 
-        # 換海歸圖片
+        # 換海龜圖片
         self.chgImageCnter += 1
         # 10步換一次圖片
         if self.chgImageCnter > 10:
