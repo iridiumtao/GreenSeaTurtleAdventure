@@ -43,8 +43,6 @@ class GraphicalView(object):
         self.turtleCounter = 0
         self.intro_text_alpha = 255
 
-        self.strawCounter = 10
-
 
     def notify(self, event):
         """
