@@ -33,6 +33,8 @@ class Keyboard(object):
                         self.evManager.Post(StateChangeEvent(None))
                     else:
                         currentstate = self.model.state.peek()
+                        if currentstate == model.STATE_INTRO:
+                            self.keydownintro(event)
                         if currentstate == model.STATE_MENU:
                             self.keydownmenu(event)
                         if currentstate == model.STATE_PLAY:
@@ -50,6 +52,15 @@ class Keyboard(object):
                     #     #self.keydownplay(event)
                     # if currentstate == model.STATE_PLAY:
                     #     self.keydownplay(event)
+
+    def keydownintro(self, event):
+        """
+        Handles intro key events.
+        """
+        if event.key == pygame.K_ESCAPE:
+            self.evManager.Post(StateChangeEvent(None))
+        if event.key == pygame.K_SPACE:
+            self.evManager.Post(StateChangeEvent(model.STATE_MENU))
 
     def keydownmenu(self, event):
         """
@@ -99,4 +110,3 @@ class Keyboard(object):
         放開按鍵回到play重新判斷有沒有按任一方向建
         """
         self.evManager.Post(StateChangeEvent(None))
-

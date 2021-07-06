@@ -9,6 +9,9 @@ import os.path
 
 
 BACKGROUND_BLUE = (93, 189, 245)
+WHITE = (255, 255, 255)
+WINDOW_HEIGHT = None
+WINDOW_WIDTH = None
 
 class GraphicalView(object):
     """
@@ -47,7 +50,7 @@ class GraphicalView(object):
         if isinstance(event, InitializeEvent):
             self.initialize()
             # add turtle object
-            self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, "src/Turtle-0-down.png")
+            self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -57,6 +60,8 @@ class GraphicalView(object):
             if not self.isinitialized:
                 return
             currentstate = self.model.state.peek()
+            if currentstate == model.STATE_INTRO:
+                self.renderintro()
             if currentstate == model.STATE_MENU:
                 self.rendermenu()
             if currentstate == model.STATE_PLAY:
@@ -75,6 +80,16 @@ class GraphicalView(object):
             # limit the redraw speed to 60 frames per second
             self.clock.tick(60)
 
+    def renderintro(self):
+        self.screen.fill(WHITE)
+        text = self.smallfont.render(
+                    'Game intro. Press space to start.',
+                    True, (0, 0, 0))
+
+        text_rect = text.get_rect(center=(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT*0.8))
+        self.screen.blit(text, text_rect)
+        pygame.display.flip()
+
     def rendermenu(self):
         """
         Render the game menu.
@@ -86,7 +101,6 @@ class GraphicalView(object):
 
         """
         self.screen.fill(BACKGROUND_BLUE)
-        white = (255, 255, 255)
         select = []
 
         # self.smallfont.render(text, antialias, color, background=None) -> Surface
@@ -119,44 +133,6 @@ class GraphicalView(object):
         """
         self.refresh()
 
-    def renderRight(self):
-        """
-        角色向右移動
-        """
-        self.creature.rect.x += 10
-        self.refresh()
-        
-    def renderLeft(self):
-        """
-        角色向左移動
-        """
-        self.creature.rect.x -= 10
-        self.refresh()
-
-    def renderUp(self):
-        """
-        角色向上移動
-        """
-        self.creature.rect.y -= 10
-        self.refresh()
-
-    def renderDown(self):
-        """
-        角色向下移動
-        """
-        self.creature.rect.y += 10
-        self.refresh()
-
-    def refresh(self):
-        """
-        刷新畫面上顯示的內容
-        """
-        self.screen.fill(BACKGROUND_BLUE)
-        somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
-        self.screen.blit(somewords, (0, 0))
-        self.screen.blit(self.creature.image, self.creature.rect)
-        pygame.display.flip()
-
     def renderhelp(self):
         """
         Render the help screen.
@@ -167,6 +143,44 @@ class GraphicalView(object):
                     'Help is here. space, escape or return. 中文字測試',
                     True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
+        pygame.display.flip()
+
+    def renderRight(self):
+        """
+        角色向右移動
+        """
+        self.creature.move("right")
+        self.refresh()
+
+    def renderLeft(self):
+        """
+        角色向左移動
+        """
+        self.creature.move("left")
+        self.refresh()
+
+    def renderUp(self):
+        """
+        角色向上移動
+        """
+        self.creature.move("up")
+        self.refresh()
+
+    def renderDown(self):
+        """
+        角色向下移動
+        """
+        self.creature.move("down")
+        self.refresh()
+
+    def refresh(self):
+        """
+        刷新畫面上顯示的內容
+        """
+        self.screen.fill(BACKGROUND_BLUE)
+        somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
+        self.screen.blit(somewords, (0, 0))
+        self.screen.blit(self.creature.image, self.creature.rect)
         pygame.display.flip()
 
     def initialize(self):
@@ -188,6 +202,7 @@ class GraphicalView(object):
         #pygame.display.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
         self.screen = pygame.display.set_mode((resolutionWidth, resolutionHeight), screenFlags)
+        self.WINDOW_WIDTH, self.WINDOW_HEIGHT = self.screen.get_size()
         self.clock = pygame.time.Clock()
         self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
