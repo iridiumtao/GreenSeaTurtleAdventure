@@ -88,6 +88,8 @@ class Keyboard(object):
 
         if event.key == pygame.K_ESCAPE:
             self.evManager.Post(StateChangeEvent(None))
+        else:
+            self.evManager.Post(InputEvent(event.unicode, None))
         # F1 shows the help
         if event.key == pygame.K_F1:
             self.evManager.Post(StateChangeEvent(model.STATE_HELP))
@@ -99,8 +101,6 @@ class Keyboard(object):
             self.evManager.Post(StateChangeEvent(model.STATE_UP))
         if event.key == pygame.K_DOWN:
             self.evManager.Post(StateChangeEvent(model.STATE_DOWN))
-        else:
-            self.evManager.Post(InputEvent(event.unicode, None))
 
     
     def keyupPlay(self):
