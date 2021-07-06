@@ -37,13 +37,19 @@ class Keyboard(object):
                             self.keydownmenu(event)
                         if currentstate == model.STATE_PLAY:
                             self.keydownplay(event)
+                        if currentstate == model.STATE_RIGHT or currentstate == model.STATE_LEFT or currentstate == model.STATE_UP or currentstate == model.STATE_DOWN:
+                            self.keyupPlay()
+                            self.keydownplay(event)
                         if currentstate == model.STATE_HELP:
                             self.keydownhelp(event)
                 # handle key up events
                 if event.type == pygame.KEYUP:
                     currentstate = self.model.state.peek()
                     if currentstate == model.STATE_RIGHT or currentstate == model.STATE_LEFT or currentstate == model.STATE_UP or currentstate == model.STATE_DOWN:
-                        self.keyUp()
+                        self.keyupPlay()
+                    #     #self.keydownplay(event)
+                    # if currentstate == model.STATE_PLAY:
+                    #     self.keydownplay(event)
 
     def keydownmenu(self, event):
         """
@@ -88,7 +94,7 @@ class Keyboard(object):
             self.evManager.Post(InputEvent(event.unicode, None))
 
     
-    def keyUp(self):
+    def keyupPlay(self):
         """
         放開按鍵回到play重新判斷有沒有按任一方向建
         """
