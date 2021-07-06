@@ -3,10 +3,10 @@ import os, sys
 import model
 from eventmanager import *
 import TurtleMC
-import Straw
 import src
 import configparser
 import os.path
+import Straw
 
 
 BACKGROUND_BLUE = (93, 189, 245)
@@ -39,8 +39,10 @@ class GraphicalView(object):
         self.clock = None
         self.smallfont = None
 
-        self.strawCounter = 10
+        self.turtleCounter = 0
+        self.intro_text_alpha = 255
 
+        self.strawCounter = 10
 
 
     def notify(self, event):
@@ -52,10 +54,12 @@ class GraphicalView(object):
             self.initialize()
             # add turtle object
             self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+
             
             self.straws = pygame.sprite.Group()
             for i in range(20):
                 self.straws.add(Straw.Straw(self.WINDOW_WIDTH, self.strawCounter, 100+30*i))
+
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -82,8 +86,6 @@ class GraphicalView(object):
                 self.renderUp()
             if currentstate == model.STATE_DOWN:
                 self.renderDown()
-            if currentstate == model.STATE_NOKEY:
-                self.renderStop()
             # limit the redraw speed to 60 frames per second
             self.clock.tick(60)
 
@@ -92,6 +94,9 @@ class GraphicalView(object):
         text = self.smallfont.render(
                     'Game intro. Press space to start.',
                     True, (0, 0, 0))
+
+        self.intro_text_alpha = self.intro_text_alpha - 4 if self.intro_text_alpha > -255 else 255
+        text.set_alpha(abs(self.intro_text_alpha))
 
         text_rect = text.get_rect(center=(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT*0.8))
         self.screen.blit(text, text_rect)
@@ -178,13 +183,6 @@ class GraphicalView(object):
         角色向下移動
         """
         self.creature.move("down")
-        self.refresh()
-
-    def renderStop(self):
-        """
-        角色停止移動
-        """
-        self.creature.move("stop")
         self.refresh()
 
     def refresh(self):
