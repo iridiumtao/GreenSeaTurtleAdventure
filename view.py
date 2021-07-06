@@ -124,12 +124,15 @@ class GraphicalView(object):
     def renderRight(self):
         self.dave.rect.x += 10
         self.refresh()
+        
     def renderLeft(self):
         self.dave.rect.x -= 10
         self.refresh()
+
     def renderUp(self):
         self.dave.rect.y -= 10
         self.refresh()
+
     def renderDown(self):
         self.dave.rect.y += 10
         self.refresh()
