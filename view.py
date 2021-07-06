@@ -3,6 +3,7 @@ import os, sys
 import model
 from eventmanager import *
 import TurtleMC
+import Straw
 import src
 import configparser
 import os.path
@@ -38,7 +39,7 @@ class GraphicalView(object):
         self.clock = None
         self.smallfont = None
 
-        self.turtleCounter = 0
+        self.strawCounter = 10
 
 
 
@@ -51,6 +52,7 @@ class GraphicalView(object):
             self.initialize()
             # add turtle object
             self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+            self.straw = Straw.Straw(self.WINDOW_WIDTH, self.strawCounter)
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -181,6 +183,8 @@ class GraphicalView(object):
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         self.screen.blit(self.creature.image, self.creature.rect)
+        self.straw.update()
+        self.screen.blit(self.straw.image, self.straw.rect)
         pygame.display.flip()
 
     def initialize(self):
