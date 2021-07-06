@@ -54,7 +54,7 @@ class Keyboard(object):
         if event.key == pygame.K_ESCAPE:
             self.evManager.Post(StateChangeEvent(None))
         if event.key == pygame.K_SPACE:
-            self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
+            self.evManager.Post(StateChangeEvent(model.STATE_MENU))
 
     def keydownmenu(self, event):
         """
