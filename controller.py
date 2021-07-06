@@ -40,13 +40,13 @@ class Keyboard(object):
                         if currentstate == model.STATE_HELP:
                             self.keydownhelp(event)
                         if currentstate == model.STATE_RIGHT:
-                            self.keyupright()
+                            self.keyupRight()
                         if currentstate == model.STATE_LEFT:
-                            self.keyupleft()
+                            self.keyupLeft()
                         if currentstate == model.STATE_UP:
-                            self.keyupup()
+                            self.keyupUp()
                         if currentstate == model.STATE_DOWN:
-                            self.keyupdown()
+                            self.keyupDown()
 
     def keydownmenu(self, event):
         """
@@ -90,14 +90,14 @@ class Keyboard(object):
         else:
             self.evManager.Post(InputEvent(event.unicode, None))
        
-    def keyupright(self):
+    def keyupRight(self):
         self.evManager.Post(StateChangeEvent(None))
 
-    def keyupleft(self):
+    def keyupLeft(self):
         self.evManager.Post(StateChangeEvent(None))
 
-    def keyupup(self):
+    def keyupUp(self):
         self.evManager.Post(StateChangeEvent(None))
 
-    def keyupdown(self):
+    def keyupDown(self):
         self.evManager.Post(StateChangeEvent(None))
