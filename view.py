@@ -46,6 +46,11 @@ class GraphicalView(object):
 
         if isinstance(event, InitializeEvent):
             self.initialize()
+            # add turtle object
+            # self.creature = pygame.sprite.Group()
+            self.dave = TurtleMC.TurtleMC(10, 100, 290, 227, "src/Turtle-0-down.png")
+            # self.creature.add(self.dave)
+
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
             self.isinitialized = False
@@ -60,8 +65,17 @@ class GraphicalView(object):
                 self.renderplay()
             if currentstate == model.STATE_HELP:
                 self.renderhelp()
+            # move turtle
+            if currentstate == model.STATE_RIGHT:
+                self.renderRight()
+            if currentstate == model.STATE_LEFT:
+                self.renderLeft()
+            if currentstate == model.STATE_UP:
+                self.renderUp()
+            if currentstate == model.STATE_DOWN:
+                self.renderDown()
             # limit the redraw speed to 30 frames per second
-            self.clock.tick(30)
+            self.clock.tick(240)
 
     def rendermenu(self):
         """
@@ -110,19 +124,25 @@ class GraphicalView(object):
                     'You are Playing the game. F1 for help.',
                     True, (0, 0, 0))
         #turtle
-        self.creature = pygame.sprite.Group()
-        self.dave = TurtleMC.TurtleMC(10, 100, 290, 227, "src/Turtle-0-down.png", "src/Turtle-0-up.png", "src/Turtle-1-down.png", "src/Turtle-1-down.png", "src/Turtle-die.png", self.turtleCounter)
-        self.creature.add(self.dave)
-
-
-
-        self.creature.update()
-        self.turtleCounter += 10
-
-
-
         self.screen.blit(somewords, (0, 0))
-        self.creature.draw(self.screen)
+        self.screen.blit(self.dave.image, self.dave.rect)
+        pygame.display.flip()
+
+    def renderRight(self):
+        self.dave.rect.x += 10
+        self.screen.blit(self.dave.image, self.dave.rect)
+        pygame.display.flip()
+    def renderLeft(self):
+        self.dave.rect.x -= 10
+        self.screen.blit(self.dave.image, self.dave.rect)
+        pygame.display.flip()
+    def renderUp(self):
+        self.dave.rect.y -= 10
+        self.screen.blit(self.dave.image, self.dave.rect)
+        pygame.display.flip()
+    def renderDown(self):
+        self.dave.rect.y += 10
+        self.screen.blit(self.dave.image, self.dave.rect)
         pygame.display.flip()
 
     def renderhelp(self):
