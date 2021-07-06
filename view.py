@@ -56,8 +56,9 @@ class GraphicalView(object):
 
             
             self.straws = pygame.sprite.Group()
-            for i in range(20):
-                self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), 100+45*i))
+            strawNum = 20
+            for i in range(strawNum):
+                self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
 
 
         elif isinstance(event, QuitEvent):
