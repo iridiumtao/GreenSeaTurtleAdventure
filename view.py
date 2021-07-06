@@ -50,7 +50,7 @@ class GraphicalView(object):
         if isinstance(event, InitializeEvent):
             self.initialize()
             # add turtle object
-            self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.screen)
+            self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics

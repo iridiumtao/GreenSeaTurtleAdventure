@@ -5,7 +5,7 @@ import src
 import view
 
 class TurtleMC(pygame.sprite.Sprite):
-    def __init__(self, x, y, w, h, screen):
+    def __init__(self, x, y, w, h, windowWidth, windowHeight):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.transform.scale((pygame.image.load("src/Turtle-0-down.png").convert_alpha()), (w,h))
@@ -17,8 +17,8 @@ class TurtleMC(pygame.sprite.Sprite):
         self.height = h
         self.widthOffset = -50
         self.heightOffset = 0
-        self.windowWidth = 1280
-        self.windowHeight = 720
+        self.windowWidth = windowWidth
+        self.windowHeight = windowHeight
         self.step = 10
 
     def move(self, direction):
