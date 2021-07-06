@@ -47,9 +47,7 @@ class GraphicalView(object):
         if isinstance(event, InitializeEvent):
             self.initialize()
             # add turtle object
-            # self.creature = pygame.sprite.Group()
-            self.dave = TurtleMC.TurtleMC(10, 100, 290, 227, "src/Turtle-0-down.png")
-            # self.creature.add(self.dave)
+            self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, "src/Turtle-0-down.png")
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -125,28 +123,28 @@ class GraphicalView(object):
         """
         角色向右移動
         """
-        self.dave.rect.x += 10
+        self.creature.rect.x += 10
         self.refresh()
         
     def renderLeft(self):
         """
         角色向左移動
         """
-        self.dave.rect.x -= 10
+        self.creature.rect.x -= 10
         self.refresh()
 
     def renderUp(self):
         """
         角色向上移動
         """
-        self.dave.rect.y -= 10
+        self.creature.rect.y -= 10
         self.refresh()
 
     def renderDown(self):
         """
         角色向下移動
         """
-        self.dave.rect.y += 10
+        self.creature.rect.y += 10
         self.refresh()
 
     def refresh(self):
@@ -156,7 +154,7 @@ class GraphicalView(object):
         self.screen.fill(BACKGROUND_BLUE)
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
-        self.screen.blit(self.dave.image, self.dave.rect)
+        self.screen.blit(self.creature.image, self.creature.rect)
         pygame.display.flip()
 
     def renderhelp(self):
