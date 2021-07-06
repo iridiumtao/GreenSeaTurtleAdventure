@@ -48,10 +48,7 @@ class Keyboard(object):
                 # handle key up events
                 if event.type == pygame.KEYUP:
                     currentstate = self.model.state.peek()
-                    # if currentstate == model.STATE_RIGHT or currentstate == model.STATE_LEFT or currentstate == model.STATE_UP or currentstate == model.STATE_DOWN:
-                    #     self.keyupPlay()
-                    #     self.keydownplay(event)
-                    if currentstate == model.STATE_NOKEY:
+                    if currentstate == model.STATE_RIGHT or currentstate == model.STATE_LEFT or currentstate == model.STATE_UP or currentstate == model.STATE_DOWN:
                         self.keyupPlay()
 
     def keydownintro(self, event):
@@ -103,7 +100,6 @@ class Keyboard(object):
         if event.key == pygame.K_DOWN:
             self.evManager.Post(StateChangeEvent(model.STATE_DOWN))
         else:
-            self.evManager.Post(StateChangeEvent(model.STATE_NOKEY))
             self.evManager.Post(InputEvent(event.unicode, None))
 
     
