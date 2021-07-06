@@ -5,20 +5,22 @@ import src
 import view
 
 class TurtleMC(pygame.sprite.Sprite):
-    def __init__(self, x, y, w, h, windowWidth, windowHeight):
+    def __init__(self, windowWidth, windowHeight):
         pygame.sprite.Sprite.__init__(self)
+
+        # 海龜width = 視窗Width除以5
+        self.width = windowWidth//5
+        self.height = int(self.width * 0.7838)
 
         self.chgImageCnter = 0
         self.imageIndex = 0
-        self.images = [pygame.transform.scale((pygame.image.load("src/Turtle-0-down.png").convert_alpha()), (w,h)),
-                pygame.transform.scale((pygame.image.load("src/Turtle-0-up.png").convert_alpha()), (w,h))]
+        self.images = [pygame.transform.scale((pygame.image.load("src/Turtle-0-down.png").convert_alpha()), (self.width ,self.height)),
+                pygame.transform.scale((pygame.image.load("src/Turtle-0-up.png").convert_alpha()), (self.width ,self.height))]
         self.image = self.images[self.imageIndex]
 
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y    
-        self.width = w
-        self.height = h
+        self.rect.x = 0
+        self.rect.y = (windowHeight + self.height)/2    
         self.widthOffset = -50
         self.heightOffset = 0
         self.windowWidth = windowWidth

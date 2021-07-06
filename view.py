@@ -53,7 +53,7 @@ class GraphicalView(object):
         if isinstance(event, InitializeEvent):
             self.initialize()
             # add turtle object
-            self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+            self.creature = TurtleMC.TurtleMC(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
 
             self.straws = pygame.sprite.Group()
