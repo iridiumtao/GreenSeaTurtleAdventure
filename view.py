@@ -87,7 +87,6 @@ class GraphicalView(object):
                     True, (0, 0, 0))
 
         text_rect = text.get_rect(center=(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT*0.8))
-        print(text_rect)
         self.screen.blit(text, text_rect)
         pygame.display.flip()
 
