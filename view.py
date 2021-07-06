@@ -90,7 +90,6 @@ class GraphicalView(object):
         self.intro_text_alpha = self.intro_text_alpha - 4 if self.intro_text_alpha > -255 else 255
         text.set_alpha(abs(self.intro_text_alpha))
 
-
         text_rect = text.get_rect(center=(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT*0.8))
         self.screen.blit(text, text_rect)
         pygame.display.flip()
