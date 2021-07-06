@@ -39,14 +39,16 @@ class Keyboard(object):
                             self.keydownplay(event)
                         if currentstate == model.STATE_HELP:
                             self.keydownhelp(event)
-                        if currentstate == model.STATE_RIGHT:
-                            self.keyupRight()
-                        if currentstate == model.STATE_LEFT:
-                            self.keyupLeft()
-                        if currentstate == model.STATE_UP:
-                            self.keyupUp()
-                        if currentstate == model.STATE_DOWN:
-                            self.keyupDown()
+                if event.type == pygame.KEYUP:
+                    currentstate = self.model.state.peek()
+                    if currentstate == model.STATE_RIGHT:
+                        self.keyupRight()
+                    if currentstate == model.STATE_LEFT:
+                        self.keyupLeft()
+                    if currentstate == model.STATE_UP:
+                        self.keyupUp()
+                    if currentstate == model.STATE_DOWN:
+                        self.keyupDown()
 
     def keydownmenu(self, event):
         """
@@ -87,6 +89,7 @@ class Keyboard(object):
             self.evManager.Post(StateChangeEvent(model.STATE_UP))
         if event.key == pygame.K_DOWN:
             self.evManager.Post(StateChangeEvent(model.STATE_DOWN))
+
         else:
             self.evManager.Post(InputEvent(event.unicode, None))
        
