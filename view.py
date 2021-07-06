@@ -119,33 +119,25 @@ class GraphicalView(object):
         """
         Render the game play.
         """
-        self.screen.fill(BACKGROUND_BLUE)
-        somewords = self.smallfont.render(
-                    'You are Playing the game. F1 for help.',
-                    True, (0, 0, 0))
-        #turtle
-        self.screen.blit(somewords, (0, 0))
-        self.screen.blit(self.dave.image, self.dave.rect)
-        pygame.display.flip()
+        self.refresh()
 
     def renderRight(self):
         self.dave.rect.x += 10
-        self.screen.fill(BACKGROUND_BLUE)
-        self.screen.blit(self.dave.image, self.dave.rect)
-        pygame.display.flip()
+        self.refresh()
     def renderLeft(self):
         self.dave.rect.x -= 10
-        self.screen.fill(BACKGROUND_BLUE)
-        self.screen.blit(self.dave.image, self.dave.rect)
-        pygame.display.flip()
+        self.refresh()
     def renderUp(self):
         self.dave.rect.y -= 10
-        self.screen.fill(BACKGROUND_BLUE)
-        self.screen.blit(self.dave.image, self.dave.rect)
-        pygame.display.flip()
+        self.refresh()
     def renderDown(self):
         self.dave.rect.y += 10
+        self.refresh()
+
+    def refresh(self):
         self.screen.fill(BACKGROUND_BLUE)
+        somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
+        self.screen.blit(somewords, (0, 0))
         self.screen.blit(self.dave.image, self.dave.rect)
         pygame.display.flip()
 
