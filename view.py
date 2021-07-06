@@ -1,13 +1,13 @@
 import pygame
 import os, sys
 import model
+import random
 from eventmanager import *
-import TurtleMC
 import src
 import configparser
 import os.path
-import Straw
-import random
+from models import TurtleMC
+from models import Straw
 
 
 BACKGROUND_BLUE = (93, 189, 245)
