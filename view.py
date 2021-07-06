@@ -6,6 +6,7 @@ import TurtleMC
 import src
 import configparser
 import os.path
+import Straw
 
 
 BACKGROUND_BLUE = (93, 189, 245)
@@ -41,6 +42,7 @@ class GraphicalView(object):
         self.turtleCounter = 0
         self.intro_text_alpha = 255
 
+        self.strawCounter = 10
 
 
     def notify(self, event):
@@ -52,6 +54,12 @@ class GraphicalView(object):
             self.initialize()
             # add turtle object
             self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+
+            
+            self.straws = pygame.sprite.Group()
+            for i in range(20):
+                self.straws.add(Straw.Straw(self.WINDOW_WIDTH, self.strawCounter, 100+30*i))
+
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -185,6 +193,8 @@ class GraphicalView(object):
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         self.screen.blit(self.creature.image, self.creature.rect)
+        self.straws.update()
+        self.straws.draw(self.screen)
         pygame.display.flip()
 
     def initialize(self):
