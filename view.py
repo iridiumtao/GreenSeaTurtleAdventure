@@ -79,6 +79,8 @@ class GraphicalView(object):
                 self.renderUp()
             if currentstate == model.STATE_DOWN:
                 self.renderDown()
+            if currentstate == model.STATE_NOKEY:
+                self.renderStop()
             # limit the redraw speed to 60 frames per second
             self.clock.tick(60)
 
@@ -173,6 +175,13 @@ class GraphicalView(object):
         角色向下移動
         """
         self.creature.move("down")
+        self.refresh()
+
+    def renderStop(self):
+        """
+        角色停止移動
+        """
+        self.creature.move("stop")
         self.refresh()
 
     def refresh(self):
