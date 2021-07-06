@@ -9,6 +9,7 @@ import os.path
 
 
 BACKGROUND_BLUE = (93, 189, 245)
+WHITE = (255, 255, 255)
 
 class GraphicalView(object):
     """
@@ -57,6 +58,8 @@ class GraphicalView(object):
             if not self.isinitialized:
                 return
             currentstate = self.model.state.peek()
+            if currentstate == model.STATE_INTRO:
+                self.renderintro()
             if currentstate == model.STATE_MENU:
                 self.rendermenu()
             if currentstate == model.STATE_PLAY:
@@ -75,6 +78,14 @@ class GraphicalView(object):
             # limit the redraw speed to 60 frames per second
             self.clock.tick(60)
 
+    def renderintro(self):
+        self.screen.fill(WHITE)
+        somewords = self.smallfont.render(
+                    'Game intro. Press space to start.',
+                    True, (0, 0, 0))
+        self.screen.blit(somewords, (0, 0))
+        pygame.display.flip()
+
     def rendermenu(self):
         """
         Render the game menu.
@@ -86,7 +97,6 @@ class GraphicalView(object):
 
         """
         self.screen.fill(BACKGROUND_BLUE)
-        white = (255, 255, 255)
         select = []
 
         # self.smallfont.render(text, antialias, color, background=None) -> Surface
@@ -119,13 +129,25 @@ class GraphicalView(object):
         """
         self.refresh()
 
+    def renderhelp(self):
+        """
+        Render the help screen.
+        """
+
+        self.screen.fill(BACKGROUND_BLUE)
+        somewords = self.smallfont.render(
+                    'Help is here. space, escape or return. 中文字測試',
+                    True, (0, 0, 0))
+        self.screen.blit(somewords, (0, 0))
+        pygame.display.flip()
+
     def renderRight(self):
         """
         角色向右移動
         """
         self.creature.rect.x += 10
         self.refresh()
-        
+
     def renderLeft(self):
         """
         角色向左移動
@@ -155,18 +177,6 @@ class GraphicalView(object):
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         self.screen.blit(self.creature.image, self.creature.rect)
-        pygame.display.flip()
-
-    def renderhelp(self):
-        """
-        Render the help screen.
-        """
-
-        self.screen.fill(BACKGROUND_BLUE)
-        somewords = self.smallfont.render(
-                    'Help is here. space, escape or return. 中文字測試',
-                    True, (0, 0, 0))
-        self.screen.blit(somewords, (0, 0))
         pygame.display.flip()
 
     def initialize(self):
