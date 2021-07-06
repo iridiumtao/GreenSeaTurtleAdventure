@@ -75,7 +75,7 @@ class GraphicalView(object):
             if currentstate == model.STATE_DOWN:
                 self.renderDown()
             # limit the redraw speed to 30 frames per second
-            self.clock.tick(240)
+            self.clock.tick(60)
 
     def rendermenu(self):
         """
