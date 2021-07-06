@@ -8,9 +8,9 @@ class TurtleMC(pygame.sprite.Sprite):
     def __init__(self, windowWidth, windowHeight):
         pygame.sprite.Sprite.__init__(self)
 
-        # 海龜width = 視窗Width除以5
-        self.width = windowWidth//8
-        self.height = int(self.width * 0.7838)
+        # 海龜height = 視窗height除以5
+        self.height = windowHeight//5
+        self.width = int(self.height * 1.275)
 
         self.chgImageCnter = 0
         self.imageIndex = 0
