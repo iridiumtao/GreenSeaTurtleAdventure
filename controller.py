@@ -39,6 +39,14 @@ class Keyboard(object):
                             self.keydownplay(event)
                         if currentstate == model.STATE_HELP:
                             self.keydownhelp(event)
+                        if currentstate == model.STATE_RIGHT:
+                            self.keyupright()
+                        if currentstate == model.STATE_LEFT:
+                            self.keyupleft()
+                        if currentstate == model.STATE_UP:
+                            self.keyupup()
+                        if currentstate == model.STATE_DOWN:
+                            self.keyupdown()
 
     def keydownmenu(self, event):
         """
@@ -71,15 +79,25 @@ class Keyboard(object):
         # F1 shows the help
         if event.key == pygame.K_F1:
             self.evManager.Post(StateChangeEvent(model.STATE_HELP))
-        else:
-            self.evManager.Post(InputEvent(event.unicode, None))
-
-    def keydownmoveright(self, event):
-        """
-        Handles move right key event. 
-        """        
-        """
         if event.key == pygame.K_RIGHT:
             self.evManager.Post(StateChangeEvent(model.STATE_RIGHT))
-        """
-        
+        if event.key == pygame.K_LEFT:
+            self.evManager.Post(StateChangeEvent(model.STATE_LEFT))
+        if event.key == pygame.K_UP:
+            self.evManager.Post(StateChangeEvent(model.STATE_UP))
+        if event.key == pygame.K_DOWN:
+            self.evManager.Post(StateChangeEvent(model.STATE_DOWN))
+        else:
+            self.evManager.Post(InputEvent(event.unicode, None))
+       
+    def keyupright(self):
+        self.evManager.Post(StateChangeEvent(None))
+
+    def keyupleft(self):
+        self.evManager.Post(StateChangeEvent(None))
+
+    def keyupup(self):
+        self.evManager.Post(StateChangeEvent(None))
+
+    def keyupdown(self):
+        self.evManager.Post(StateChangeEvent(None))

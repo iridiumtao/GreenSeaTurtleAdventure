@@ -57,6 +57,10 @@ STATE_MENU = 2
 STATE_HELP = 3
 STATE_ABOUT = 4
 STATE_PLAY = 5
+STATE_RIGHT = 6
+STATE_LEFT = 7
+STATE_UP = 8
+STATE_DOWN = 9
 
 class StateMachine(object):
     """
