@@ -7,6 +7,7 @@ import src
 import configparser
 import os.path
 import Straw
+import random
 
 
 BACKGROUND_BLUE = (93, 189, 245)
@@ -58,7 +59,7 @@ class GraphicalView(object):
             
             self.straws = pygame.sprite.Group()
             for i in range(20):
-                self.straws.add(Straw.Straw(self.WINDOW_WIDTH, self.strawCounter, 100+30*i))
+                self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), 100+45*i))
 
 
         elif isinstance(event, QuitEvent):

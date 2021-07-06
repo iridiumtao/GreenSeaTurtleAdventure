@@ -22,16 +22,6 @@ class Straw(pygame.sprite.Sprite):
         
         self.maxWidth = maxWidth
     
-    '''def changeDir(self):
-
-        if self.rect.x < -30:
-            self.dir = "right"
-            self.image1 = pygame.transform.flip(self.image1, True, False)
-            self.image2 = pygame.transform.flip(self.image2, True, False)
-        if self.rect.x > 1700:
-            self.dir = "left"
-            self.image1 = pygame.transform.flip(self.image1, True, False)
-            self.image2 = pygame.transform.flip(self.image2, True, False)'''
     
     def update(self):
 
