@@ -8,6 +8,7 @@ import configparser
 import os.path
 from models import TurtleMC
 from models import Straw
+from models import Heart
 
 
 BACKGROUND_BLUE = (93, 189, 245)
@@ -54,12 +55,17 @@ class GraphicalView(object):
             # add turtle object
             self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
-            
+
             self.straws = pygame.sprite.Group()
             strawNum = 20
             for i in range(strawNum):
                 self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
 
+            self.hearts = pygame.sprite.Group()
+            heartNum = 2
+            heartSize = 52
+            for i in range(heartNum):
+                self.hearts.add(Heart.Heart(0 + i * heartSize, self.WINDOW_HEIGHT - heartSize, heartSize))
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -195,6 +201,8 @@ class GraphicalView(object):
         self.screen.blit(self.creature.image, self.creature.rect)
         self.straws.update()
         self.straws.draw(self.screen)
+        self.hearts.update()
+        self.hearts.draw(self.screen)
         pygame.display.flip()
 
     def initialize(self):
