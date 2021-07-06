@@ -43,7 +43,6 @@ class GraphicalView(object):
 
         self.turtleCounter = 0
         self.intro_text_alpha = 255
-        self.background_image = pygame.image.load("src/background.png")
 
 
 
@@ -54,6 +53,9 @@ class GraphicalView(object):
 
         if isinstance(event, InitializeEvent):
             self.initialize()
+
+            self.background_image = pygame.image.load("src/background.png").convert_alpha()
+
             # add turtle object
             self.creature = TurtleMC.TurtleMC(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
@@ -202,6 +204,7 @@ class GraphicalView(object):
         刷新畫面上顯示的內容
         """
         self.screen.fill(BACKGROUND_BLUE)
+
         self.screen.blit(self.background_image, (0, 0))
 
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
