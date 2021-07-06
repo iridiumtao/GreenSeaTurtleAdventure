@@ -39,6 +39,7 @@ class Keyboard(object):
                             self.keydownplay(event)
                         if currentstate == model.STATE_HELP:
                             self.keydownhelp(event)
+                # handle key up events
                 if event.type == pygame.KEYUP:
                     currentstate = self.model.state.peek()
                     if currentstate == model.STATE_RIGHT:

@@ -23,7 +23,7 @@ class GameEngine(object):
         """
         Called by an event in the message queue. 
         """
-
+        
         if isinstance(event, QuitEvent):
             self.running = False
         if isinstance(event, StateChangeEvent):

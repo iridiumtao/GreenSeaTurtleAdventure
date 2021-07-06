@@ -9,7 +9,6 @@ class TurtleMC(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.transform.scale((pygame.image.load(image).convert_alpha()), (w,h))
-
         self.flapIndex = 0
         self.rect = self.image.get_rect()
         self.rect.x = x
