@@ -73,3 +73,13 @@ class Keyboard(object):
             self.evManager.Post(StateChangeEvent(model.STATE_HELP))
         else:
             self.evManager.Post(InputEvent(event.unicode, None))
+
+    def keydownmoveright(self, event):
+        """
+        Handles move right key event. 
+        """        
+        """
+        if event.key == pygame.K_RIGHT:
+            self.evManager.Post(StateChangeEvent(model.STATE_RIGHT))
+        """
+        
