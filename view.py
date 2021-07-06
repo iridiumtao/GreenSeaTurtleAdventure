@@ -173,6 +173,13 @@ class GraphicalView(object):
         self.creature.move("down")
         self.refresh()
 
+    def renderStop(self):
+        """
+        角色停止移動
+        """
+        self.creature.move("stop")
+        self.refresh()
+
     def refresh(self):
         """
         刷新畫面上顯示的內容
