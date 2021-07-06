@@ -10,6 +10,8 @@ import os.path
 
 BACKGROUND_BLUE = (93, 189, 245)
 WHITE = (255, 255, 255)
+WINDOW_HEIGHT = None
+WINDOW_WIDTH = None
 
 class GraphicalView(object):
     """
@@ -80,10 +82,13 @@ class GraphicalView(object):
 
     def renderintro(self):
         self.screen.fill(WHITE)
-        somewords = self.smallfont.render(
+        text = self.smallfont.render(
                     'Game intro. Press space to start.',
                     True, (0, 0, 0))
-        self.screen.blit(somewords, (0, 0))
+
+        text_rect = text.get_rect(center=(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT*0.8))
+        print(text_rect)
+        self.screen.blit(text, text_rect)
         pygame.display.flip()
 
     def rendermenu(self):
@@ -198,6 +203,7 @@ class GraphicalView(object):
         #pygame.display.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
         self.screen = pygame.display.set_mode((resolutionWidth, resolutionHeight), screenFlags)
+        self.WINDOW_WIDTH, self.WINDOW_HEIGHT = self.screen.get_size()
         self.clock = pygame.time.Clock()
         self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
