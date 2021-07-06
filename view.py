@@ -43,6 +43,8 @@ class GraphicalView(object):
 
         self.turtleCounter = 0
         self.intro_text_alpha = 255
+        self.background_image = pygame.image.load("src/background.png")
+
 
 
     def notify(self, event):
@@ -119,6 +121,10 @@ class GraphicalView(object):
 
         """
         self.screen.fill(BACKGROUND_BLUE)
+
+        image = pygame.image.load("src/background.png")
+        self.screen.blit(image, (0, 0))
+
         select = []
 
         # self.smallfont.render(text, antialias, color, background=None) -> Surface
@@ -196,6 +202,8 @@ class GraphicalView(object):
         刷新畫面上顯示的內容
         """
         self.screen.fill(BACKGROUND_BLUE)
+        self.screen.blit(self.background_image, (0, 0))
+
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         self.screen.blit(self.creature.image, self.creature.rect)
