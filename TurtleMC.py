@@ -39,6 +39,9 @@ class TurtleMC(pygame.sprite.Sprite):
         elif direction == "down":
             if self.rect.y + self.height < self.windowHeight:
                 self.rect.y += self.step
+        elif direction == "stop":
+            self.rect.x = self.rect.x
+            self.rect.y = self.rect.y
 
         # 換海歸圖片
         self.chgImageCnter += 1

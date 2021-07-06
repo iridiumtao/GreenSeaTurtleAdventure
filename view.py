@@ -3,6 +3,7 @@ import os, sys
 import model
 from eventmanager import *
 import TurtleMC
+import Straw
 import src
 import configparser
 import os.path
@@ -38,7 +39,7 @@ class GraphicalView(object):
         self.clock = None
         self.smallfont = None
 
-        self.turtleCounter = 0
+        self.strawCounter = 10
 
 
 
@@ -51,6 +52,7 @@ class GraphicalView(object):
             self.initialize()
             # add turtle object
             self.creature = TurtleMC.TurtleMC(10, 100, 290, 227, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+            self.straw = Straw.Straw(self.WINDOW_WIDTH, self.strawCounter)
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -77,6 +79,8 @@ class GraphicalView(object):
                 self.renderUp()
             if currentstate == model.STATE_DOWN:
                 self.renderDown()
+            if currentstate == model.STATE_NOKEY:
+                self.renderStop()
             # limit the redraw speed to 60 frames per second
             self.clock.tick(60)
 
@@ -173,6 +177,13 @@ class GraphicalView(object):
         self.creature.move("down")
         self.refresh()
 
+    def renderStop(self):
+        """
+        角色停止移動
+        """
+        self.creature.move("stop")
+        self.refresh()
+
     def refresh(self):
         """
         刷新畫面上顯示的內容
@@ -181,6 +192,8 @@ class GraphicalView(object):
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         self.screen.blit(self.creature.image, self.creature.rect)
+        self.straw.update()
+        self.screen.blit(self.straw.image, self.straw.rect)
         pygame.display.flip()
 
     def initialize(self):
