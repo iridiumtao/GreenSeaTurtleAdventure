@@ -1,9 +1,7 @@
 import pygame
-import random
-import time
 import src
 import view
-
+from models import HitBox
 class TurtleMC(pygame.sprite.Sprite):
     def __init__(self, Ratio, windowWidth, windowHeight):
         pygame.sprite.Sprite.__init__(self)
@@ -33,10 +31,12 @@ class TurtleMC(pygame.sprite.Sprite):
         self.rect.y = (windowHeight - self.imageHeight)/2    
         self.step = 10
 
-        self.hitBox = pygame.Rect(int(self.rect.x + self.imageWidth * (2/5)), 
+        # 頭部hitBox
+        self.hitBox = HitBox.Hitbox(int(self.rect.x + self.imageWidth * (2/5)), 
                 self.rect.y,
                 int(self.imageWidth * (3/7)), 
                 int(self.imageHeight * (2/5)))
+
                 
 
     def move(self, direction):
@@ -58,7 +58,7 @@ class TurtleMC(pygame.sprite.Sprite):
             self.rect.y = self.rect.y
         self.chgImage()
         # 碰撞
-        self.hitBox.update(int(self.rect.x + self.imageWidth * (2/5)), 
+        self.hitBox.rect.update(int(self.rect.x + self.imageWidth * (2/5)), 
                 self.rect.y,
                 int(self.imageWidth * (3/7)), 
                 int(self.imageHeight * (2/5)))

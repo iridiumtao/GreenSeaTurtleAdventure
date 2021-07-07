@@ -284,9 +284,9 @@ class GraphicalView(object):
         score_rect = score.get_rect(topright = (self.WINDOW_WIDTH , 0))
         self.screen.blit(score, score_rect)
 
-        # 碰撞
-        pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox, 2)
-        print(pygame.sprite.spritecollide(self.creature, self.straws, False, pygame.sprite.collide_rect))
+        # 顯示hitBox
+        pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox.rect, 2)
+        print(pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False))
 
         pygame.display.flip()
 
