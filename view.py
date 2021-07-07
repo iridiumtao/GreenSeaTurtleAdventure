@@ -10,7 +10,6 @@ from models import TurtleMC
 from models import Straw
 from models import Heart
 from models import IntroObject
-from models import MenuButton
 
 
 BACKGROUND_BLUE = (93, 189, 245)
@@ -68,6 +67,7 @@ class GraphicalView(object):
             self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
             self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
+<<<<<<< HEAD
             # 生成 menu 按鈕
             self.menuContiuneButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
                                                             y = self.WINDOW_HEIGHT * 0.235,
@@ -95,6 +95,9 @@ class GraphicalView(object):
                                                    (self.menuOptionButton,) +
                                                    (self.menuHelpButton,))
 
+=======
+            # add turtle object
+>>>>>>> 7b818393492350e8455ab407535cad961c963d6f
 
             # 生成海龜
             self.creatures = pygame.sprite.Group()
@@ -107,7 +110,7 @@ class GraphicalView(object):
             for i in range(strawNum):
                 self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
 
-            # 生成愛心
+            # 生成心臟
             self.hearts = pygame.sprite.Group()
             heartNum = 2
             heartSize = 52
@@ -194,9 +197,26 @@ class GraphicalView(object):
 
 
         # self.smallfont.render(text, antialias, color, background=None) -> Surface
-        self.menuButtons.draw(self.screen)
-        for i in self.menuButtons:
-            i.update()
+        titleText = self.smallfont.render(
+                    'You are in the Menu. Space to play. Esc exits.',
+                    True, (0, 0, 0))
+        self.screen.blit(titleText, (0, 0))
+        displaySettingText = self.smallfont.render(
+                    'Resolution:',
+                    True, (0, 0, 0))
+        displaySettingText2 = self.smallfont.render(
+                    '1920x1080',
+                    True, (0, 0, 0))
+        displaySettingText3 = self.smallfont.render(
+                    '1366x768',
+                    True, (0, 0, 0))
+        displaySettingText4 = self.smallfont.render(
+                    '3840x2160',
+                    True, (0, 0, 0))
+        self.screen.blit(displaySettingText, (0, 40))
+        self.screen.blit(displaySettingText2, (40, 80))
+        self.screen.blit(displaySettingText3, (40, 120))
+        self.screen.blit(displaySettingText4, (40, 160))
 
         # 偵測是否有按下滑鼠，並判斷是否在按鈕的範圍內
         if self.menuContiuneButton.rect.collidepoint(self.menuButtonPos):
