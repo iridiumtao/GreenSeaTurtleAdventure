@@ -73,22 +73,22 @@ class GraphicalView(object):
                                                             y = self.WINDOW_HEIGHT * 0.235,
                                                             w = self.WINDOW_WIDTH * 0.32,
                                                             h = self.WINDOW_HEIGHT * 0.135,
-                                                            image = "src/start-button.png")
+                                                            image = "src/continue-button.png")
             self.menuNewGameButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
                                                            y = self.WINDOW_HEIGHT * 0.42,
                                                            w = self.WINDOW_WIDTH * 0.32,
                                                            h = self.WINDOW_HEIGHT * 0.135,
-                                                           image = "src/store-button.png")
+                                                           image = "src/start-button.png")
             self.menuOptionButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
                                                           y = self.WINDOW_HEIGHT * 0.605,
                                                           w = self.WINDOW_WIDTH * 0.135,
                                                           h = self.WINDOW_HEIGHT * 0.135,
-                                                          image = "src/store-button.png")
+                                                          image = "src/option-button.png")
             self.menuHelpButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.525,
                                                         y = self.WINDOW_HEIGHT * 0.605,
                                                         w = self.WINDOW_WIDTH * 0.135,
                                                         h = self.WINDOW_HEIGHT * 0.135,
-                                                        image = "src/store-button.png")
+                                                        image = "src/help-button.png")
 
             self.menuButtons = pygame.sprite.Group((self.menuContiuneButton,) +
                                                    (self.menuNewGameButton,) +
@@ -191,29 +191,9 @@ class GraphicalView(object):
 
         self.screen.blit(self.background_image, (0, 0))
 
-
-
-        # self.smallfont.render(text, antialias, color, background=None) -> Surface
-        titleText = self.smallfont.render(
-                    'You are in the Menu. Space to play. Esc exits.',
-                    True, (0, 0, 0))
-        self.screen.blit(titleText, (0, 0))
-        displaySettingText = self.smallfont.render(
-                    'Resolution:',
-                    True, (0, 0, 0))
-        displaySettingText2 = self.smallfont.render(
-                    '1920x1080',
-                    True, (0, 0, 0))
-        displaySettingText3 = self.smallfont.render(
-                    '1366x768',
-                    True, (0, 0, 0))
-        displaySettingText4 = self.smallfont.render(
-                    '3840x2160',
-                    True, (0, 0, 0))
-        self.screen.blit(displaySettingText, (0, 40))
-        self.screen.blit(displaySettingText2, (40, 80))
-        self.screen.blit(displaySettingText3, (40, 120))
-        self.screen.blit(displaySettingText4, (40, 160))
+        self.menuButtons.draw(self.screen)
+        for i in self.menuButtons:
+            i.update()
 
         # 偵測是否有按下滑鼠，並判斷是否在按鈕的範圍內
         if self.menuContiuneButton.rect.collidepoint(self.menuButtonPos):
