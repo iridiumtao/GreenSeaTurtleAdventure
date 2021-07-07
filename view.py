@@ -278,17 +278,18 @@ class GraphicalView(object):
         self.straws.draw(self.screen)
         self.hearts.update()
         self.hearts.draw(self.screen)
-        pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox, 2)
-
+        
         # score counter
         self.turtleCounter += 1
         score = self.smallfont.render(str(self.turtleCounter // 6), False, (0, 0, 0))
         score_rect = score.get_rect(topright = (self.WINDOW_WIDTH , 0))
         self.screen.blit(score, score_rect)
-
+        
+        # 碰撞
+        pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox, 2)
+        print(pygame.sprite.spritecollideany(self.creature, self.straws, None))
 
         pygame.display.flip()
-        print(pygame.sprite.spritecollideany(self.creature, self.straws, None))
 
     def initialize(self):
         """
