@@ -85,23 +85,25 @@ class Keyboard(object):
         """
         Handles play key events.
         """
-
+        # ESC back to menu
         if event.key == pygame.K_ESCAPE:
             self.evManager.Post(StateChangeEvent(None))
         else:
             self.evManager.Post(InputEvent(event.unicode, None))
+        
         # F1 shows the help
         if event.key == pygame.K_F1:
             self.evManager.Post(StateChangeEvent(model.STATE_HELP))
+        
+        # Arrow keys to control character
         if event.key == pygame.K_RIGHT:
             self.evManager.Post(StateChangeEvent(model.STATE_RIGHT))
-        if event.key == pygame.K_LEFT:
+        elif event.key == pygame.K_LEFT:
             self.evManager.Post(StateChangeEvent(model.STATE_LEFT))
-        if event.key == pygame.K_UP:
+        elif event.key == pygame.K_UP:
             self.evManager.Post(StateChangeEvent(model.STATE_UP))
-        if event.key == pygame.K_DOWN:
+        elif event.key == pygame.K_DOWN:
             self.evManager.Post(StateChangeEvent(model.STATE_DOWN))
-
     
     def keyupPlay(self):
         """
