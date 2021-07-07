@@ -247,7 +247,9 @@ class GraphicalView(object):
         self.straws.draw(self.screen)
         self.hearts.update()
         self.hearts.draw(self.screen)
+        pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox, 2)
         pygame.display.flip()
+        print(pygame.sprite.spritecollideany(self.creature, self.straws, None))
 
     def initialize(self):
         """
