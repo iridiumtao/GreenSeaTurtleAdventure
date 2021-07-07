@@ -69,26 +69,23 @@ class GraphicalView(object):
             self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
             # 生成 menu 按鈕
-            btnLeft = self.WINDOW_WIDTH * 0.34
-            btnWidth = self.WINDOW_WIDTH * 0.32
-            winHeight = self.WINDOW_HEIGHT
-            self.menuContiuneButton = MenuButton.MenuButton(x = btnLeft,
-                                                            y = winHeight * 0.235,
-                                                            w = btnWidth,
+            self.menuContiuneButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
+                                                            y = self.WINDOW_HEIGHT * 0.235,
+                                                            w = self.WINDOW_WIDTH * 0.32,
                                                             h = self.WINDOW_HEIGHT * 0.135,
                                                             image = "src/start-button.png")
-            self.menuNewGameButton = MenuButton.MenuButton(x = btnLeft,
-                                                           y = winHeight * 0.42,
-                                                           w = btnWidth,
+            self.menuNewGameButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
+                                                           y = self.WINDOW_HEIGHT * 0.42,
+                                                           w = self.WINDOW_WIDTH * 0.32,
                                                            h = self.WINDOW_HEIGHT * 0.135,
                                                            image = "src/store-button.png")
-            self.menuOptionButton = MenuButton.MenuButton(x = btnLeft,
-                                                          y = winHeight * 0.605,
+            self.menuOptionButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
+                                                          y = self.WINDOW_HEIGHT * 0.605,
                                                           w = self.WINDOW_WIDTH * 0.135,
                                                           h = self.WINDOW_HEIGHT * 0.135,
                                                           image = "src/store-button.png")
             self.menuHelpButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.525,
-                                                        y = winHeight * 0.605,
+                                                        y = self.WINDOW_HEIGHT * 0.605,
                                                         w = self.WINDOW_WIDTH * 0.135,
                                                         h = self.WINDOW_HEIGHT * 0.135,
                                                         image = "src/store-button.png")
@@ -202,30 +199,25 @@ class GraphicalView(object):
             i.update()
 
         # 偵測是否有按下滑鼠，並判斷是否在按鈕的範圍內
-        mouse_x, mouse_y = self.menuButtonPos
-        if mouse_x > self.WINDOW_WIDTH * 0.34 and mouse_x < self.WINDOW_WIDTH * 0.66:
+        if self.menuContiuneButton.rect.collidepoint(self.menuButtonPos):
+            # todo: 顯示一個更大的 button，讓它看起來有跳起來的感覺
+            print("按下「繼續遊戲」")
+            self.menuButtonPos = (0, 0)
 
-            # 繼續遊戲
-            if mouse_y > self.WINDOW_HEIGHT * 0.235 and mouse_y < self.WINDOW_HEIGHT * 0.37:
-                print("按下「繼續遊戲」")
-                self.menuButtonPos = (0, 0)
+        # 新遊戲
+        if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
+            print("按下「新遊戲」")
+            self.menuButtonPos = (0, 0)
 
-            # 新遊戲
-            if mouse_y > self.WINDOW_HEIGHT * 0.42 and mouse_y < self.WINDOW_HEIGHT * 0.555:
-                print("按下「新遊戲」")
-                self.menuButtonPos = (0, 0)
+        # 選項
+        if self.menuOptionButton.rect.collidepoint(self.menuButtonPos):
+            print("按下「選項」")
+            self.menuButtonPos = (0, 0)
 
-            if mouse_y > self.WINDOW_HEIGHT * 0.605 and mouse_y < self.WINDOW_HEIGHT * 0.74:
-
-                # 選項
-                if mouse_x < self.WINDOW_WIDTH * 0.375:
-                    print("按下「選項」")
-                    self.menuButtonPos = (0, 0)
-
-                # 說明
-                if mouse_x > self.WINDOW_WIDTH * 0.525:
-                    print("按下「說明」")
-                    self.menuButtonPos = (0, 0)
+        # 說明
+        if self.menuHelpButton.rect.collidepoint(self.menuButtonPos):
+            print("按下「說明」")
+            self.menuButtonPos = (0, 0)
 
         pygame.display.flip()
 
@@ -291,13 +283,13 @@ class GraphicalView(object):
         self.straws.draw(self.screen)
         self.hearts.update()
         self.hearts.draw(self.screen)
-        
+
         # score counter
         self.turtleCounter += 1
         score = self.smallfont.render(str(self.turtleCounter // 6), False, (0, 0, 0))
         score_rect = score.get_rect(topright = (self.WINDOW_WIDTH , 0))
         self.screen.blit(score, score_rect)
-        
+
         # 碰撞
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox, 2)
         # print(pygame.sprite.spritecollideany(self.creature, self.straws, pygame.sprite.collide_rect))
