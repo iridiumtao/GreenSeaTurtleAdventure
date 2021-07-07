@@ -37,6 +37,7 @@ class TurtleMC(pygame.sprite.Sprite):
                 self.rect.y,
                 int(self.imageWidth * (3/7)), 
                 int(self.imageHeight * (2/5)))
+                
 
     def move(self, direction):
         # 移動
