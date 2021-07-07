@@ -55,6 +55,7 @@ class GraphicalView(object):
             self.initialize()
 
             self.background_image = pygame.image.load("src/background.png").convert_alpha()
+            self.background_image = pygame.transform.scale(self.background_image, (self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
 
             # add turtle object
             self.creature = TurtleMC.TurtleMC(1/5, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
@@ -105,9 +106,15 @@ class GraphicalView(object):
 
     def renderintro(self):
         self.screen.fill(WHITE)
+        self.screen.fill(BACKGROUND_BLUE)
+        self.screen.blit(self.background_image, (0, 0))
+
         text = self.smallfont.render(
-                    'Game intro. Press space to start.',
+                    'Press space key to start.',
                     True, (0, 0, 0))
+
+
+        # todo: 把海龜跟吸管弄進來
 
         # 讓 intro text 有呼吸效果
         self.intro_text_alpha = self.intro_text_alpha - 4 if self.intro_text_alpha > -255 else 255
@@ -133,8 +140,8 @@ class GraphicalView(object):
         """
         self.screen.fill(BACKGROUND_BLUE)
 
-        image = pygame.image.load("src/background.png")
-        self.screen.blit(image, (0, 0))
+        self.screen.blit(self.background_image, (0, 0))
+
 
         select = []
 

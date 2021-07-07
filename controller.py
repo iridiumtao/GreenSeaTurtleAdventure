@@ -24,9 +24,11 @@ class Keyboard(object):
         if isinstance(event, TickEvent):
             # Called for each game tick. We check our keyboard presses here.
             for event in pygame.event.get():
+
                 # handle window manager closing our window
                 if event.type == pygame.QUIT:
                     self.evManager.Post(QuitEvent())
+
                 # handle key down events
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
@@ -58,9 +60,6 @@ class Keyboard(object):
                     if currentstate == model.STATE_DOWN and event.key == pygame.K_DOWN:
                         self.keyupPlay()
 
-                if event.type == pygame.MOUSEBUTTONUP:
-                    print("pygame.MOUSEBUTTONUP is working")
-
     def keydownintro(self, event):
         """
         Handles intro key events.
@@ -81,6 +80,9 @@ class Keyboard(object):
         # space plays the game
         if event.key == pygame.K_SPACE:
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
+        if event.key == pygame.MOUSEBUTTONUP:
+            print("pygame.MOUSEBUTTONUP is working")
+            self.evManager.Post(InputEvent(None, event.pos))
 
     def keydownhelp(self, event):
         """
