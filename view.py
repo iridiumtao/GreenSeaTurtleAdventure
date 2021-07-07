@@ -99,6 +99,7 @@ class GraphicalView(object):
             if currentstate == model.STATE_DOWN:
                 self.renderDown()
 
+
             # 設定 60 FPS
             self.clock.tick(60)
 
