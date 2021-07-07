@@ -67,7 +67,6 @@ class GraphicalView(object):
             self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
             self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
-<<<<<<< HEAD
             # 生成 menu 按鈕
             self.menuContiuneButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
                                                             y = self.WINDOW_HEIGHT * 0.235,
@@ -95,9 +94,6 @@ class GraphicalView(object):
                                                    (self.menuOptionButton,) +
                                                    (self.menuHelpButton,))
 
-=======
-            # add turtle object
->>>>>>> 7b818393492350e8455ab407535cad961c963d6f
 
             # 生成海龜
             self.creatures = pygame.sprite.Group()
