@@ -29,12 +29,13 @@ class Keyboard(object):
                 if event.type == pygame.QUIT:
                     self.evManager.Post(QuitEvent())
 
+                currentstate = self.model.state.peek()
+
                 # handle key down events
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self.evManager.Post(StateChangeEvent(None))
                     else:
-                        currentstate = self.model.state.peek()
                         if currentstate == model.STATE_INTRO:
                             self.keydownintro(event)
                         if currentstate == model.STATE_MENU:
@@ -50,7 +51,6 @@ class Keyboard(object):
 
                 # handle key up events
                 if event.type == pygame.KEYUP:
-                    currentstate = self.model.state.peek()
                     if currentstate == model.STATE_RIGHT and event.key == pygame.K_RIGHT:
                         self.keyupPlay()
                     if currentstate == model.STATE_LEFT and event.key == pygame.K_LEFT:
@@ -59,6 +59,10 @@ class Keyboard(object):
                         self.keyupPlay()
                     if currentstate == model.STATE_DOWN and event.key == pygame.K_DOWN:
                         self.keyupPlay()
+
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if currentstate == model.STATE_MENU:
+                        self.mousebuttonupmenu(event)
 
     def keydownintro(self, event):
         """
@@ -80,9 +84,8 @@ class Keyboard(object):
         # space plays the game
         if event.key == pygame.K_SPACE:
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
-        if event.key == pygame.MOUSEBUTTONUP:
-            print("pygame.MOUSEBUTTONUP is working")
-            self.evManager.Post(InputEvent(None, event.pos))
+
+
 
     def keydownhelp(self, event):
         """
@@ -122,3 +125,7 @@ class Keyboard(object):
         放開按鍵回到play重新判斷有沒有按任一方向鍵
         """
         self.evManager.Post(StateChangeEvent(None))
+
+    def mousebuttonupmenu(self, event):
+
+        self.evManager.Post(InputEvent(None, event.pos))
