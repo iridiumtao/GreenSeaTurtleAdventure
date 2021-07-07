@@ -27,8 +27,8 @@ class IntroObject(pygame.sprite.Sprite):
     def __init__(self, screenWidth, screenHight, w, h, x, y, stopX, rate, turn=0, flip=False, image="src/Turtle-menu.png"):
         pygame.sprite.Sprite.__init__(self)
 
-        self.w = w*(screenWidth//1280)
-        self.h = h*(screenHight//720)
+        self.w = int(w*(screenWidth/1280))
+        self.h = int(h*(screenHight/720))
 
         self.image1 = pygame.transform.scale(pygame.image.load(image).convert_alpha(), (self.w, self.h))
         self.turn = turn
