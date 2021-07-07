@@ -44,6 +44,7 @@ class GraphicalView(object):
         self.turtleCounter = 0
         self.intro_text_alpha = 255
 
+        self.menuButtonPressed = None
 
 
     def notify(self, event):
@@ -84,7 +85,7 @@ class GraphicalView(object):
             if currentstate == model.STATE_INTRO:
                 self.renderintro()
             if currentstate == model.STATE_MENU:
-                self.rendermenu()
+                self.rendermenu(event)
             if currentstate == model.STATE_PLAY:
                 self.renderplay()
             if currentstate == model.STATE_HELP:
@@ -100,9 +101,15 @@ class GraphicalView(object):
             if currentstate == model.STATE_DOWN:
                 self.renderDown()
 
-
             # 設定 60 FPS
             self.clock.tick(60)
+
+        elif isinstance(event, InputEvent):
+            currentstate = self.model.state.peek()
+            if currentstate == model.STATE_MENU:
+                print("hi: {}".format(event.clickpos))
+
+
 
     def renderintro(self):
         self.screen.fill(WHITE)
@@ -125,7 +132,7 @@ class GraphicalView(object):
         self.screen.blit(text, text_rect)
         pygame.display.flip()
 
-    def rendermenu(self):
+    def rendermenu(self, event):
         """
         Render the game menu.
         """
@@ -143,7 +150,6 @@ class GraphicalView(object):
         self.screen.blit(self.background_image, (0, 0))
 
 
-        select = []
 
         # self.smallfont.render(text, antialias, color, background=None) -> Surface
         titleText = self.smallfont.render(
@@ -166,6 +172,15 @@ class GraphicalView(object):
         self.screen.blit(displaySettingText2, (40, 80))
         self.screen.blit(displaySettingText3, (40, 120))
         self.screen.blit(displaySettingText4, (40, 160))
+
+        # 偵測是否有按下滑鼠，並判斷是否在按鈕的範圍內
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONUP:
+                mouse_x, mouse_y = event.pos
+                print(event.pos)
+
+                if mouse_x < self.WINDOW_HEIGHT * 0.2 and mouse_y < self.WINDOW_WIDTH * 0.2:
+                    print("hi")
 
         pygame.display.flip()
 
