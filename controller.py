@@ -58,6 +58,9 @@ class Keyboard(object):
                     if currentstate == model.STATE_DOWN and event.key == pygame.K_DOWN:
                         self.keyupPlay()
 
+                if event.type == pygame.MOUSEBUTTONUP:
+                    print("pygame.MOUSEBUTTONUP is working")
+
     def keydownintro(self, event):
         """
         Handles intro key events.
@@ -97,11 +100,11 @@ class Keyboard(object):
             self.evManager.Post(StateChangeEvent(None))
         else:
             self.evManager.Post(InputEvent(event.unicode, None))
-        
+
         # F1 shows the help
         if event.key == pygame.K_F1:
             self.evManager.Post(StateChangeEvent(model.STATE_HELP))
-        
+
         # Arrow keys to control character
         if event.key == pygame.K_RIGHT:
             self.evManager.Post(StateChangeEvent(model.STATE_RIGHT))
@@ -111,7 +114,7 @@ class Keyboard(object):
             self.evManager.Post(StateChangeEvent(model.STATE_UP))
         if event.key == pygame.K_DOWN:
             self.evManager.Post(StateChangeEvent(model.STATE_DOWN))
-    
+
     def keyupPlay(self):
         """
         放開按鍵回到play重新判斷有沒有按任一方向鍵

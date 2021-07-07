@@ -59,12 +59,13 @@ class GraphicalView(object):
             # add turtle object
             self.creature = TurtleMC.TurtleMC(1/5, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
-
+            # 生成吸管
             self.straws = pygame.sprite.Group()
             strawNum = 20
             for i in range(strawNum):
                 self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
 
+            # 生成心臟
             self.hearts = pygame.sprite.Group()
             heartNum = 2
             heartSize = 52
@@ -87,7 +88,8 @@ class GraphicalView(object):
                 self.renderplay()
             if currentstate == model.STATE_HELP:
                 self.renderhelp()
-            # move turtle
+
+            # 鍵盤上下左右的狀態
             if currentstate == model.STATE_RIGHT:
                 self.renderRight()
             if currentstate == model.STATE_LEFT:
@@ -96,7 +98,9 @@ class GraphicalView(object):
                 self.renderUp()
             if currentstate == model.STATE_DOWN:
                 self.renderDown()
-            # limit the redraw speed to 60 frames per second
+
+
+            # 設定 60 FPS
             self.clock.tick(60)
 
     def renderintro(self):
@@ -105,10 +109,12 @@ class GraphicalView(object):
                     'Game intro. Press space to start.',
                     True, (0, 0, 0))
 
+        # 讓 intro text 有呼吸效果
         self.intro_text_alpha = self.intro_text_alpha - 4 if self.intro_text_alpha > -255 else 255
         text.set_alpha(abs(self.intro_text_alpha))
 
-        text_rect = text.get_rect(center=(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT*0.8))
+        # 計算文字位置，水平置中、垂直0.8
+        text_rect = text.get_rect(center = (self.WINDOW_WIDTH / 2, self.WINDOW_HEIGHT * 0.8))
         self.screen.blit(text, text_rect)
         pygame.display.flip()
 
@@ -119,7 +125,10 @@ class GraphicalView(object):
 
         """
         todo:
-        1.
+        1. 繼續遊戲
+        2. 新遊戲
+        3. 設定
+        4. 幫助
 
         """
         self.screen.fill(BACKGROUND_BLUE)
@@ -224,17 +233,22 @@ class GraphicalView(object):
         if not os.path.isfile('config.ini'):
             resolutionWidth = 1280
             resolutionHeight = 720
-            screenFlags = 0
+            screenFlags = pygame.SCALED
+            display_index = 0
+            vsync = 1
             self.generateConfig()
         else:
-            resolutionWidth, resolutionHeight, screenFlags = self.applyConfig()
+            resolutionWidth, resolutionHeight, screenFlags, display_index, vsync = self.applyConfig()
 
         result = pygame.init()
         pygame.init()
         pygame.font.init()
         #pygame.display.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
-        self.screen = pygame.display.set_mode((resolutionWidth, resolutionHeight), screenFlags)
+        self.screen = pygame.display.set_mode((resolutionWidth, resolutionHeight),
+                                                screenFlags,
+                                                display = display_index,
+                                                vsync = vsync)
         self.WINDOW_WIDTH, self.WINDOW_HEIGHT = self.screen.get_size()
         self.clock = pygame.time.Clock()
         self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
@@ -248,7 +262,12 @@ class GraphicalView(object):
                             '# Set fullscreen to TRUE may cause some problem on system resolution.' : None,
                             'FULLSCREEN' : 'FALSE',
                             'SCALED' : 'TRUE',
-                            'NOFRAME' : 'FALSE'}
+                            'NOFRAME' : 'FALSE',
+                            'OPENGL' : 'FALSE',
+                            'display_index' : '0',
+                            '# 需要開啟OPENGL或SCALED使VSYNC有效' : None,
+                            '# VSYNC only works with the OPENGL or SCALED flags set TRUE' : None,
+                            'vsync' : '1'}
 
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
@@ -262,17 +281,18 @@ class GraphicalView(object):
 
             resolutionWidth = int(screen['resolution_width'])
             resolutionHeight = int(screen['resolution_height'])
-            isFullscreen = screen.getboolean('fullscreen')
             screenFlags = 0
-            if isFullscreen:
+            if screen.getboolean('fullscreen'):
                 screenFlags = pygame.FULLSCREEN
-            isScaled = screen.getboolean('scaled')
-            if isScaled:
+            if screen.getboolean('scaled'):
                 screenFlags = screenFlags | pygame.SCALED
-            isNoframe = screen.getboolean('noframe')
-            if isNoframe:
+            if screen.getboolean('noframe'):
                 screenFlags = screenFlags | pygame.NOFRAME
-            return resolutionWidth, resolutionHeight, screenFlags
+            if screen.getboolean('opengl'):
+                screenFlags = screenFlags | pygame.OPENGL
+            display_index = int(screen['display_index'])
+            vsync = int(screen['vsync'])
+            return resolutionWidth, resolutionHeight, screenFlags, display_index, vsync
         except:
             self.generateConfig()
-            return 1280, 720, 0
+            return 1280, 720, pygame.SCALED, 0, 1
