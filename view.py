@@ -69,24 +69,24 @@ class GraphicalView(object):
             self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
             # 生成 menu 按鈕
-            self.menuContiuneButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
+            self.menuContiuneButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.275,
                                                             y = self.WINDOW_HEIGHT * 0.235,
-                                                            w = self.WINDOW_WIDTH * 0.32,
+                                                            w = self.WINDOW_WIDTH * 0.45,
                                                             h = self.WINDOW_HEIGHT * 0.135,
                                                             image = "src/continue-button.png")
-            self.menuNewGameButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
+            self.menuNewGameButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.275,
                                                            y = self.WINDOW_HEIGHT * 0.42,
-                                                           w = self.WINDOW_WIDTH * 0.32,
+                                                           w = self.WINDOW_WIDTH * 0.45,
                                                            h = self.WINDOW_HEIGHT * 0.135,
                                                            image = "src/start-button.png")
-            self.menuOptionButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.34,
+            self.menuOptionButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.275,
                                                           y = self.WINDOW_HEIGHT * 0.605,
-                                                          w = self.WINDOW_WIDTH * 0.135,
+                                                          w = self.WINDOW_WIDTH * 0.21,
                                                           h = self.WINDOW_HEIGHT * 0.135,
                                                           image = "src/option-button.png")
-            self.menuHelpButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.525,
+            self.menuHelpButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.515,
                                                         y = self.WINDOW_HEIGHT * 0.605,
-                                                        w = self.WINDOW_WIDTH * 0.135,
+                                                        w = self.WINDOW_WIDTH * 0.21,
                                                         h = self.WINDOW_HEIGHT * 0.135,
                                                         image = "src/help-button.png")
 
