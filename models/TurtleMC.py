@@ -56,7 +56,8 @@ class TurtleMC(pygame.sprite.Sprite):
             self.rect.x = self.rect.x
             self.rect.y = self.rect.y
         self.chgImage()
-        self.hitBox = pygame.Rect(int(self.rect.x + self.imageWidth * (2/5)), 
+        # 碰撞
+        self.hitBox.update(int(self.rect.x + self.imageWidth * (2/5)), 
                 self.rect.y,
                 int(self.imageWidth * (3/7)), 
                 int(self.imageHeight * (2/5)))
