@@ -6,7 +6,7 @@ import view
 
 class IntroObject(pygame.sprite.Sprite):
     '''
-    for big turtle object: 
+    for big turtle object:
         w = 858
         h = 672
         x = -1000
@@ -22,7 +22,7 @@ class IntroObject(pygame.sprite.Sprite):
         stopX = 900, 950, 900
         rate = -8
         turn = -60, -50, -40
-        flip = True 
+        flip = True
     '''
     def __init__(self, screenWidth, screenHight, w, h, x, y, stopX, rate, turn=0, flip=False, image="src/Turtle-menu.png"):
         pygame.sprite.Sprite.__init__(self)
