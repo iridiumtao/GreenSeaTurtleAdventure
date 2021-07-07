@@ -57,7 +57,7 @@ class GraphicalView(object):
             self.background_image = pygame.image.load("src/background.png").convert_alpha()
 
             # add turtle object
-            self.creature = TurtleMC.TurtleMC(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+            self.creature = TurtleMC.TurtleMC(1/5, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
 
             self.straws = pygame.sprite.Group()
