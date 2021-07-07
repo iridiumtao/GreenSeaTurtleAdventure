@@ -60,10 +60,10 @@ class GraphicalView(object):
 
 
             # add intro page objects
-            self.bigTurtle = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 858, 672, -1000, 150, -400, 8, turn=-15)
-            self.bigStraw1 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 390, 900, -8, turn=-60, flip=True, image="src/straw.png")
-            self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 350, 950, -8, turn=-50, flip=True, image="src/straw.png")
-            self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 300, 900, -8, turn=-40, flip=True, image="src/straw.png")
+            self.bigTurtle = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
+            self.bigStraw1 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
+            self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
+            self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
             # add turtle object
 
