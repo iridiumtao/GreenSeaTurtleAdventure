@@ -45,7 +45,8 @@ class GraphicalView(object):
         self.turtleCounter = 0
         self.intro_text_alpha = 255
 
-        self.menuButtonPressed = None
+        self.menuButtonPos = (0, 0)
+        self.tempNum = 0
 
 
     def notify(self, event):
@@ -119,9 +120,7 @@ class GraphicalView(object):
         elif isinstance(event, InputEvent):
             currentstate = self.model.state.peek()
             if currentstate == model.STATE_MENU:
-                print("hi: {}".format(event.clickpos))
-
-
+                self.menuButtonPos = event.clickpos
 
     def renderintro(self):
         self.screen.fill(WHITE)
@@ -133,7 +132,7 @@ class GraphicalView(object):
                     True, (0, 0, 0))
 
 
-        # todo: 把海龜跟吸管弄進來
+        # 把海龜跟吸管弄進來
         self.introObj = pygame.sprite.Group((self.bigTurtle,) + (self.bigStraw1,) + (self.bigStraw2,) + (self.bigStraw3,))
         self.introObj.draw(self.screen)
         for i in self.introObj:
@@ -190,13 +189,18 @@ class GraphicalView(object):
         self.screen.blit(displaySettingText4, (40, 160))
 
         # 偵測是否有按下滑鼠，並判斷是否在按鈕的範圍內
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONUP:
-                mouse_x, mouse_y = event.pos
-                print(event.pos)
+        mouse_x, mouse_y = self.menuButtonPos
+        if mouse_x > self.WINDOW_WIDTH * 0.34 and mouse_x < self.WINDOW_WIDTH * 0.66:
 
-                if mouse_x < self.WINDOW_HEIGHT * 0.2 and mouse_y < self.WINDOW_WIDTH * 0.2:
-                    print("hi")
+            # 繼續遊戲
+            if mouse_y > self.WINDOW_HEIGHT * 0.235 and mouse_y < self.WINDOW_HEIGHT * 0.37:
+                print("按下「繼續遊戲」")
+                self.menuButtonPos = (0, 0)
+
+            # 新遊戲
+            if mouse_y > self.WINDOW_HEIGHT * 0.42 and mouse_y < self.WINDOW_HEIGHT * 0.555:
+                print("按下「新遊戲」")
+                self.menuButtonPos = (0, 0)
 
         pygame.display.flip()
 
