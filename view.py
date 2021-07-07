@@ -9,6 +9,7 @@ import os.path
 from models import TurtleMC
 from models import Straw
 from models import Heart
+from models import IntroObject
 
 
 BACKGROUND_BLUE = (93, 189, 245)
@@ -56,6 +57,12 @@ class GraphicalView(object):
 
             self.background_image = pygame.image.load("src/background.png").convert_alpha()
             self.background_image = pygame.transform.scale(self.background_image, (self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
+
+            # add intro page objects
+            self.bigTurtle = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 858, 672, -1000, 150, -400, 8, turn=-15)
+            self.bigStraw1 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 390, 900, -8, turn=-60, flip=True, image="src/straw.png")
+            self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 350, 950, -8, turn=-50, flip=True, image="src/straw.png")
+            self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 300, 900, -8, turn=-40, flip=True, image="src/straw.png")
 
             # add turtle object
             self.creature = TurtleMC.TurtleMC(1/5, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
@@ -115,6 +122,10 @@ class GraphicalView(object):
 
 
         # todo: 把海龜跟吸管弄進來
+        self.introObj = pygame.sprite.Group((self.bigTurtle,) + (self.bigStraw1,) + (self.bigStraw2,) + (self.bigStraw3,))
+        self.introObj.draw(self.screen)
+        for i in self.introObj:
+            i.update()
 
         # 讓 intro text 有呼吸效果
         self.intro_text_alpha = self.intro_text_alpha - 4 if self.intro_text_alpha > -255 else 255
