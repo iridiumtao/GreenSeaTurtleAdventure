@@ -45,14 +45,7 @@ class Keyboard(object):
                         if currentstate == model.STATE_RIGHT or currentstate == model.STATE_LEFT or currentstate == model.STATE_UP or currentstate == model.STATE_DOWN:
                             self.keyupPlay()
                             self.keydownplay(event)
-                        # if currentstate == model.STATE_RIGHT and event.key == pygame.K_LEFT:
-                        #     self.keyupPlay()
-                        # if currentstate == model.STATE_LEFT and event.key == pygame.K_RIGHT:
-                        #     self.keyupPlay()
-                        # if currentstate == model.STATE_UP and event.key == pygame.K_DOWN:
-                        #     self.keyupPlay()
-                        # if currentstate == model.STATE_DOWN and event.key == pygame.K_UP:
-                        #     self.keyupPlay()
+
                 # handle key up events
                 if event.type == pygame.KEYUP:
                     currentstate = self.model.state.peek()
