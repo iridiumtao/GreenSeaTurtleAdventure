@@ -287,7 +287,7 @@ class GraphicalView(object):
         
         # 碰撞
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox, 2)
-        print(pygame.sprite.spritecollideany(self.creature, self.straws, None))
+        # print(pygame.sprite.spritecollideany(self.creature, self.straws, pygame.sprite.collide_rect))
 
         pygame.display.flip()
 
