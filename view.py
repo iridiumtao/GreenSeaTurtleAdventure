@@ -48,6 +48,7 @@ class GraphicalView(object):
 
         self.menuButtonPos = (0, 0)
         self.tempNum = 0
+        self.menuButtonState = 0
 
 
     def notify(self, event):
@@ -179,14 +180,6 @@ class GraphicalView(object):
         Render the game menu.
         """
 
-        """
-        todo:
-        1. 繼續遊戲
-        2. 新遊戲
-        3. 選項
-        4. 幫助
-
-        """
         self.screen.fill(BACKGROUND_BLUE)
 
         self.screen.blit(self.background_image, (0, 0))
@@ -199,21 +192,25 @@ class GraphicalView(object):
         if self.menuContiuneButton.rect.collidepoint(self.menuButtonPos):
             # todo: 顯示一個更大的 button，讓它看起來有跳起來的感覺
             print("按下「繼續遊戲」")
+            self.evManager.Post(MenuButtonEvent(model.MENU_CONTIUNE))
             self.menuButtonPos = (0, 0)
 
         # 新遊戲
         if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
             print("按下「新遊戲」")
+            self.evManager.Post(MenuButtonEvent(model.MENU_NEW_GAME))
             self.menuButtonPos = (0, 0)
 
         # 選項
         if self.menuOptionButton.rect.collidepoint(self.menuButtonPos):
             print("按下「選項」")
+            self.evManager.Post(MenuButtonEvent(model.MENU_OPTION))
             self.menuButtonPos = (0, 0)
 
         # 說明
         if self.menuHelpButton.rect.collidepoint(self.menuButtonPos):
             print("按下「說明」")
+            self.evManager.Post(MenuButtonEvent(model.MENU_HELP))
             self.menuButtonPos = (0, 0)
 
         pygame.display.flip()

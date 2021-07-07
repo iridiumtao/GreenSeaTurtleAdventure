@@ -51,6 +51,12 @@ class GameEngine(object):
             self.evManager.Post(newTick)
 
 
+MENU_CONTIUNE = 1
+MENU_NEW_GAME = 2
+MENU_OPTION = 3
+MENU_HELP = 4
+MENU_STORE = 5
+
 # State machine constants for the StateMachine class below
 STATE_INTRO = 1
 STATE_MENU = 2
