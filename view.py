@@ -126,7 +126,7 @@ class GraphicalView(object):
                     True, (0, 0, 0))
 
 
-        # todo: 把海龜跟吸管弄進來
+        # 把海龜跟吸管弄進來
         self.introObj = pygame.sprite.Group((self.bigTurtle,) + (self.bigStraw1,) + (self.bigStraw2,) + (self.bigStraw3,))
         self.introObj.draw(self.screen)
         for i in self.introObj:
@@ -247,6 +247,13 @@ class GraphicalView(object):
         self.straws.draw(self.screen)
         self.hearts.update()
         self.hearts.draw(self.screen)
+
+        # score counter
+        self.turtleCounter += 1
+        score = self.smallfont.render(str(self.turtleCounter//60), False, (0, 0, 0))
+        self.screen.blit(score, (self.WINDOW_WIDTH-60, 0))
+
+
         pygame.display.flip()
 
     def initialize(self):
