@@ -36,7 +36,7 @@ class TurtleMC(pygame.sprite.Sprite):
         self.hitBox = pygame.Rect(int(self.rect.x + self.imageWidth * (2/5)), 
                 self.rect.y,
                 int(self.imageWidth * (1/3)), 
-                int(self.windowHeight * (1/3)))
+                int(self.imageHeight * (1/3)))
 
     def move(self, direction):
         # 移動
@@ -59,7 +59,7 @@ class TurtleMC(pygame.sprite.Sprite):
         self.hitBox = pygame.Rect(int(self.rect.x + self.imageWidth * (2/5)), 
                 self.rect.y,
                 int(self.imageWidth * (1/3)), 
-                int(self.windowHeight * (1/3)))
+                int(self.imageHeight * (1/3)))
 
     def chgImage(self):
         # 換圖片
