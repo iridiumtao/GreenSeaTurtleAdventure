@@ -281,8 +281,9 @@ class GraphicalView(object):
 
         # score counter
         self.turtleCounter += 1
-        score = self.smallfont.render(str(self.turtleCounter//60), False, (0, 0, 0))
-        self.screen.blit(score, (self.WINDOW_WIDTH-60, 0))
+        score = self.smallfont.render(str(self.turtleCounter // 6), False, (0, 0, 0))
+        score_rect = score.get_rect(topright = (self.WINDOW_WIDTH , 0))
+        self.screen.blit(score, score_rect)
 
 
         pygame.display.flip()
