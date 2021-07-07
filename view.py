@@ -9,6 +9,7 @@ import os.path
 from models import TurtleMC
 from models import Straw
 from models import Heart
+from models import IntroObject
 
 
 BACKGROUND_BLUE = (93, 189, 245)
@@ -58,8 +59,19 @@ class GraphicalView(object):
             self.background_image = pygame.image.load("src/background.png").convert_alpha()
             self.background_image = pygame.transform.scale(self.background_image, (self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
 
+
+            # add intro page objects
+            self.bigTurtle = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
+            self.bigStraw1 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
+            self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
+            self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
+
             # add turtle object
+
+            # 生成海龜
+            self.creatures = pygame.sprite.Group()
             self.creature = TurtleMC.TurtleMC(1/5, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+            self.creatures.add(self.creature)
 
             # 生成吸管
             self.straws = pygame.sprite.Group()
@@ -122,6 +134,10 @@ class GraphicalView(object):
 
 
         # todo: 把海龜跟吸管弄進來
+        self.introObj = pygame.sprite.Group((self.bigTurtle,) + (self.bigStraw1,) + (self.bigStraw2,) + (self.bigStraw3,))
+        self.introObj.draw(self.screen)
+        for i in self.introObj:
+            i.update()
 
         # 讓 intro text 有呼吸效果
         self.intro_text_alpha = self.intro_text_alpha - 4 if self.intro_text_alpha > -255 else 255
@@ -240,7 +256,8 @@ class GraphicalView(object):
 
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
-        self.screen.blit(self.creature.image, self.creature.rect)
+        self.creatures.update()
+        self.creatures.draw(self.screen)
         self.straws.update()
         self.straws.draw(self.screen)
         self.hearts.update()
