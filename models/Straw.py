@@ -25,8 +25,7 @@ class Straw(pygame.sprite.Sprite):
         '''
         object moves horizontally left and starts again after out of screen
         '''
-    	self.rect.x -= 10
-    	if self.rect.x < -10:
-    		self.rect.x = self.maxWidth + 10
-
+        self.rect.x -= 10
+        if self.rect.x < -10:
+            self.rect.x = self.maxWidth + 10
 
