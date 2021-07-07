@@ -45,6 +45,8 @@ class GraphicalView(object):
         self.turtleCounter = 0
         self.intro_text_alpha = 255
 
+        self.menuButtonPos = (0, 0)
+        self.tempNum = 0
 
 
     def notify(self, event):
@@ -60,10 +62,10 @@ class GraphicalView(object):
 
 
             # add intro page objects
-            self.bigTurtle = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 858, 672, -1000, 150, -400, 8, turn=-15)
-            self.bigStraw1 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 390, 900, -8, turn=-60, flip=True, image="src/straw.png")
-            self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 350, 950, -8, turn=-50, flip=True, image="src/straw.png")
-            self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 300, 900, -8, turn=-40, flip=True, image="src/straw.png")
+            self.bigTurtle = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
+            self.bigStraw1 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
+            self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
+            self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
             # add turtle object
 
@@ -96,7 +98,7 @@ class GraphicalView(object):
             if currentstate == model.STATE_INTRO:
                 self.renderintro()
             if currentstate == model.STATE_MENU:
-                self.rendermenu()
+                self.rendermenu(event)
             if currentstate == model.STATE_PLAY:
                 self.renderplay()
             if currentstate == model.STATE_HELP:
@@ -112,9 +114,13 @@ class GraphicalView(object):
             if currentstate == model.STATE_DOWN:
                 self.renderDown()
 
-
             # 設定 60 FPS
             self.clock.tick(60)
+
+        elif isinstance(event, InputEvent):
+            currentstate = self.model.state.peek()
+            if currentstate == model.STATE_MENU:
+                self.menuButtonPos = event.clickpos
 
     def renderintro(self):
         self.screen.fill(WHITE)
@@ -126,7 +132,7 @@ class GraphicalView(object):
                     True, (0, 0, 0))
 
 
-        # todo: 把海龜跟吸管弄進來
+        # 把海龜跟吸管弄進來
         self.introObj = pygame.sprite.Group((self.bigTurtle,) + (self.bigStraw1,) + (self.bigStraw2,) + (self.bigStraw3,))
         self.introObj.draw(self.screen)
         for i in self.introObj:
@@ -141,7 +147,7 @@ class GraphicalView(object):
         self.screen.blit(text, text_rect)
         pygame.display.flip()
 
-    def rendermenu(self):
+    def rendermenu(self, event):
         """
         Render the game menu.
         """
@@ -159,7 +165,6 @@ class GraphicalView(object):
         self.screen.blit(self.background_image, (0, 0))
 
 
-        select = []
 
         # self.smallfont.render(text, antialias, color, background=None) -> Surface
         titleText = self.smallfont.render(
@@ -182,6 +187,20 @@ class GraphicalView(object):
         self.screen.blit(displaySettingText2, (40, 80))
         self.screen.blit(displaySettingText3, (40, 120))
         self.screen.blit(displaySettingText4, (40, 160))
+
+        # 偵測是否有按下滑鼠，並判斷是否在按鈕的範圍內
+        mouse_x, mouse_y = self.menuButtonPos
+        if mouse_x > self.WINDOW_WIDTH * 0.34 and mouse_x < self.WINDOW_WIDTH * 0.66:
+
+            # 繼續遊戲
+            if mouse_y > self.WINDOW_HEIGHT * 0.235 and mouse_y < self.WINDOW_HEIGHT * 0.37:
+                print("按下「繼續遊戲」")
+                self.menuButtonPos = (0, 0)
+
+            # 新遊戲
+            if mouse_y > self.WINDOW_HEIGHT * 0.42 and mouse_y < self.WINDOW_HEIGHT * 0.555:
+                print("按下「新遊戲」")
+                self.menuButtonPos = (0, 0)
 
         pygame.display.flip()
 
@@ -248,6 +267,13 @@ class GraphicalView(object):
         self.hearts.update()
         self.hearts.draw(self.screen)
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox, 2)
+
+        # score counter
+        self.turtleCounter += 1
+        score = self.smallfont.render(str(self.turtleCounter//60), False, (0, 0, 0))
+        self.screen.blit(score, (self.WINDOW_WIDTH-60, 0))
+
+
         pygame.display.flip()
         print(pygame.sprite.spritecollideany(self.creature, self.straws, None))
 
