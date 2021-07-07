@@ -14,6 +14,15 @@ class IntroObject(pygame.sprite.Sprite):
         stopX = -400
         rate = 8
         turn = -15
+    for big straws:
+        w = 200
+        h = 700
+        x = 1100
+        y = 390, 350, 300
+        stopX = 900, 950, 900
+        rate = -8
+        turn = -60, -50, -40
+        flip = True 
     '''
     def __init__(self, screenWidth, screenHight, w, h, x, y, stopX, rate, turn=0, flip=False, image="src/Turtle-menu.png"):
         pygame.sprite.Sprite.__init__(self)
@@ -35,6 +44,9 @@ class IntroObject(pygame.sprite.Sprite):
         self.rate = rate
 
     def update(self):
+        '''
+        move the object horizontally at self.rate until it hits self.stopX
+        '''
         if self.rate > 0:
             if self.rect.x < self.stopX:
                 self.rect.x += self.rate
