@@ -61,7 +61,6 @@ STATE_RIGHT = 6
 STATE_LEFT = 7
 STATE_UP = 8
 STATE_DOWN = 9
-STATE_NOKEY = 10
 
 class StateMachine(object):
     """

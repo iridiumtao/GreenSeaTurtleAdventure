@@ -41,14 +41,28 @@ class Keyboard(object):
                             self.keydownhelp(event)
                         if currentstate == model.STATE_PLAY:
                             self.keydownplay(event)
+                        #設定尚未放開方向鍵就改變方向
                         if currentstate == model.STATE_RIGHT or currentstate == model.STATE_LEFT or currentstate == model.STATE_UP or currentstate == model.STATE_DOWN:
                             self.keyupPlay()
                             self.keydownplay(event)
-                        
+                        # if currentstate == model.STATE_RIGHT and event.key == pygame.K_LEFT:
+                        #     self.keyupPlay()
+                        # if currentstate == model.STATE_LEFT and event.key == pygame.K_RIGHT:
+                        #     self.keyupPlay()
+                        # if currentstate == model.STATE_UP and event.key == pygame.K_DOWN:
+                        #     self.keyupPlay()
+                        # if currentstate == model.STATE_DOWN and event.key == pygame.K_UP:
+                        #     self.keyupPlay()
                 # handle key up events
                 if event.type == pygame.KEYUP:
                     currentstate = self.model.state.peek()
-                    if currentstate == model.STATE_RIGHT or currentstate == model.STATE_LEFT or currentstate == model.STATE_UP or currentstate == model.STATE_DOWN:
+                    if currentstate == model.STATE_RIGHT and event.key == pygame.K_RIGHT:
+                        self.keyupPlay()
+                    if currentstate == model.STATE_LEFT and event.key == pygame.K_LEFT:
+                        self.keyupPlay()
+                    if currentstate == model.STATE_UP and event.key == pygame.K_UP:
+                        self.keyupPlay()
+                    if currentstate == model.STATE_DOWN and event.key == pygame.K_DOWN:
                         self.keyupPlay()
 
     def keydownintro(self, event):
@@ -98,15 +112,15 @@ class Keyboard(object):
         # Arrow keys to control character
         if event.key == pygame.K_RIGHT:
             self.evManager.Post(StateChangeEvent(model.STATE_RIGHT))
-        elif event.key == pygame.K_LEFT:
+        if event.key == pygame.K_LEFT:
             self.evManager.Post(StateChangeEvent(model.STATE_LEFT))
-        elif event.key == pygame.K_UP:
+        if event.key == pygame.K_UP:
             self.evManager.Post(StateChangeEvent(model.STATE_UP))
-        elif event.key == pygame.K_DOWN:
+        if event.key == pygame.K_DOWN:
             self.evManager.Post(StateChangeEvent(model.STATE_DOWN))
     
     def keyupPlay(self):
         """
-        放開按鍵回到play重新判斷有沒有按任一方向建
+        放開按鍵回到play重新判斷有沒有按任一方向鍵
         """
         self.evManager.Post(StateChangeEvent(None))
