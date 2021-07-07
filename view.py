@@ -10,6 +10,7 @@ from models import TurtleMC
 from models import Straw
 from models import Heart
 from models import IntroObject
+from models import MenuButton
 
 
 BACKGROUND_BLUE = (93, 189, 245)
