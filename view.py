@@ -156,7 +156,7 @@ class GraphicalView(object):
         todo:
         1. 繼續遊戲
         2. 新遊戲
-        3. 設定
+        3. 選項
         4. 幫助
 
         """
@@ -201,6 +201,18 @@ class GraphicalView(object):
             if mouse_y > self.WINDOW_HEIGHT * 0.42 and mouse_y < self.WINDOW_HEIGHT * 0.555:
                 print("按下「新遊戲」")
                 self.menuButtonPos = (0, 0)
+
+            if mouse_y > self.WINDOW_HEIGHT * 0.605 and mouse_y < self.WINDOW_HEIGHT * 0.74:
+
+                # 選項
+                if mouse_x < self.WINDOW_WIDTH * 0.375:
+                    print("按下「選項」")
+                    self.menuButtonPos = (0, 0)
+
+                # 說明
+                if mouse_x > self.WINDOW_WIDTH * 0.525:
+                    print("按下「說明」")
+                    self.menuButtonPos = (0, 0)
 
         pygame.display.flip()
 
