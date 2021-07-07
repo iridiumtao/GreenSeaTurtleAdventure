@@ -58,6 +58,7 @@ class GraphicalView(object):
             self.background_image = pygame.image.load("src/background.png").convert_alpha()
             self.background_image = pygame.transform.scale(self.background_image, (self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
 
+
             # add intro page objects
             self.bigTurtle = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 858, 672, -1000, 150, -400, 8, turn=-15)
             self.bigStraw1 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 390, 900, -8, turn=-60, flip=True, image="src/straw.png")
@@ -65,7 +66,11 @@ class GraphicalView(object):
             self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 200, 700, 1100, 300, 900, -8, turn=-40, flip=True, image="src/straw.png")
 
             # add turtle object
+
+            # 生成海龜
+            self.creatures = pygame.sprite.Group()
             self.creature = TurtleMC.TurtleMC(1/5, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+            self.creatures.add(self.creature)
 
             # 生成吸管
             self.straws = pygame.sprite.Group()
@@ -236,7 +241,8 @@ class GraphicalView(object):
 
         somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
-        self.screen.blit(self.creature.image, self.creature.rect)
+        self.creatures.update()
+        self.creatures.draw(self.screen)
         self.straws.update()
         self.straws.draw(self.screen)
         self.hearts.update()
