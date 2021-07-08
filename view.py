@@ -285,7 +285,7 @@ class GraphicalView(object):
 
         # 顯示hitBox
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox.rect, 2)
-        print(pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False))
+        # print(pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False))
 
         pygame.display.flip()
 
