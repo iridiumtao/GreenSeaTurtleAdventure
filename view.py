@@ -13,10 +13,8 @@ from models import IntroObject
 from models import MenuButton
 
 
-BACKGROUND_BLUE = (93, 189, 245)
-WHITE = (255, 255, 255)
-WINDOW_HEIGHT = None
-WINDOW_WIDTH = None
+backgroundColor = (93, 189, 245)
+defaultColor = (255, 255, 255)
 
 class GraphicalView(object):
     """
@@ -41,10 +39,10 @@ class GraphicalView(object):
         self.isinitialized = False
         self.screen = None
         self.clock = None
-        self.smallfont = None
+        self.smallFont = None
 
         self.turtleCounter = 0
-        self.intro_text_alpha = 255
+        self.introTextAlpha = 255
 
         self.menuButtonPos = (0, 0)
         self.tempNum = 0
@@ -59,36 +57,36 @@ class GraphicalView(object):
         if isinstance(event, InitializeEvent):
             self.initialize()
 
-            self.background_image = pygame.image.load("src/background.png").convert_alpha()
-            self.background_image = pygame.transform.scale(self.background_image, (self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
+            self.backgroundImage = pygame.image.load("src/background.png").convert_alpha()
+            self.backgroundImage = pygame.transform.scale(self.backgroundImage, (self.windowWidth, self.windowHeight))
 
 
             # add intro page objects
-            self.bigTurtle = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
-            self.bigStraw1 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
-            self.bigStraw2 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
-            self.bigStraw3 = IntroObject.IntroObject(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
+            self.bigTurtle = IntroObject.IntroObject(self.windowWidth, self.windowHeight, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
+            self.bigStraw1 = IntroObject.IntroObject(self.windowWidth, self.windowHeight, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
+            self.bigStraw2 = IntroObject.IntroObject(self.windowWidth, self.windowHeight, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
+            self.bigStraw3 = IntroObject.IntroObject(self.windowWidth, self.windowHeight, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
             # 生成 menu 按鈕
-            self.menuContiuneButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.275,
-                                                            y = self.WINDOW_HEIGHT * 0.235,
-                                                            w = self.WINDOW_WIDTH * 0.45,
-                                                            h = self.WINDOW_HEIGHT * 0.135,
+            self.menuContiuneButton = MenuButton.MenuButton(x = self.windowWidth * 0.275,
+                                                            y = self.windowHeight * 0.235,
+                                                            w = self.windowWidth * 0.45,
+                                                            h = self.windowHeight * 0.135,
                                                             image = "src/continue-button.png")
-            self.menuNewGameButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.275,
-                                                           y = self.WINDOW_HEIGHT * 0.42,
-                                                           w = self.WINDOW_WIDTH * 0.45,
-                                                           h = self.WINDOW_HEIGHT * 0.135,
+            self.menuNewGameButton = MenuButton.MenuButton(x = self.windowWidth * 0.275,
+                                                           y = self.windowHeight * 0.42,
+                                                           w = self.windowWidth * 0.45,
+                                                           h = self.windowHeight * 0.135,
                                                            image = "src/start-button.png")
-            self.menuOptionButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.275,
-                                                          y = self.WINDOW_HEIGHT * 0.605,
-                                                          w = self.WINDOW_WIDTH * 0.21,
-                                                          h = self.WINDOW_HEIGHT * 0.135,
+            self.menuOptionButton = MenuButton.MenuButton(x = self.windowWidth * 0.275,
+                                                          y = self.windowHeight * 0.605,
+                                                          w = self.windowWidth * 0.21,
+                                                          h = self.windowHeight * 0.135,
                                                           image = "src/option-button.png")
-            self.menuHelpButton = MenuButton.MenuButton(x = self.WINDOW_WIDTH * 0.515,
-                                                        y = self.WINDOW_HEIGHT * 0.605,
-                                                        w = self.WINDOW_WIDTH * 0.21,
-                                                        h = self.WINDOW_HEIGHT * 0.135,
+            self.menuHelpButton = MenuButton.MenuButton(x = self.windowWidth * 0.515,
+                                                        y = self.windowHeight * 0.605,
+                                                        w = self.windowWidth * 0.21,
+                                                        h = self.windowHeight * 0.135,
                                                         image = "src/help-button.png")
 
             self.menuButtons = pygame.sprite.Group((self.menuContiuneButton,) +
@@ -99,38 +97,39 @@ class GraphicalView(object):
 
             # 生成海龜
             self.creatures = pygame.sprite.Group()
-            self.creature = TurtleMC.TurtleMC(1/5, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+            self.creature = TurtleMC.TurtleMC(1/5, self.windowWidth, self.windowHeight)
             self.creatures.add(self.creature)
 
             # 生成吸管
             self.straws = pygame.sprite.Group()
             strawNum = 20
             for i in range(strawNum):
-                self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
+                self.straws.add(Straw.Straw(self.windowWidth, random.randint(self.windowWidth, self.windowWidth*2), (self.windowHeight/strawNum)*i+10))
 
             # 生成心臟
             self.hearts = pygame.sprite.Group()
             heartNum = 2
             heartSize = 52
             for i in range(heartNum):
-                self.hearts.add(Heart.Heart(0 + i * heartSize, self.WINDOW_HEIGHT - heartSize, heartSize))
+                self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
             self.isinitialized = False
             pygame.quit()
         elif isinstance(event, TickEvent):
+             # Called for each game tick. We check our keyboard presses here.
             if not self.isinitialized:
                 return
             currentstate = self.model.state.peek()
             if currentstate == model.STATE_INTRO:
-                self.renderintro()
+                self.renderIntro()
             if currentstate == model.STATE_MENU:
-                self.rendermenu(event)
+                self.renderMenu(event)
             if currentstate == model.STATE_PLAY:
-                self.renderplay()
+                self.renderPlay()
             if currentstate == model.STATE_HELP:
-                self.renderhelp()
+                self.renderHelp()
 
             # 鍵盤上下左右的狀態
             if currentstate == model.STATE_RIGHT:
@@ -150,12 +149,12 @@ class GraphicalView(object):
             if currentstate == model.STATE_MENU:
                 self.menuButtonPos = event.clickpos
 
-    def renderintro(self):
-        self.screen.fill(WHITE)
-        self.screen.fill(BACKGROUND_BLUE)
-        self.screen.blit(self.background_image, (0, 0))
+    def renderIntro(self):
+        self.screen.fill(defaultColor)
+        self.screen.fill(backgroundColor)
+        self.screen.blit(self.backgroundImage, (0, 0))
 
-        text = self.smallfont.render(
+        text = self.smallFont.render(
                     'Press space key to start.',
                     True, (0, 0, 0))
 
@@ -167,22 +166,22 @@ class GraphicalView(object):
             i.update()
 
         # 讓 intro text 有呼吸效果
-        self.intro_text_alpha = self.intro_text_alpha - 4 if self.intro_text_alpha > -255 else 255
-        text.set_alpha(abs(self.intro_text_alpha))
+        self.introTextAlpha = self.introTextAlpha - 4 if self.introTextAlpha > -255 else 255
+        text.set_alpha(abs(self.introTextAlpha))
 
         # 計算文字位置，水平置中、垂直0.8
-        text_rect = text.get_rect(center = (self.WINDOW_WIDTH / 2, self.WINDOW_HEIGHT * 0.8))
+        text_rect = text.get_rect(center = (self.windowWidth / 2, self.windowHeight * 0.8))
         self.screen.blit(text, text_rect)
         pygame.display.flip()
 
-    def rendermenu(self, event):
+    def renderMenu(self, event):
         """
         Render the game menu.
         """
 
-        self.screen.fill(BACKGROUND_BLUE)
+        self.screen.fill(backgroundColor)
 
-        self.screen.blit(self.background_image, (0, 0))
+        self.screen.blit(self.backgroundImage, (0, 0))
 
         self.menuButtons.draw(self.screen)
         for i in self.menuButtons:
@@ -215,19 +214,19 @@ class GraphicalView(object):
 
         pygame.display.flip()
 
-    def renderplay(self):
+    def renderPlay(self):
         """
         Render the game play.
         """
         self.refresh()
 
-    def renderhelp(self):
+    def renderHelp(self):
         """
         Render the help screen.
         """
 
-        self.screen.fill(BACKGROUND_BLUE)
-        somewords = self.smallfont.render(
+        self.screen.fill(backgroundColor)
+        somewords = self.smallFont.render(
                     'Help is here. space, escape or return. 中文字測試',
                     True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
@@ -265,11 +264,11 @@ class GraphicalView(object):
         """
         刷新畫面上顯示的內容
         """
-        self.screen.fill(BACKGROUND_BLUE)
+        self.screen.fill(backgroundColor)
 
-        self.screen.blit(self.background_image, (0, 0))
+        self.screen.blit(self.backgroundImage, (0, 0))
 
-        somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
+        somewords = self.smallFont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         self.creatures.update()
         self.creatures.draw(self.screen)
@@ -280,8 +279,8 @@ class GraphicalView(object):
 
         # score counter
         self.turtleCounter += 1
-        score = self.smallfont.render(str(self.turtleCounter // 6), False, (0, 0, 0))
-        score_rect = score.get_rect(topright = (self.WINDOW_WIDTH , 0))
+        score = self.smallFont.render(str(self.turtleCounter // 6), False, (0, 0, 0))
+        score_rect = score.get_rect(topright = (self.windowWidth , 0))
         self.screen.blit(score, score_rect)
 
         # 顯示hitBox
@@ -299,11 +298,11 @@ class GraphicalView(object):
             resolutionWidth = 1280
             resolutionHeight = 720
             screenFlags = pygame.SCALED
-            display_index = 0
+            displayIndex = 0
             vsync = 1
             self.generateConfig()
         else:
-            resolutionWidth, resolutionHeight, screenFlags, display_index, vsync = self.applyConfig()
+            resolutionWidth, resolutionHeight, screenFlags, displayIndex, vsync = self.applyConfig()
 
         result = pygame.init()
         pygame.init()
@@ -312,11 +311,11 @@ class GraphicalView(object):
         pygame.display.set_caption('Green Sea Turtle Adventure')
         self.screen = pygame.display.set_mode((resolutionWidth, resolutionHeight),
                                                 screenFlags,
-                                                display = display_index,
+                                                display = displayIndex,
                                                 vsync = vsync)
-        self.WINDOW_WIDTH, self.WINDOW_HEIGHT = self.screen.get_size()
+        self.windowWidth, self.windowHeight = self.screen.get_size()
         self.clock = pygame.time.Clock()
-        self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
+        self.smallFont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
 
     def generateConfig(self):

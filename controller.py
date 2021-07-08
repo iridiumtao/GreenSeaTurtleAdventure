@@ -37,32 +37,32 @@ class Keyboard(object):
                         self.evManager.Post(StateChangeEvent(None))
                     else:
                         if currentstate == model.STATE_INTRO:
-                            self.keydownintro(event)
+                            self.keyDownIntro(event)
                         if currentstate == model.STATE_MENU:
-                            self.keydownmenu(event)
+                            self.keyDownMenu(event)
                         if currentstate == model.STATE_HELP:
-                            self.keydownhelp(event)
+                            self.keyDownHelp(event)
                         if currentstate == model.STATE_PLAY:
-                            self.keydownplay(event)
+                            self.keyDownPlay(event)
                         #設定尚未放開方向鍵就改變方向
                         if currentstate == model.STATE_RIGHT or currentstate == model.STATE_LEFT or currentstate == model.STATE_UP or currentstate == model.STATE_DOWN:
-                            self.keyupPlay()
-                            self.keydownplay(event)
+                            self.keyUpPlay()
+                            self.keyDownPlay(event)
 
                 # handle key up events
                 if event.type == pygame.KEYUP:
                     if currentstate == model.STATE_RIGHT and event.key == pygame.K_RIGHT:
-                        self.keyupPlay()
+                        self.keyUpPlay()
                     if currentstate == model.STATE_LEFT and event.key == pygame.K_LEFT:
-                        self.keyupPlay()
+                        self.keyUpPlay()
                     if currentstate == model.STATE_UP and event.key == pygame.K_UP:
-                        self.keyupPlay()
+                        self.keyUpPlay()
                     if currentstate == model.STATE_DOWN and event.key == pygame.K_DOWN:
-                        self.keyupPlay()
+                        self.keyUpPlay()
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     if currentstate == model.STATE_MENU:
-                        self.mousebuttonupmenu(event)
+                        self.mouseButtonUpMenu(event)
         if isinstance(event, MenuButtonEvent):
             if event.state == model.MENU_CONTIUNE:
                 self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
@@ -74,7 +74,7 @@ class Keyboard(object):
                 self.evManager.Post(StateChangeEvent(model.STATE_HELP))
 
 
-    def keydownintro(self, event):
+    def keyDownIntro(self, event):
         """
         Handles intro key events.
         """
@@ -83,7 +83,7 @@ class Keyboard(object):
         if event.key == pygame.K_SPACE:
             self.evManager.Post(StateChangeEvent(model.STATE_MENU))
 
-    def keydownmenu(self, event):
+    def keyDownMenu(self, event):
         """
         Handles menu key events.
         """
@@ -92,7 +92,7 @@ class Keyboard(object):
         if event.key == pygame.K_ESCAPE:
             self.evManager.Post(StateChangeEvent(None))
 
-    def keydownhelp(self, event):
+    def keyDownHelp(self, event):
         """
         Handles help key events.
         """
@@ -101,7 +101,7 @@ class Keyboard(object):
         if event.key in [pygame.K_ESCAPE, pygame.K_SPACE, pygame.K_RETURN]:
             self.evManager.Post(StateChangeEvent(None))
 
-    def keydownplay(self, event):
+    def keyDownPlay(self, event):
         """
         Handles play key events.
         """
@@ -125,12 +125,12 @@ class Keyboard(object):
         if event.key == pygame.K_DOWN:
             self.evManager.Post(StateChangeEvent(model.STATE_DOWN))
 
-    def keyupPlay(self):
+    def keyUpPlay(self):
         """
         放開按鍵回到play重新判斷有沒有按任一方向鍵
         """
         self.evManager.Post(StateChangeEvent(None))
 
-    def mousebuttonupmenu(self, event):
+    def mouseButtonUpMenu(self, event):
         # MENU 按下去之後傳送滑鼠位置
         self.evManager.Post(InputEvent(None, event.pos))
