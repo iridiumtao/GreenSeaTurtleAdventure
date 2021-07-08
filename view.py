@@ -185,7 +185,7 @@ class GraphicalView(object):
 
         for button in self.menuButtons:
             button.update()
-        
+
         # 繼續遊戲
         if self.menuContinueButton.rect.collidepoint(self.menuButtonPos):# 如果按下滑鼠，並判斷是否在按鈕的範圍內
             # todo: 顯示一個更大的 button，讓它看起來有跳起來的感覺
@@ -196,6 +196,7 @@ class GraphicalView(object):
         # 新遊戲
         if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
             print("按下「新遊戲」")
+            self.turtleCounter = 1
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
             self.menuButtonPos = (0, 0)
 
@@ -219,6 +220,8 @@ class GraphicalView(object):
         """
 
         self.screen.fill(backgroundColor)
+        self.screen.blit(self.backgroundImage, (0, 0))
+
         somewords = self.smallFont.render(
                     'Options is here. space, escape or return.',
                     True, (0, 0, 0))
@@ -231,6 +234,8 @@ class GraphicalView(object):
         """
 
         self.screen.fill(backgroundColor)
+        self.screen.blit(self.backgroundImage, (0, 0))
+
         somewords = self.smallFont.render(
                     'Help is here. space, escape or return. 中文字測試',
                     True, (0, 0, 0))
@@ -238,20 +243,20 @@ class GraphicalView(object):
         pygame.display.flip()
 
     def renderPlay(self):
-            """
-            Render the game play.
-            """
+        """
+        Render the game play.
+        """
 
-            currentstate = self.model.state.peek()
-            if currentstate == model.STATE_RIGHT:
-                self.creature.move("right")
-            if currentstate == model.STATE_LEFT:
-                self.creature.move("left")
-            if currentstate == model.STATE_UP:
-                self.creature.move("up")
-            if currentstate == model.STATE_DOWN:
-                self.creature.move("down")
-            self.refresh()
+        currentstate = self.model.state.peek()
+        if currentstate == model.STATE_RIGHT:
+            self.creature.move("right")
+        if currentstate == model.STATE_LEFT:
+            self.creature.move("left")
+        if currentstate == model.STATE_UP:
+            self.creature.move("up")
+        if currentstate == model.STATE_DOWN:
+            self.creature.move("down")
+        self.refresh()
 
     def refresh(self):
         """
@@ -278,7 +283,7 @@ class GraphicalView(object):
 
         # 顯示hitBox
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox.rect, 2)
-        
+
         strawsDamage = pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False)
         if(strawsDamage):
             for straw in strawsDamage:
