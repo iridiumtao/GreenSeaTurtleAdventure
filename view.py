@@ -102,9 +102,10 @@ class GraphicalView(object):
 
             # 生成吸管
             self.straws = pygame.sprite.Group()
-            strawNum = 20
+            strawNum = 10
             for i in range(strawNum):
-                self.straws.add(Straw.Straw(self.windowWidth, random.randint(self.windowWidth, self.windowWidth*2), (self.windowHeight/strawNum)*i+10))
+                # self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
+                self.straws.add(Straw.Straw(self.windowWidth, self.windowHeight))
 
             # 生成心臟
             self.hearts = pygame.sprite.Group()
@@ -277,7 +278,12 @@ class GraphicalView(object):
 
         # 顯示hitBox
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox.rect, 2)
-        # print(pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False))
+        
+        strawsDamage = pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False)
+        if(strawsDamage):
+            for straw in strawsDamage:
+                self.straws.remove(straw)
+                self.straws.add(Straw.Straw(self.windowWidth, self.windowHeight))
 
         pygame.display.flip()
 
