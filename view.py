@@ -136,9 +136,10 @@ class GraphicalView(object):
             # 生成心臟
             self.hearts = pygame.sprite.Group()
             heartNum = 2
-            heartSize = 52
+            # heartSize = 52
             for i in range(heartNum):
-                self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
+                # self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
+                self.hearts.add(Heart.Heart(i, self.windowWidth, self.windowHeight))
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -320,8 +321,13 @@ class GraphicalView(object):
         # 顯示hitBox
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox.rect, 2)
 
+        # hitbox觸發
         strawsDamage = pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False)
         if(strawsDamage):
+            if(len(self.hearts) == 0):
+                pass #gameover
+            else:
+                self.hearts.remove(self.hearts.sprites()[len(self.hearts) - 1])
             for straw in strawsDamage:
                 self.straws.remove(straw)
                 self.straws.add(Straw.Straw(self.windowWidth, self.windowHeight))
