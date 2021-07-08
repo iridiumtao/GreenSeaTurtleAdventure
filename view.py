@@ -68,7 +68,7 @@ class GraphicalView(object):
             self.bigStraw3 = IntroObject.IntroObject(self.windowWidth, self.windowHeight, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
             # 生成 menu 按鈕
-            self.menuContiuneButton = MenuButton.MenuButton(x = self.windowWidth * 0.275,
+            self.menuContinueButton = MenuButton.MenuButton(x = self.windowWidth * 0.275,
                                                             y = self.windowHeight * 0.235,
                                                             w = self.windowWidth * 0.45,
                                                             h = self.windowHeight * 0.135,
@@ -89,7 +89,7 @@ class GraphicalView(object):
                                                         h = self.windowHeight * 0.135,
                                                         image = "src/help-button.png")
 
-            self.menuButtons = pygame.sprite.Group((self.menuContiuneButton,) +
+            self.menuButtons = pygame.sprite.Group((self.menuContinueButton,) +
                                                    (self.menuNewGameButton,) +
                                                    (self.menuOptionButton,) +
                                                    (self.menuHelpButton,))
@@ -121,25 +121,22 @@ class GraphicalView(object):
              # Called for each game tick. We check our keyboard presses here.
             if not self.isinitialized:
                 return
+            # 切換頁面
             currentstate = self.model.state.peek()
             if currentstate == model.STATE_INTRO:
                 self.renderIntro()
             if currentstate == model.STATE_MENU:
                 self.renderMenu(event)
-            if currentstate == model.STATE_PLAY:
+            if currentstate == model.STATE_PLAY \
+                            or currentstate == model.STATE_RIGHT \
+                            or currentstate == model.STATE_LEFT \
+                            or currentstate == model.STATE_UP \
+                            or currentstate == model.STATE_DOWN:
                 self.renderPlay()
             if currentstate == model.STATE_HELP:
                 self.renderHelp()
-
-            # 鍵盤上下左右的狀態
-            if currentstate == model.STATE_RIGHT:
-                self.renderRight()
-            if currentstate == model.STATE_LEFT:
-                self.renderLeft()
-            if currentstate == model.STATE_UP:
-                self.renderUp()
-            if currentstate == model.STATE_DOWN:
-                self.renderDown()
+            if currentstate == model.STATE_OPTIONS:
+                self.renderOptions()
 
             # 設定 60 FPS
             self.clock.tick(60)
@@ -184,41 +181,48 @@ class GraphicalView(object):
         self.screen.blit(self.backgroundImage, (0, 0))
 
         self.menuButtons.draw(self.screen)
-        for i in self.menuButtons:
-            i.update()
 
-        # 偵測是否有按下滑鼠，並判斷是否在按鈕的範圍內
-        if self.menuContiuneButton.rect.collidepoint(self.menuButtonPos):
+        for button in self.menuButtons:
+            button.update()
+        
+        # 繼續遊戲
+        if self.menuContinueButton.rect.collidepoint(self.menuButtonPos):# 如果按下滑鼠，並判斷是否在按鈕的範圍內
             # todo: 顯示一個更大的 button，讓它看起來有跳起來的感覺
             print("按下「繼續遊戲」")
-            self.evManager.Post(MenuButtonEvent(model.MENU_CONTIUNE))
+            self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
             self.menuButtonPos = (0, 0)
 
         # 新遊戲
         if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
             print("按下「新遊戲」")
-            self.evManager.Post(MenuButtonEvent(model.MENU_NEW_GAME))
+            self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
             self.menuButtonPos = (0, 0)
 
         # 選項
         if self.menuOptionButton.rect.collidepoint(self.menuButtonPos):
             print("按下「選項」")
-            self.evManager.Post(MenuButtonEvent(model.MENU_OPTION))
+            self.evManager.Post(StateChangeEvent(model.STATE_OPTIONS))
             self.menuButtonPos = (0, 0)
 
         # 說明
         if self.menuHelpButton.rect.collidepoint(self.menuButtonPos):
             print("按下「說明」")
-            self.evManager.Post(MenuButtonEvent(model.MENU_HELP))
+            self.evManager.Post(StateChangeEvent(model.STATE_HELP))
             self.menuButtonPos = (0, 0)
 
         pygame.display.flip()
 
-    def renderPlay(self):
+    def renderOptions(self):
         """
-        Render the game play.
+        Render the options screen.
         """
-        self.refresh()
+
+        self.screen.fill(backgroundColor)
+        somewords = self.smallFont.render(
+                    'Options is here. space, escape or return.',
+                    True, (0, 0, 0))
+        self.screen.blit(somewords, (0, 0))
+        pygame.display.flip()
 
     def renderHelp(self):
         """
@@ -232,33 +236,21 @@ class GraphicalView(object):
         self.screen.blit(somewords, (0, 0))
         pygame.display.flip()
 
-    def renderRight(self):
-        """
-        角色向右移動
-        """
-        self.creature.move("right")
-        self.refresh()
+    def renderPlay(self):
+            """
+            Render the game play.
+            """
 
-    def renderLeft(self):
-        """
-        角色向左移動
-        """
-        self.creature.move("left")
-        self.refresh()
-
-    def renderUp(self):
-        """
-        角色向上移動
-        """
-        self.creature.move("up")
-        self.refresh()
-
-    def renderDown(self):
-        """
-        角色向下移動
-        """
-        self.creature.move("down")
-        self.refresh()
+            currentstate = self.model.state.peek()
+            if currentstate == model.STATE_RIGHT:
+                self.creature.move("right")
+            if currentstate == model.STATE_LEFT:
+                self.creature.move("left")
+            if currentstate == model.STATE_UP:
+                self.creature.move("up")
+            if currentstate == model.STATE_DOWN:
+                self.creature.move("down")
+            self.refresh()
 
     def refresh(self):
         """
