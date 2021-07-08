@@ -242,9 +242,9 @@ class GraphicalView(object):
         pygame.display.flip()
 
     def renderPlay(self):
-            """
-            Render the game play.
-            """
+        """
+        Render the game play.
+        """
 
         currentstate = self.model.state.peek()
         if currentstate == model.STATE_RIGHT:
@@ -282,7 +282,7 @@ class GraphicalView(object):
 
         # 顯示hitBox
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hitBox.rect, 2)
-        
+
         strawsDamage = pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False)
         if(strawsDamage):
             for straw in strawsDamage:
