@@ -60,6 +60,9 @@ class GraphicalView(object):
             self.backgroundImage = pygame.image.load("src/background.png").convert_alpha()
             self.backgroundImage = pygame.transform.scale(self.backgroundImage, (self.windowWidth, self.windowHeight))
 
+            self.helpBackgroundImage = pygame.image.load("src/help-inside.jpg").convert_alpha()
+            self.helpBackgroundImage = pygame.transform.scale(self.helpBackgroundImage, (self.windowWidth, self.windowHeight))
+
 
             # add intro page objects
             self.bigTurtle = IntroObject.IntroObject(self.windowWidth, self.windowHeight, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
@@ -272,12 +275,8 @@ class GraphicalView(object):
         """
 
         self.screen.fill(backgroundColor)
-        self.screen.blit(self.backgroundImage, (0, 0))
+        self.screen.blit(self.helpBackgroundImage, (0, 0))
 
-        somewords = self.smallFont.render(
-                    'Help is here. space, escape or return. 中文字測試',
-                    True, (0, 0, 0))
-        self.screen.blit(somewords, (0, 0))
         pygame.display.flip()
 
     def renderPlay(self):
