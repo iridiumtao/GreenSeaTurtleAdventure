@@ -92,7 +92,7 @@ class Keyboard(object):
         if event.key in [pygame.K_ESCAPE, pygame.K_SPACE, pygame.K_RETURN]:
             self.evManager.Post(StateChangeEvent(None))
 
-    def keyDownOptios(self, event):
+    def keyDownOptions(self, event):
         """
         Handles help key events.
         """

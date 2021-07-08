@@ -127,22 +127,16 @@ class GraphicalView(object):
                 self.renderIntro()
             if currentstate == model.STATE_MENU:
                 self.renderMenu(event)
-            if currentstate == model.STATE_PLAY:
+            if currentstate == model.STATE_PLAY \
+                            or currentstate == model.STATE_RIGHT \
+                            or currentstate == model.STATE_LEFT \
+                            or currentstate == model.STATE_UP \
+                            or currentstate == model.STATE_DOWN:
                 self.renderPlay()
             if currentstate == model.STATE_HELP:
                 self.renderHelp()
             if currentstate == model.STATE_OPTIONS:
                 self.renderOptions()
-
-            # 鍵盤上下左右的狀態
-            if currentstate == model.STATE_RIGHT:
-                self.renderRight()
-            if currentstate == model.STATE_LEFT:
-                self.renderLeft()
-            if currentstate == model.STATE_UP:
-                self.renderUp()
-            if currentstate == model.STATE_DOWN:
-                self.renderDown()     
 
             # 設定 60 FPS
             self.clock.tick(60)
@@ -246,35 +240,17 @@ class GraphicalView(object):
             """
             Render the game play.
             """
+
+            currentstate = self.model.state.peek()
+            if currentstate == model.STATE_RIGHT:
+                self.creature.move("right")
+            if currentstate == model.STATE_LEFT:
+                self.creature.move("left")
+            if currentstate == model.STATE_UP:
+                self.creature.move("up")
+            if currentstate == model.STATE_DOWN:
+                self.creature.move("down")
             self.refresh()
-
-    def renderRight(self):
-        """
-        角色向右移動
-        """
-        self.creature.move("right")
-        self.refresh()
-
-    def renderLeft(self):
-        """
-        角色向左移動
-        """
-        self.creature.move("left")
-        self.refresh()
-
-    def renderUp(self):
-        """
-        角色向上移動
-        """
-        self.creature.move("up")
-        self.refresh()
-
-    def renderDown(self):
-        """
-        角色向下移動
-        """
-        self.creature.move("down")
-        self.refresh()
 
     def refresh(self):
         """
