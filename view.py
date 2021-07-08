@@ -15,8 +15,6 @@ from models import MenuButton
 
 backgroundColor = (93, 189, 245)
 defaultColor = (255, 255, 255)
-#windowHeight = None
-#windowWidth = None
 
 class GraphicalView(object):
     """
@@ -41,10 +39,10 @@ class GraphicalView(object):
         self.isinitialized = False
         self.screen = None
         self.clock = None
-        self.smallfont = None
+        self.smallFont = None
 
         self.turtleCounter = 0
-        self.intro_text_alpha = 255
+        self.introTextAlpha = 255
 
         self.menuButtonPos = (0, 0)
         self.tempNum = 0
@@ -156,7 +154,7 @@ class GraphicalView(object):
         self.screen.fill(backgroundColor)
         self.screen.blit(self.backgroundImage, (0, 0))
 
-        text = self.smallfont.render(
+        text = self.smallFont.render(
                     'Press space key to start.',
                     True, (0, 0, 0))
 
@@ -168,8 +166,8 @@ class GraphicalView(object):
             i.update()
 
         # 讓 intro text 有呼吸效果
-        self.intro_text_alpha = self.intro_text_alpha - 4 if self.intro_text_alpha > -255 else 255
-        text.set_alpha(abs(self.intro_text_alpha))
+        self.introTextAlpha = self.introTextAlpha - 4 if self.introTextAlpha > -255 else 255
+        text.set_alpha(abs(self.introTextAlpha))
 
         # 計算文字位置，水平置中、垂直0.8
         text_rect = text.get_rect(center = (self.windowWidth / 2, self.windowHeight * 0.8))
@@ -228,7 +226,7 @@ class GraphicalView(object):
         """
 
         self.screen.fill(backgroundColor)
-        somewords = self.smallfont.render(
+        somewords = self.smallFont.render(
                     'Help is here. space, escape or return. 中文字測試',
                     True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
@@ -270,7 +268,7 @@ class GraphicalView(object):
 
         self.screen.blit(self.backgroundImage, (0, 0))
 
-        somewords = self.smallfont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
+        somewords = self.smallFont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
         self.screen.blit(somewords, (0, 0))
         self.creatures.update()
         self.creatures.draw(self.screen)
@@ -281,7 +279,7 @@ class GraphicalView(object):
 
         # score counter
         self.turtleCounter += 1
-        score = self.smallfont.render(str(self.turtleCounter // 6), False, (0, 0, 0))
+        score = self.smallFont.render(str(self.turtleCounter // 6), False, (0, 0, 0))
         score_rect = score.get_rect(topright = (self.windowWidth , 0))
         self.screen.blit(score, score_rect)
 
@@ -317,7 +315,7 @@ class GraphicalView(object):
                                                 vsync = vsync)
         self.windowWidth, self.windowHeight = self.screen.get_size()
         self.clock = pygame.time.Clock()
-        self.smallfont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
+        self.smallFont = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
 
     def generateConfig(self):
