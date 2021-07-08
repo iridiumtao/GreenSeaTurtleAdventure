@@ -196,6 +196,7 @@ class GraphicalView(object):
         # 新遊戲
         if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
             print("按下「新遊戲」")
+            self.turtleCounter = 1
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
             self.menuButtonPos = (0, 0)
 
