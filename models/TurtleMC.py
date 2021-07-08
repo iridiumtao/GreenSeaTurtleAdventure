@@ -29,7 +29,7 @@ class TurtleMC(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.frame
         self.rect.y = (windowHeight - self.imageHeight)/2    
-        self.step = 10
+        self.step = 15
 
         # 頭部hitBox
         self.hitBox = HitBox.HitBox(int(self.rect.x + self.imageWidth * (2/5)), 
@@ -39,7 +39,7 @@ class TurtleMC(pygame.sprite.Sprite):
 
                 
 
-    def move(self, direction):
+    def move2(self, direction):
         # 移動
         if direction == "right":
             if self.rect.x + self.imageWidth < self.windowWidth - self.frame:
@@ -62,6 +62,31 @@ class TurtleMC(pygame.sprite.Sprite):
                 self.rect.y,
                 int(self.imageWidth * (3/7)), 
                 int(self.imageHeight * (2/5)))
+
+    def move(self, direction):
+        # 移動
+        if direction == "right":
+            if self.hitBox.rect.x + self.hitBox.rect.width < self.windowWidth:
+                self.rect.x += self.step
+        elif direction == "left":
+            if self.hitBox.rect.x > 0:
+                self.rect.x -= self.step
+        elif direction == "up":
+            if self.hitBox.rect.y > 0:
+                self.rect.y -= self.step
+        elif direction == "down":
+            if self.hitBox.rect.y + self.hitBox.rect.height < self.windowHeight:
+                self.rect.y += self.step
+        elif direction == "stop":
+            self.rect.x = self.rect.x
+            self.rect.y = self.rect.y
+        self.chgImage()
+        # 碰撞
+        self.hitBox.rect.update(int(self.rect.x + self.imageWidth * (2/5)), 
+                self.rect.y,
+                int(self.imageWidth * (3/7)), 
+                int(self.imageHeight * (2/5)))
+
 
     def chgImage(self):
         # 換圖片
