@@ -32,7 +32,7 @@ class TurtleMC(pygame.sprite.Sprite):
         self.step = 10
 
         # 頭部hitBox
-        self.hitBox = HitBox.Hitbox(int(self.rect.x + self.imageWidth * (2/5)), 
+        self.hitBox = HitBox.HitBox(int(self.rect.x + self.imageWidth * (2/5)), 
                 self.rect.y,
                 int(self.imageWidth * (3/7)), 
                 int(self.imageHeight * (2/5)))
