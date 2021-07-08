@@ -48,6 +48,8 @@ class GraphicalView(object):
         self.tempNum = 0
         self.menuButtonState = 0
 
+        self.key = 0
+
 
     def notify(self, event):
         """
@@ -152,11 +154,7 @@ class GraphicalView(object):
                 self.renderIntro()
             if currentstate == model.STATE_MENU:
                 self.renderMenu(event)
-            if currentstate == model.STATE_PLAY \
-                            or currentstate == model.STATE_RIGHT \
-                            or currentstate == model.STATE_LEFT \
-                            or currentstate == model.STATE_UP \
-                            or currentstate == model.STATE_DOWN:
+            if currentstate == model.STATE_PLAY:
                 self.renderPlay()
             if currentstate == model.STATE_HELP:
                 self.renderHelp()
@@ -170,6 +168,8 @@ class GraphicalView(object):
             currentstate = self.model.state.peek()
             if currentstate == model.STATE_MENU:
                 self.menuButtonPos = event.clickpos
+            if currentstate == model.STATE_PLAY:
+                self.key = event.key
 
     def renderIntro(self):
         self.screen.fill(defaultColor)
@@ -284,14 +284,13 @@ class GraphicalView(object):
         Render the game play.
         """
 
-        currentstate = self.model.state.peek()
-        if currentstate == model.STATE_RIGHT:
+        if self.key == pygame.K_RIGHT:
             self.creature.move("right")
-        if currentstate == model.STATE_LEFT:
+        if self.key == pygame.K_LEFT:
             self.creature.move("left")
-        if currentstate == model.STATE_UP:
+        if self.key == pygame.K_UP:
             self.creature.move("up")
-        if currentstate == model.STATE_DOWN:
+        if self.key == pygame.K_DOWN:
             self.creature.move("down")
         self.refresh()
 
