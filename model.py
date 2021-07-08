@@ -50,18 +50,11 @@ class GameEngine(object):
             newTick = TickEvent()
             self.evManager.Post(newTick)
 
-
-MENU_CONTIUNE = 1
-MENU_NEW_GAME = 2
-MENU_OPTION = 3
-MENU_HELP = 4
-MENU_STORE = 5
-
 # State machine constants for the StateMachine class below
 STATE_INTRO = 1
 STATE_MENU = 2
 STATE_HELP = 3
-STATE_ABOUT = 4
+STATE_OPTIONS  = 4
 STATE_PLAY = 5
 STATE_RIGHT = 6
 STATE_LEFT = 7

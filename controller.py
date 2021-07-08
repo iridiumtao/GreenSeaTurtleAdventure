@@ -63,15 +63,6 @@ class Keyboard(object):
                 if event.type == pygame.MOUSEBUTTONUP:
                     if currentstate == model.STATE_MENU:
                         self.mouseButtonUpMenu(event)
-        if isinstance(event, MenuButtonEvent):
-            if event.state == model.MENU_CONTIUNE:
-                self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
-            if event.state == model.MENU_NEW_GAME:
-                self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
-            if event.state == model.MENU_OPTION:
-                self.evManager.Post(StateChangeEvent(model.STATE_MENU))
-            if event.state == model.MENU_HELP:
-                self.evManager.Post(StateChangeEvent(model.STATE_HELP))
 
 
     def keyDownIntro(self, event):
@@ -93,6 +84,15 @@ class Keyboard(object):
             self.evManager.Post(StateChangeEvent(None))
 
     def keyDownHelp(self, event):
+        """
+        Handles help key events.
+        """
+
+        # space, enter or escape pops help
+        if event.key in [pygame.K_ESCAPE, pygame.K_SPACE, pygame.K_RETURN]:
+            self.evManager.Post(StateChangeEvent(None))
+
+    def keyDownOptios(self, event):
         """
         Handles help key events.
         """

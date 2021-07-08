@@ -69,22 +69,6 @@ class StateChangeEvent(Event):
         else:
             return '%s popped' % (self.name, )
 
-class MenuButtonEvent(Event):
-    """
-
-    """
-
-    def __init__ (self, state):
-        self.name = "Menu Button Event"
-        self.state = state
-
-    def __str__(self):
-        if self.state:
-            return 'Menu Button : %s' % (self.state)
-        else:
-            return 'MenuButtonEvent: ???'
-
-
 class EventManager(object):
     """
     We coordinate communication between the Model, View, and Controller.
