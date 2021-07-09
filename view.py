@@ -9,8 +9,8 @@ import os.path
 from models import TurtleMC
 from models import Straw
 from models import Heart
-from models import IntroObject
-from models import MenuButton
+from models import intro_object
+from models import menu_button
 
 
 BACKGROUND_COLOR = (93, 189, 245)
@@ -70,55 +70,55 @@ class GraphicalView(object):
 
 
             # add intro page objects
-            self.bigTurtle = IntroObject.IntroObject(self.window_width, self.window_height, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
-            self.bigStraw1 = IntroObject.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
-            self.bigStraw2 = IntroObject.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
-            self.bigStraw3 = IntroObject.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
+            self.bigTurtle = intro_object.IntroObject(self.window_width, self.window_height, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
+            self.bigStraw1 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
+            self.bigStraw2 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
+            self.bigStraw3 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
             # 生成 menu 按鈕
-            self.menuContinueButton = MenuButton.MenuButton(x = self.window_width * 0.34,
+            self.menu_continue_button = menu_button.MenuButton(x = self.window_width * 0.34,
                                                             y = self.window_height * 0.235,
                                                             w = self.window_width * 0.32,
                                                             h = self.window_height * 0.135,
                                                             image = "src/continue-button.png")
-            self.menu_new_game_button = MenuButton.MenuButton(x = self.window_width * 0.34,
+            self.menu_new_game_button = menu_button.MenuButton(x = self.window_width * 0.34,
                                                            y = self.window_height * 0.42,
                                                            w = self.window_width * 0.32,
                                                            h = self.window_height * 0.135,
                                                            image = "src/start-button.png")
-            self.menu_option_button = MenuButton.MenuButton(x = self.window_width * 0.34,
+            self.menu_option_button = menu_button.MenuButton(x = self.window_width * 0.34,
                                                           y = self.window_height * 0.605,
                                                           w = self.window_width * 0.135,
                                                           h = self.window_height * 0.135,
                                                           image = "src/option-button.png")
-            self.menu_help_button = MenuButton.MenuButton(x = self.window_width * 0.525,
+            self.menu_help_button = menu_button.MenuButton(x = self.window_width * 0.525,
                                                         y = self.window_height * 0.605,
                                                         w = self.window_width * 0.135,
                                                         h = self.window_height * 0.135,
                                                         image = "src/help-button.png")
 
-            self.menuBigContinueButton = MenuButton.MenuButton(x = self.window_width * 0.32,
+            self.menu_big_continue_button = menu_button.MenuButton(x = self.window_width * 0.32,
                                                             y = self.window_height * 0.225,
                                                             w = self.window_width * 0.36,
                                                             h = self.window_height * 0.155,
                                                             image = "src/continue-button.png")
-            self.menuBigGameButton = MenuButton.MenuButton(x = self.window_width * 0.32,
+            self.menu_big_game_button = menu_button.MenuButton(x = self.window_width * 0.32,
                                                            y = self.window_height * 0.41,
                                                            w = self.window_width * 0.36,
                                                            h = self.window_height * 0.155,
                                                            image = "src/start-button.png")
-            self.menuBigOptionButton = MenuButton.MenuButton(x = self.window_width * 0.33,
+            self.menu_big_option_button = menu_button.MenuButton(x = self.window_width * 0.33,
                                                           y = self.window_height * 0.600,
                                                           w = self.window_width * 0.155,
                                                           h = self.window_height * 0.145,
                                                           image = "src/option-button.png")
-            self.menu_big_help_button = MenuButton.MenuButton(x = self.window_width * 0.515,
+            self.menu_big_help_button = menu_button.MenuButton(x = self.window_width * 0.515,
                                                         y = self.window_height * 0.600,
                                                         w = self.window_width * 0.155,
                                                         h = self.window_height * 0.145,
                                                         image = "src/help-button.png")
 
-            self.menu_buttons = pygame.sprite.Group((self.menuContinueButton,) +
+            self.menu_buttons = pygame.sprite.Group((self.menu_continue_button,) +
                                                    (self.menu_new_game_button,) +
                                                    (self.menu_option_button,) +
                                                    (self.menu_help_button,))
@@ -210,17 +210,17 @@ class GraphicalView(object):
 
         # 繼續遊戲按鈕的顯示與否
         if self.first_time or self.turtle_died:
-            self.menu_buttons.remove(self.menuContinueButton)
+            self.menu_buttons.remove(self.menu_continue_button)
         else:
-            self.menu_buttons.add(self.menuContinueButton)
+            self.menu_buttons.add(self.menu_continue_button)
             # 繼續遊戲
-            if self.menuContinueButton.rect.collidepoint(self.menu_button_pos):
+            if self.menu_continue_button.rect.collidepoint(self.menu_button_pos):
                 print("按下「繼續遊戲」")
                 self.event_manager.post(StateChangeEvent(model.STATE_PLAY))
                 self.menu_button_pos = (0, 0)
 
-            if self.menuContinueButton.rect.collidepoint(pygame.mouse.get_pos()):
-                mouse_focused_sprite = pygame.sprite.Group((self.menuBigContinueButton,))
+            if self.menu_continue_button.rect.collidepoint(pygame.mouse.get_pos()):
+                mouse_focused_sprite = pygame.sprite.Group((self.menu_big_continue_button,))
 
         # 新遊戲
         if self.menu_new_game_button.rect.collidepoint(self.menu_button_pos):
@@ -232,7 +232,7 @@ class GraphicalView(object):
             self.menu_button_pos = (0, 0)
 
         if self.menu_new_game_button.rect.collidepoint(pygame.mouse.get_pos()):
-            mouse_focused_sprite = pygame.sprite.Group((self.menuBigGameButton,))
+            mouse_focused_sprite = pygame.sprite.Group((self.menu_big_game_button,))
 
         # 選項
         if self.menu_option_button.rect.collidepoint(self.menu_button_pos):
@@ -241,7 +241,7 @@ class GraphicalView(object):
             self.menu_button_pos = (0, 0)
 
         if self.menu_option_button.rect.collidepoint(pygame.mouse.get_pos()):
-            mouse_focused_sprite = pygame.sprite.Group((self.menuBigOptionButton,))
+            mouse_focused_sprite = pygame.sprite.Group((self.menu_big_option_button,))
 
         # 說明
         if self.menu_help_button.rect.collidepoint(self.menu_button_pos):
