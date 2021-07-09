@@ -7,8 +7,8 @@ import src
 import configparser
 import os.path
 from models import turtle_mc
-from models import Straw
-from models import Heart
+from models import straw_obj
+from models import heart_obj
 from models import intro_object
 from models import menu_button
 
@@ -133,8 +133,8 @@ class GraphicalView(object):
             self.straws = pygame.sprite.Group()
             straw_num = 10
             for i in range(straw_num):
-                # self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/straw_num)*i+10))
-                self.straws.add(Straw.Straw(self.window_width, self.window_height))
+                # self.straws.add(straw_obj.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/straw_num)*i+10))
+                self.straws.add(straw_obj.Straw(self.window_width, self.window_height))
 
             self.spawn_turtle_heart(self.turtle_heart)
 
@@ -221,7 +221,7 @@ class GraphicalView(object):
         # 新遊戲
         if self.menu_new_game_button.rect.collidepoint(self.menu_button_pos):
             print("按下「新遊戲」")
-            self.setTurtleState(turtle_mc.TURTLE_ALIVE)
+            self.set_turtle_state(turtle_mc.TURTLE_ALIVE)
             self.turtle_score = 1
             self.spawn_turtle_heart(2)
             self.event_manager.post(StateChangeEvent(model.STATE_PLAY))
@@ -333,30 +333,30 @@ class GraphicalView(object):
         self.hearts = pygame.sprite.Group()
         # heartSize = 52
         for i in range(heartNum):
-            # self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
-            self.hearts.add(Heart.Heart(i, self.window_width, self.window_height))
+            # self.hearts.add(heart_obj.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
+            self.hearts.add(heart_obj.Heart(i, self.window_width, self.window_height))
 
     def straws_damage(self, straws_damage):
 
         for straw in straws_damage:
             self.straws.remove(straw)
-            self.straws.add(Straw.Straw(self.window_width, self.window_height))
+            self.straws.add(straw_obj.Straw(self.window_width, self.window_height))
 
         current_hearts = len(self.hearts)
         if current_hearts == 0:
             print("game over")
-            self.setTurtleState(turtle_mc.TURTLE_DIED)
+            self.set_turtle_state(turtle_mc.TURTLE_DIED)
             pass
              #gameover
             return
 
         if current_hearts <= self.turtle_heart // 2:
-            self.setTurtleState(turtle_mc.TURTLE_DYING)
+            self.set_turtle_state(turtle_mc.TURTLE_DYING)
 
         self.hearts.remove(self.hearts.sprites()[current_hearts - 1])
 
 
-    def setTurtleState(self, state):
+    def set_turtle_state(self, state):
         if state == turtle_mc.TURTLE_ALIVE:
             self.creature.set_image(turtle_mc.TURTLE_ALIVE)
             self.turtle_died = False

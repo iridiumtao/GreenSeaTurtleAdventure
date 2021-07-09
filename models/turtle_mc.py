@@ -1,7 +1,7 @@
 import pygame
 import src
 import view
-from models import HitBox
+from models import hit_box
 
 TURTLE_ALIVE = 0
 TURTLE_DYING = 1
@@ -42,7 +42,7 @@ class TurtleMC(pygame.sprite.Sprite):
         self.step = 15
 
         # 新增頭部 hitBox sprite
-        self.hit_box = HitBox.HitBox(int(self.rect.x + self.image_width * (2/5)),
+        self.hit_box = hit_box.HitBox(int(self.rect.x + self.image_width * (2/5)),
                 self.rect.y,
                 int(self.image_width * (3/7)),
                 int(self.image_height * (2/5)))
