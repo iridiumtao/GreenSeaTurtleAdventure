@@ -119,7 +119,7 @@ class TurtleMC(pygame.sprite.Sprite):
             self.images = self.aliveImages
             self.imageAmt = len(self.images)
             self.image = self.images[self.imageIndex]
-        if state == TURTLE_DYING:
+        elif state == TURTLE_DYING:
             self.images = self.dyingImages
             self.imageAmt = len(self.images)
             self.image = self.images[self.imageIndex]
