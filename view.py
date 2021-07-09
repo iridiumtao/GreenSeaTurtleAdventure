@@ -6,7 +6,7 @@ from eventmanager import *
 import src
 import configparser
 import os.path
-from models import TurtleMC
+from models import turtle_mc
 from models import Straw
 from models import Heart
 from models import intro_object
@@ -70,10 +70,10 @@ class GraphicalView(object):
 
 
             # add intro page objects
-            self.bigTurtle = intro_object.IntroObject(self.window_width, self.window_height, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
-            self.bigStraw1 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
-            self.bigStraw2 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
-            self.bigStraw3 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
+            self.big_turtle = intro_object.IntroObject(self.window_width, self.window_height, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
+            self.big_straw1 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
+            self.big_straw2 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
+            self.big_straw3 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
 
             # 生成 menu 按鈕
             self.menu_continue_button = menu_button.MenuButton(x = self.window_width * 0.34,
@@ -126,17 +126,17 @@ class GraphicalView(object):
 
             # 生成海龜
             self.creatures = pygame.sprite.Group()
-            self.creature = TurtleMC.TurtleMC(1/5, self.window_width, self.window_height)
+            self.creature = turtle_mc.TurtleMC(1/5, self.window_width, self.window_height)
             self.creatures.add(self.creature)
 
             # 生成吸管
             self.straws = pygame.sprite.Group()
-            strawNum = 10
-            for i in range(strawNum):
-                # self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
+            straw_num = 10
+            for i in range(straw_num):
+                # self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/straw_num)*i+10))
                 self.straws.add(Straw.Straw(self.window_width, self.window_height))
 
-            self.spawnTurtleHeart(self.turtle_heart)
+            self.spawn_turtle_heart(self.turtle_heart)
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -149,15 +149,15 @@ class GraphicalView(object):
             # 切換頁面
             currentstate = self.model.state.peek()
             if currentstate == model.STATE_INTRO:
-                self.renderIntro()
+                self.render_intro()
             if currentstate == model.STATE_MENU:
-                self.renderMenu(event)
+                self.render_menu(event)
             if currentstate == model.STATE_PLAY:
-                self.renderPlay()
+                self.render_play()
             if currentstate == model.STATE_HELP:
-                self.renderHelp()
+                self.render_help()
             if currentstate == model.STATE_OPTIONS:
-                self.renderOptions()
+                self.render_options()
 
             # 設定 60 FPS
             self.clock.tick(60)
@@ -169,7 +169,7 @@ class GraphicalView(object):
             if currentstate == model.STATE_PLAY:
                 self.key = event.key
 
-    def renderIntro(self):
+    def render_intro(self):
         self.screen.fill(DEFAULT_COLOR)
         self.screen.fill(BACKGROUND_COLOR)
         self.screen.blit(self.background_image, (0, 0))
@@ -180,9 +180,9 @@ class GraphicalView(object):
 
 
         # 把海龜跟吸管弄進來
-        self.introObj = pygame.sprite.Group((self.bigTurtle,) + (self.bigStraw1,) + (self.bigStraw2,) + (self.bigStraw3,))
-        self.introObj.draw(self.screen)
-        for i in self.introObj:
+        self.intro_obj = pygame.sprite.Group((self.big_turtle,) + (self.big_straw1,) + (self.big_straw2,) + (self.big_straw3,))
+        self.intro_obj.draw(self.screen)
+        for i in self.intro_obj:
             i.update()
 
         # 讓 intro text 有呼吸效果
@@ -194,17 +194,13 @@ class GraphicalView(object):
         self.screen.blit(text, text_rect)
         pygame.display.flip()
 
-    def renderMenu(self, event):
+    def render_menu(self, event):
         """
         Render the game menu.
         """
 
         self.screen.fill(BACKGROUND_COLOR)
-
         self.screen.blit(self.background_image, (0, 0))
-
-
-
 
         mouse_focused_sprite = pygame.sprite.Group()
 
@@ -225,9 +221,9 @@ class GraphicalView(object):
         # 新遊戲
         if self.menu_new_game_button.rect.collidepoint(self.menu_button_pos):
             print("按下「新遊戲」")
-            self.setTurtleState(TurtleMC.TURTLE_ALIVE)
+            self.setTurtleState(turtle_mc.TURTLE_ALIVE)
             self.turtle_score = 1
-            self.spawnTurtleHeart(2)
+            self.spawn_turtle_heart(2)
             self.event_manager.post(StateChangeEvent(model.STATE_PLAY))
             self.menu_button_pos = (0, 0)
 
@@ -262,7 +258,7 @@ class GraphicalView(object):
 
         pygame.display.flip()
 
-    def renderOptions(self):
+    def render_options(self):
         """
         Render the options screen.
         """
@@ -276,7 +272,7 @@ class GraphicalView(object):
         self.screen.blit(somewords, (0, 0))
         pygame.display.flip()
 
-    def renderHelp(self):
+    def render_help(self):
         """
         Render the help screen.
         """
@@ -286,7 +282,7 @@ class GraphicalView(object):
 
         pygame.display.flip()
 
-    def renderPlay(self):
+    def render_play(self):
         """
         Render the game play.
         """
@@ -326,13 +322,13 @@ class GraphicalView(object):
         pygame.draw.rect(self.screen, (255, 0, 0), self.creature.hit_box.rect, 2)
 
         # hitbox觸發
-        strawsDamage = pygame.sprite.spritecollide(self.creature.hit_box, self.straws, False)
-        if(strawsDamage):
-            self.strawsDamage(strawsDamage)
+        straws_damage = pygame.sprite.spritecollide(self.creature.hit_box, self.straws, False)
+        if(straws_damage):
+            self.straws_damage(straws_damage)
 
         pygame.display.flip()
 
-    def spawnTurtleHeart(self, heartNum):
+    def spawn_turtle_heart(self, heartNum):
         # 生成心臟
         self.hearts = pygame.sprite.Group()
         # heartSize = 52
@@ -340,35 +336,35 @@ class GraphicalView(object):
             # self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
             self.hearts.add(Heart.Heart(i, self.window_width, self.window_height))
 
-    def strawsDamage(self, strawsDamage):
+    def straws_damage(self, straws_damage):
 
-        for straw in strawsDamage:
+        for straw in straws_damage:
             self.straws.remove(straw)
             self.straws.add(Straw.Straw(self.window_width, self.window_height))
 
-        currentHearts = len(self.hearts)
-        if currentHearts == 0:
+        current_hearts = len(self.hearts)
+        if current_hearts == 0:
             print("game over")
-            self.setTurtleState(TurtleMC.TURTLE_DIED)
+            self.setTurtleState(turtle_mc.TURTLE_DIED)
             pass
              #gameover
             return
 
-        if currentHearts <= self.turtle_heart // 2:
-            self.setTurtleState(TurtleMC.TURTLE_DYING)
+        if current_hearts <= self.turtle_heart // 2:
+            self.setTurtleState(turtle_mc.TURTLE_DYING)
 
-        self.hearts.remove(self.hearts.sprites()[currentHearts - 1])
+        self.hearts.remove(self.hearts.sprites()[current_hearts - 1])
 
 
     def setTurtleState(self, state):
-        if state == TurtleMC.TURTLE_ALIVE:
-            self.creature.setImageSetNum(TurtleMC.TURTLE_ALIVE)
+        if state == turtle_mc.TURTLE_ALIVE:
+            self.creature.set_image(turtle_mc.TURTLE_ALIVE)
             self.turtle_died = False
-        elif state == TurtleMC.TURTLE_DYING:
-            self.creature.setImageSetNum(TurtleMC.TURTLE_DYING)
+        elif state == turtle_mc.TURTLE_DYING:
+            self.creature.set_image(turtle_mc.TURTLE_DYING)
             self.turtle_died = False
-        elif state == TurtleMC.TURTLE_DIED:
-            self.creature.setImageSetNum(TurtleMC.TURTLE_DIED)
+        elif state == turtle_mc.TURTLE_DIED:
+            self.creature.set_image(turtle_mc.TURTLE_DIED)
             self.turtle_died = True
 
 
