@@ -2,10 +2,13 @@ import pygame
 import src
 import view
 from models import HitBox
+
+TURTLE_ALIVE = 0
+TURTLE_DYING = 1
+TURTLE_DIED = 2
+
 class TurtleMC(pygame.sprite.Sprite):
-    TURTLE_ALIVE = 0
-    TURTLE_DYING = 1
-    TURTLE_DIED = 2
+
     def __init__(self, Ratio, windowWidth, windowHeight):
         pygame.sprite.Sprite.__init__(self)
 

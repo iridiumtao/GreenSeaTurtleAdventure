@@ -224,7 +224,7 @@ class GraphicalView(object):
         # 新遊戲
         if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
             print("按下「新遊戲」")
-            self.setTurtleState(self.creature.TURTLE_ALIVE)
+            self.setTurtleState(TurtleMC.TURTLE_ALIVE)
             self.turtleScore = 1
             self.spawnTurtleHeart(2)
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
@@ -347,26 +347,26 @@ class GraphicalView(object):
         currentHearts = len(self.hearts)
         if currentHearts == 0:
             print("game over")
-            self.setTurtleState(self.creature.TURTLE_DIED)
+            self.setTurtleState(TurtleMC.TURTLE_DIED)
             pass
              #gameover
             return
 
         if currentHearts <= self.turtleHeart // 2:
-            self.setTurtleState(self.creature.TURTLE_DYING)
+            self.setTurtleState(TurtleMC.TURTLE_DYING)
 
         self.hearts.remove(self.hearts.sprites()[currentHearts - 1])
 
 
     def setTurtleState(self, state):
-        if state == self.creature.TURTLE_ALIVE:
-            self.creature.setImageSetNum(self.creature.TURTLE_ALIVE)
+        if state == TurtleMC.TURTLE_ALIVE:
+            self.creature.setImageSetNum(TurtleMC.TURTLE_ALIVE)
             self.turtleDied = False
-        elif state == self.creature.TURTLE_DYING:
-            self.creature.setImageSetNum(self.creature.TURTLE_DYING)
+        elif state == TurtleMC.TURTLE_DYING:
+            self.creature.setImageSetNum(TurtleMC.TURTLE_DYING)
             self.turtleDied = False
-        elif state == self.creature.TURTLE_DIED:
-            self.creature.setImageSetNum(self.creature.TURTLE_DIED)
+        elif state == TurtleMC.TURTLE_DIED:
+            self.creature.setImageSetNum(TurtleMC.TURTLE_DIED)
             self.turtleDied = True
 
 
