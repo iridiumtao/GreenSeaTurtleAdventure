@@ -97,9 +97,9 @@ class TurtleMC(pygame.sprite.Sprite):
                 int(self.imageWidth * (3/7)),
                 int(self.imageHeight * (2/5)))
 
-
+    # 換圖片
     def chgImage(self):
-        # 換圖片
+        # 如果 image amount 不足以換圖片則不執行
         if self.imageAmt <= 1:
             return
 

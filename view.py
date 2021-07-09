@@ -208,6 +208,7 @@ class GraphicalView(object):
 
         mouseFocusedSprite = pygame.sprite.Group()
 
+        # 繼續遊戲按鈕的顯示與否
         if self.firstTime or self.turtleDied:
             self.menuButtons.remove(self.menuContinueButton)
         else:
@@ -292,14 +293,15 @@ class GraphicalView(object):
 
         self.firstTime = False
 
-        if self.key == pygame.K_RIGHT:
-            self.creature.move("right")
-        if self.key == pygame.K_LEFT:
-            self.creature.move("left")
-        if self.key == pygame.K_UP:
-            self.creature.move("up")
-        if self.key == pygame.K_DOWN:
-            self.creature.move("down")
+        if not self.turtleDied:
+            if self.key == pygame.K_RIGHT:
+                self.creature.move("right")
+            if self.key == pygame.K_LEFT:
+                self.creature.move("left")
+            if self.key == pygame.K_UP:
+                self.creature.move("up")
+            if self.key == pygame.K_DOWN:
+                self.creature.move("down")
 
         self.screen.fill(backgroundColor)
         self.screen.blit(self.backgroundImage, (0, 0))
