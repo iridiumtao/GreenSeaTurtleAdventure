@@ -3,6 +3,9 @@ import src
 import view
 from models import HitBox
 class TurtleMC(pygame.sprite.Sprite):
+    TURTLE_ALIVE = 0
+    TURTLE_DYING = 1
+    TURTLE_DIED = 2
     def __init__(self, Ratio, windowWidth, windowHeight):
         pygame.sprite.Sprite.__init__(self)
 
@@ -113,7 +116,3 @@ class TurtleMC(pygame.sprite.Sprite):
         else:
             self.image = pygame.transform.scale((pygame.image.load("src/Turtle-die.png").convert_alpha()), (self.imageWidth ,self.imageHeight))
             self.imageAmt = 1
-
-    TURTLE_ALIVE = 0
-    TURTLE_DYING = 1
-    TURTLE_DIED = 2

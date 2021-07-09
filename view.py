@@ -314,7 +314,8 @@ class GraphicalView(object):
         self.hearts.draw(self.screen)
 
         # score counter
-        self.turtleScore += 1
+        if not self.turtleDied:
+            self.turtleScore += 1
         score = self.smallFont.render(str(self.turtleScore // 6), False, (0, 0, 0))
         score_rect = score.get_rect(topright = (self.windowWidth , 0))
         self.screen.blit(score, score_rect)
@@ -325,22 +326,7 @@ class GraphicalView(object):
         # hitbox觸發
         strawsDamage = pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False)
         if(strawsDamage):
-            currentHearts = len(self.hearts)
-            if currentHearts == 0:
-                print("game over")
-                self.setTurtleState(self.creature.TURTLE_DIED)
-                pass
-                 #gameover
-
-            elif currentHearts <= self.turtleHeart // 2:
-                self.setTurtleState(self.creature.TURTLE_DYING)
-                self.hearts.remove(self.hearts.sprites()[currentHearts - 1])
-            else:
-                self.hearts.remove(self.hearts.sprites()[currentHearts - 1])
-
-            for straw in strawsDamage:
-                self.straws.remove(straw)
-                self.straws.add(Straw.Straw(self.windowWidth, self.windowHeight))
+            self.strawsDamage(strawsDamage)
 
         pygame.display.flip()
 
@@ -351,6 +337,26 @@ class GraphicalView(object):
         for i in range(heartNum):
             # self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
             self.hearts.add(Heart.Heart(i, self.windowWidth, self.windowHeight))
+
+    def strawsDamage(self, strawsDamage):
+
+        for straw in strawsDamage:
+            self.straws.remove(straw)
+            self.straws.add(Straw.Straw(self.windowWidth, self.windowHeight))
+
+        currentHearts = len(self.hearts)
+        if currentHearts == 0:
+            print("game over")
+            self.setTurtleState(self.creature.TURTLE_DIED)
+            pass
+             #gameover
+            return
+
+        if currentHearts <= self.turtleHeart // 2:
+            self.setTurtleState(self.creature.TURTLE_DYING)
+
+        self.hearts.remove(self.hearts.sprites()[currentHearts - 1])
+
 
     def setTurtleState(self, state):
         if state == self.creature.TURTLE_ALIVE:
