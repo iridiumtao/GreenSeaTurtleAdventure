@@ -41,7 +41,7 @@ class GraphicalView(object):
         self.clock = None
         self.smallFont = None
 
-        self.turtleCounter = 0
+        self.turtleScore = 0
         self.turtleHeart = 2
         self.introTextAlpha = 255
 
@@ -50,6 +50,8 @@ class GraphicalView(object):
         self.menuButtonState = 0
 
         self.key = 0
+        self.firstTime = True
+        self.turtleDied = False
 
 
     def notify(self, event):
@@ -201,23 +203,30 @@ class GraphicalView(object):
 
         self.screen.blit(self.backgroundImage, (0, 0))
 
+
+
+
         mouseFocusedSprite = pygame.sprite.Group()
 
-        # 繼續遊戲
-        if self.menuContinueButton.rect.collidepoint(self.menuButtonPos):# 如果按下滑鼠，並判斷是否在按鈕的範圍內
-            # todo: 顯示一個更大的 button，讓它看起來有跳起來的感覺
-            print("按下「繼續遊戲」")
-            self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
-            self.menuButtonPos = (0, 0)
+        if self.firstTime or self.turtleDied:
+            self.menuButtons.remove(self.menuContinueButton)
+        else:
+            self.menuButtons.add(self.menuContinueButton)
+            # 繼續遊戲
+            if self.menuContinueButton.rect.collidepoint(self.menuButtonPos):
+                print("按下「繼續遊戲」")
+                self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
+                self.menuButtonPos = (0, 0)
 
-        if self.menuContinueButton.rect.collidepoint(pygame.mouse.get_pos()):
-            mouseFocusedSprite = pygame.sprite.Group((self.menuBigContinueButton,))
+            if self.menuContinueButton.rect.collidepoint(pygame.mouse.get_pos()):
+                mouseFocusedSprite = pygame.sprite.Group((self.menuBigContinueButton,))
 
         # 新遊戲
         if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
             print("按下「新遊戲」")
-            self.turtleCounter = 1
+            self.turtleScore = 1
             self.spawnTurtleHeart(2)
+            self.turtleDied = False
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
             self.menuButtonPos = (0, 0)
 
@@ -281,6 +290,8 @@ class GraphicalView(object):
         Render the game play.
         """
 
+        self.firstTime = False
+
         if self.key == pygame.K_RIGHT:
             self.creature.move("right")
         if self.key == pygame.K_LEFT:
@@ -303,8 +314,8 @@ class GraphicalView(object):
         self.hearts.draw(self.screen)
 
         # score counter
-        self.turtleCounter += 1
-        score = self.smallFont.render(str(self.turtleCounter // 6), False, (0, 0, 0))
+        self.turtleScore += 1
+        score = self.smallFont.render(str(self.turtleScore // 6), False, (0, 0, 0))
         score_rect = score.get_rect(topright = (self.windowWidth , 0))
         self.screen.blit(score, score_rect)
 
@@ -315,6 +326,7 @@ class GraphicalView(object):
         strawsDamage = pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False)
         if(strawsDamage):
             if(len(self.hearts) == 0):
+                self.turtleDied = True
                 pass #gameover
             else:
                 self.hearts.remove(self.hearts.sprites()[len(self.hearts) - 1])
