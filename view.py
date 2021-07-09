@@ -44,6 +44,7 @@ class GraphicalView(object):
         self.turtle_score = 0
         self.turtle_heart = 2
         self.intro_text_alpha = 255
+        self.straw_amt = 10
 
         self.menu_button_pos = (0, 0)
         self.temp_num = 0
@@ -124,19 +125,9 @@ class GraphicalView(object):
                                                    (self.menu_help_button,))
 
 
-            # 生成海龜
-            self.creatures = pygame.sprite.Group()
-            self.creature = TurtleMC.TurtleMC(1/5, self.window_width, self.window_height)
-            self.creatures.add(self.creature)
-
-            # 生成吸管
-            self.straws = pygame.sprite.Group()
-            strawNum = 10
-            for i in range(strawNum):
-                # self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
-                self.straws.add(Straw.Straw(self.window_width, self.window_height))
-
-            self.spawnTurtleHeart(self.turtle_heart)
+            # self.spawnTurtle()
+            # self.spawnStraw(self.straw_amt)
+            # self.spawnTurtleHeart(self.turtle_heart)
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -200,12 +191,7 @@ class GraphicalView(object):
         """
 
         self.screen.fill(BACKGROUND_COLOR)
-
         self.screen.blit(self.background_image, (0, 0))
-
-
-
-
         mouse_focused_sprite = pygame.sprite.Group()
 
         # 繼續遊戲按鈕的顯示與否
@@ -225,9 +211,11 @@ class GraphicalView(object):
         # 新遊戲
         if self.menu_new_game_button.rect.collidepoint(self.menu_button_pos):
             print("按下「新遊戲」")
-            self.setTurtleState(TurtleMC.TURTLE_ALIVE)
             self.turtle_score = 1
-            self.spawnTurtleHeart(2)
+            self.spawnTurtle()
+            self.spawnStraw(self.straw_amt)
+            self.spawnTurtleHeart(self.turtle_heart)
+            self.setTurtleState(TurtleMC.TURTLE_ALIVE)
             self.event_manager.post(StateChangeEvent(model.STATE_PLAY))
             self.menu_button_pos = (0, 0)
 
@@ -331,6 +319,16 @@ class GraphicalView(object):
             self.strawsDamage(strawsDamage)
 
         pygame.display.flip()
+
+    def spawnTurtle(self):
+        self.creatures = pygame.sprite.Group()
+        self.creature = TurtleMC.TurtleMC(1/5, self.window_width, self.window_height)
+        self.creatures.add(self.creature)
+
+    def spawnStraw(self, strawNum):
+        self.straws = pygame.sprite.Group()
+        for i in range(strawNum):
+            self.straws.add(Straw.Straw(self.window_width, self.window_height))
 
     def spawnTurtleHeart(self, heartNum):
         # 生成心臟
