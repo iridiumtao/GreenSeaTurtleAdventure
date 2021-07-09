@@ -124,10 +124,6 @@ class GraphicalView(object):
                                                    (self.menu_option_button,) +
                                                    (self.menu_help_button,))
 
-            # self.spawn_turtle()
-            # self.spawn_straw(self.straw_amt)
-            # self.spawn_turtle_heart(self.turtle_heart)
-
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
             self.isinitialized = False
