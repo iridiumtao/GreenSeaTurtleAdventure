@@ -42,6 +42,7 @@ class GraphicalView(object):
         self.smallFont = None
 
         self.turtleCounter = 0
+        self.turtleHeart = 2
         self.introTextAlpha = 255
 
         self.menuButtonPos = (0, 0)
@@ -133,13 +134,7 @@ class GraphicalView(object):
                 # self.straws.add(Straw.Straw(self.WINDOW_WIDTH, random.randint(self.WINDOW_WIDTH, self.WINDOW_WIDTH*2), (self.WINDOW_HEIGHT/strawNum)*i+10))
                 self.straws.add(Straw.Straw(self.windowWidth, self.windowHeight))
 
-            # 生成心臟
-            self.hearts = pygame.sprite.Group()
-            heartNum = 2
-            # heartSize = 52
-            for i in range(heartNum):
-                # self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
-                self.hearts.add(Heart.Heart(i, self.windowWidth, self.windowHeight))
+            self.spawnTurtleHeart(self.turtleHeart)
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
@@ -222,6 +217,7 @@ class GraphicalView(object):
         if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
             print("按下「新遊戲」")
             self.turtleCounter = 1
+            self.spawnTurtleHeart(2)
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
             self.menuButtonPos = (0, 0)
 
@@ -293,14 +289,8 @@ class GraphicalView(object):
             self.creature.move("up")
         if self.key == pygame.K_DOWN:
             self.creature.move("down")
-        self.refresh()
 
-    def refresh(self):
-        """
-        刷新畫面上顯示的內容
-        """
         self.screen.fill(backgroundColor)
-
         self.screen.blit(self.backgroundImage, (0, 0))
 
         somewords = self.smallFont.render('You are Playing the game. F1 for help.', True, (0, 0, 0))
@@ -333,6 +323,14 @@ class GraphicalView(object):
                 self.straws.add(Straw.Straw(self.windowWidth, self.windowHeight))
 
         pygame.display.flip()
+
+    def spawnTurtleHeart(self, heartNum):
+        # 生成心臟
+        self.hearts = pygame.sprite.Group()
+        # heartSize = 52
+        for i in range(heartNum):
+            # self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
+            self.hearts.add(Heart.Heart(i, self.windowWidth, self.windowHeight))
 
     def initialize(self):
         """
