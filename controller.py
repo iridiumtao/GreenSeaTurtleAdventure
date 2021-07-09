@@ -13,7 +13,7 @@ class Keyboard(object):
         model (GameEngine): a strong reference to the game Model.
         """
         self.event_manager = event_manager
-        event_manager.RegisterListener(self)
+        event_manager.register_listener(self)
         self.model = model
         self.lastKey = None
 
@@ -28,93 +28,93 @@ class Keyboard(object):
 
                 # handle window manager closing our window
                 if event.type == pygame.QUIT:
-                    self.event_manager.Post(QuitEvent())
+                    self.event_manager.post(QuitEvent())
 
                 currentstate = self.model.state.peek()
 
                 # handle key down events
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        self.event_manager.Post(StateChangeEvent(None))
+                        self.event_manager.post(StateChangeEvent(None))
                     else:
                         if currentstate == model.STATE_INTRO:
-                            self.keyDownIntro(event)
+                            self.key_down_intro(event)
                         if currentstate == model.STATE_MENU:
-                            self.keyDownMenu(event)
+                            self.key_down_menu(event)
                         if currentstate == model.STATE_HELP:
-                            self.keyDownHelp(event)
+                            self.key_down_help(event)
                         if currentstate == model.STATE_PLAY:
-                            self.keyDownPlay(event)
+                            self.key_down_play(event)
                         #設定尚未放開方向鍵就改變方向
 
                 # handle key up events
                 if event.type == pygame.KEYUP:
                     if currentstate == model.STATE_PLAY:
-                        self.keyUpPlay(event)
+                        self.key_up_play(event)
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     if currentstate == model.STATE_MENU:
-                        self.mouseButtonUpMenu(event)
+                        self.mouse_button_up_menu(event)
 
 
-    def keyDownIntro(self, event):
+    def key_down_intro(self, event):
         """
         Handles intro key events.
         """
         if event.key == pygame.K_ESCAPE:
-            self.event_manager.Post(StateChangeEvent(None))
+            self.event_manager.post(StateChangeEvent(None))
         if event.key == pygame.K_SPACE:
-            self.event_manager.Post(StateChangeEvent(model.STATE_MENU))
+            self.event_manager.post(StateChangeEvent(model.STATE_MENU))
 
-    def keyDownMenu(self, event):
+    def key_down_menu(self, event):
         """
         Handles menu key events.
         """
 
         # escape pops the menu
         if event.key == pygame.K_ESCAPE:
-            self.event_manager.Post(StateChangeEvent(None))
+            self.event_manager.post(StateChangeEvent(None))
 
-    def keyDownHelp(self, event):
+    def key_down_help(self, event):
         """
         Handles help key events.
         """
 
         # space, enter or escape pops help
         if event.key in [pygame.K_ESCAPE, pygame.K_SPACE, pygame.K_RETURN]:
-            self.event_manager.Post(StateChangeEvent(None))
+            self.event_manager.post(StateChangeEvent(None))
 
-    def keyDownOptions(self, event):
+    def key_down_options(self, event):
         """
         Handles help key events.
         """
 
         # space, enter or escape pops help
         if event.key in [pygame.K_ESCAPE, pygame.K_SPACE, pygame.K_RETURN]:
-            self.event_manager.Post(StateChangeEvent(None))
+            self.event_manager.post(StateChangeEvent(None))
 
-    def keyDownPlay(self, event):
+    def key_down_play(self, event):
         """
         Handles play key events.
         """
         # ESC back to menu
         if event.key == pygame.K_ESCAPE:
-            self.event_manager.Post(StateChangeEvent(None))
+            self.event_manager.post(StateChangeEvent(None))
         else:
             self.lastKey = event.key
-            self.event_manager.Post(InputEvent(event.key, None))
+            self.event_manager.post(InputEvent(event.key, None))
 
         # F1 shows the help
         if event.key == pygame.K_F1:
-            self.event_manager.Post(StateChangeEvent(model.STATE_HELP))
+            self.event_manager.post(StateChangeEvent(model.STATE_HELP))
 
-    def keyUpPlay(self, event):
+    def key_up_play(self, event):
         """
         放開按鍵
         """
         if self.lastKey == event.key:
-            self.event_manager.Post(InputEvent(None, None))
+            self.event_manager.post(InputEvent(None, None))
 
-    def mouseButtonUpMenu(self, event):
+    def mouse_button_up_menu(self, event):
         # MENU 按下去之後傳送滑鼠位置
-        self.event_manager.Post(InputEvent(None, event.pos))
+        self.event_manager.post(InputEvent(None, event.pos))

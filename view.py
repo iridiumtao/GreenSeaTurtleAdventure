@@ -34,7 +34,7 @@ class GraphicalView(object):
         """
         #pygame.init()
         self.event_manager = event_manager
-        event_manager.RegisterListener(self)
+        event_manager.register_listener(self)
         self.model = model
         self.isinitialized = False
         self.screen = None
@@ -216,7 +216,7 @@ class GraphicalView(object):
             # 繼續遊戲
             if self.menuContinueButton.rect.collidepoint(self.menu_button_pos):
                 print("按下「繼續遊戲」")
-                self.event_manager.Post(StateChangeEvent(model.STATE_PLAY))
+                self.event_manager.post(StateChangeEvent(model.STATE_PLAY))
                 self.menu_button_pos = (0, 0)
 
             if self.menuContinueButton.rect.collidepoint(pygame.mouse.get_pos()):
@@ -228,7 +228,7 @@ class GraphicalView(object):
             self.setTurtleState(TurtleMC.TURTLE_ALIVE)
             self.turtle_score = 1
             self.spawnTurtleHeart(2)
-            self.event_manager.Post(StateChangeEvent(model.STATE_PLAY))
+            self.event_manager.post(StateChangeEvent(model.STATE_PLAY))
             self.menu_button_pos = (0, 0)
 
         if self.menu_new_game_button.rect.collidepoint(pygame.mouse.get_pos()):
@@ -237,7 +237,7 @@ class GraphicalView(object):
         # 選項
         if self.menu_option_button.rect.collidepoint(self.menu_button_pos):
             print("按下「選項」")
-            self.event_manager.Post(StateChangeEvent(model.STATE_OPTIONS))
+            self.event_manager.post(StateChangeEvent(model.STATE_OPTIONS))
             self.menu_button_pos = (0, 0)
 
         if self.menu_option_button.rect.collidepoint(pygame.mouse.get_pos()):
@@ -246,7 +246,7 @@ class GraphicalView(object):
         # 說明
         if self.menu_help_button.rect.collidepoint(self.menu_button_pos):
             print("按下「說明」")
-            self.event_manager.Post(StateChangeEvent(model.STATE_HELP))
+            self.event_manager.post(StateChangeEvent(model.STATE_HELP))
             self.menu_button_pos = (0, 0)
 
         if self.menu_help_button.rect.collidepoint(pygame.mouse.get_pos()):

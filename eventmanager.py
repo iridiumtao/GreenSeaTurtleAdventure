@@ -33,9 +33,9 @@ class InputEvent(Event):
     Keyboard or mouse input event.
     """
 
-    def __init__(self, now_key, click_pos):
+    def __init__(self, key, click_pos):
         self.name = "Input event"
-        self.key = now_key
+        self.key = key
         self.click_pos = click_pos
     def __str__(self):
         return '%s, key=%s, clickpos=%s' % (self.name, self.key, self.click_pos)
@@ -78,15 +78,15 @@ class EventManager(object):
         from weakref import WeakKeyDictionary
         self.listeners = WeakKeyDictionary()
 
-    def RegisterListener(self, listener):
+    def register_listener(self, listener):
         """
         Adds a listener to our spam list.
-        It will receive Post()ed events through it's notify(event) call.
+        It will receive post()ed events through it's notify(event) call.
         """
 
         self.listeners[listener] = 1
 
-    def UnregisterListener(self, listener):
+    def unregister_listener(self, listener):
         """
         Remove a listener from our spam list.
         This is implemented but hardly used.
@@ -96,7 +96,7 @@ class EventManager(object):
         if listener in self.listeners.keys():
             del self.listeners[listener]
 
-    def Post(self, event):
+    def post(self, event):
         """
         Post a new event to the message queue.
         It will be broadcast to all listeners.

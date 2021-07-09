@@ -15,7 +15,7 @@ class GameEngine(object):
         """
 
         self.event_manager = event_manager
-        event_manager.RegisterListener(self)
+        event_manager.register_listener(self)
         self.running = False
         self.state = StateMachine()
 
@@ -31,7 +31,7 @@ class GameEngine(object):
             if not event.state:
                 # false if no more states are left
                 if not self.state.pop():
-                    self.event_manager.Post(QuitEvent())
+                    self.event_manager.post(QuitEvent())
             else:
                 # push a new state on the stack
                 self.state.push(event.state)
@@ -44,11 +44,11 @@ class GameEngine(object):
         The loop ends when this object hears a QuitEvent in notify().
         """
         self.running = True
-        self.event_manager.Post(InitializeEvent())
+        self.event_manager.post(InitializeEvent())
         self.state.push(STATE_INTRO)
         while self.running:
             new_tick = TickEvent()
-            self.event_manager.Post(new_tick)
+            self.event_manager.post(new_tick)
 
 # State machine constants for the StateMachine class below
 STATE_INTRO = 1
