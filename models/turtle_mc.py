@@ -1,7 +1,7 @@
 import pygame
 import src
 import view
-from models import HitBox
+from models import hit_box
 
 TURTLE_ALIVE = 0
 TURTLE_DYING = 1
@@ -26,9 +26,9 @@ class TurtleMC(pygame.sprite.Sprite):
         self.image_index = 0
         self.alive_images = [pygame.transform.scale((pygame.image.load("src/Turtle-0-down.png").convert_alpha()), (self.image_width ,self.image_height)),
                 pygame.transform.scale((pygame.image.load("src/Turtle-0-up.png").convert_alpha()), (self.image_width ,self.image_height))]
-        self.dyingImages = [pygame.transform.scale((pygame.image.load("src/Turtle-1-down.png").convert_alpha()), (self.image_width ,self.image_height)),
+        self.dying_images = [pygame.transform.scale((pygame.image.load("src/Turtle-1-down.png").convert_alpha()), (self.image_width ,self.image_height)),
                 pygame.transform.scale((pygame.image.load("src/Turtle-1-up.png").convert_alpha()), (self.image_width ,self.image_height))]
-        self.diedImage = pygame.transform.scale((pygame.image.load("src/Turtle-die.png").convert_alpha()), (self.image_width ,self.image_height))
+        self.died_image = pygame.transform.scale((pygame.image.load("src/Turtle-die.png").convert_alpha()), (self.image_width ,self.image_height))
         self.images = self.alive_images
         self.image_amt = len(self.images)
         self.image = self.images[self.image_index]
@@ -42,7 +42,7 @@ class TurtleMC(pygame.sprite.Sprite):
         self.step = 15
 
         # 新增頭部 hitBox sprite
-        self.hit_box = HitBox.HitBox(int(self.rect.x + self.image_width * (2/5)),
+        self.hit_box = hit_box.HitBox(int(self.rect.x + self.image_width * (2/5)),
                 self.rect.y,
                 int(self.image_width * (3/7)),
                 int(self.image_height * (2/5)))
@@ -64,7 +64,7 @@ class TurtleMC(pygame.sprite.Sprite):
     #     elif direction == "stop":
     #         self.rect.x = self.rect.x
     #         self.rect.y = self.rect.y
-    #     self.chgImage()
+    #     self.chg_image()
     #     # hitBox sprite 跟隨 turtle sprite
     #     self.hitBox.rect.update(int(self.rect.x + self.imageWidth * (2/5)),
     #             self.rect.y,
@@ -89,7 +89,7 @@ class TurtleMC(pygame.sprite.Sprite):
         elif direction == "stop":
             self.rect.x = self.rect.x
             self.rect.y = self.rect.y
-        self.chgImage()
+        self.chg_image()
 
         # hitBox sprite 跟隨 turtle sprite
         self.hit_box.rect.update(int(self.rect.x + self.image_width * (2/5)),
@@ -98,7 +98,7 @@ class TurtleMC(pygame.sprite.Sprite):
                 int(self.image_height * (2/5)))
 
     # 換圖片
-    def chgImage(self):
+    def chg_image(self):
         # 如果 image amount 不足以換圖片則不執行
         if self.image_amt <= 1:
             return
@@ -113,16 +113,16 @@ class TurtleMC(pygame.sprite.Sprite):
 
     # num = 0 活好好的
     # num = 1 插一根吸管
-    def setImageSetNum(self, state):
+    def set_image(self, state):
         print("turtle state {}".format(state))
         if state == TURTLE_ALIVE:
             self.images = self.alive_images
             self.image_amt = len(self.images)
             self.image = self.images[self.image_index]
         elif state == TURTLE_DYING:
-            self.images = self.dyingImages
+            self.images = self.dying_images
             self.image_amt = len(self.images)
             self.image = self.images[self.image_index]
         else:
-            self.image = self.diedImage
+            self.image = self.died_image
             self.image_amt = 1
