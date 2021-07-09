@@ -24,8 +24,12 @@ class TurtleMC(pygame.sprite.Sprite):
         self.chgImageCnter = 0
         self.chgImageThreshold = 10
         self.imageIndex = 0
-        self.images = [pygame.transform.scale((pygame.image.load("src/Turtle-0-down.png").convert_alpha()), (self.imageWidth ,self.imageHeight)),
+        self.aliveImages = [pygame.transform.scale((pygame.image.load("src/Turtle-0-down.png").convert_alpha()), (self.imageWidth ,self.imageHeight)),
                 pygame.transform.scale((pygame.image.load("src/Turtle-0-up.png").convert_alpha()), (self.imageWidth ,self.imageHeight))]
+        self.dyingImages = [pygame.transform.scale((pygame.image.load("src/Turtle-1-down.png").convert_alpha()), (self.imageWidth ,self.imageHeight)),
+                pygame.transform.scale((pygame.image.load("src/Turtle-1-up.png").convert_alpha()), (self.imageWidth ,self.imageHeight))]
+        self.diedImage = pygame.transform.scale((pygame.image.load("src/Turtle-die.png").convert_alpha()), (self.imageWidth ,self.imageHeight))
+        self.images = self.aliveImages
         self.imageAmt = len(self.images)
         self.image = self.images[self.imageIndex]
 
@@ -109,13 +113,16 @@ class TurtleMC(pygame.sprite.Sprite):
 
     # num = 0 活好好的
     # num = 1 插一根吸管
-    def setImageSetNum(self, num = 0):
-        print("turtle state {}".format(num))
-        if num == 0 or num == 1:
-            self.images = [pygame.transform.scale((pygame.image.load("src/Turtle-"+str(num)+"-down.png").convert_alpha()), (self.imageWidth ,self.imageHeight)),
-                    pygame.transform.scale((pygame.image.load("src/Turtle-"+str(num)+"-up.png").convert_alpha()), (self.imageWidth ,self.imageHeight))]
+    def setImageSetNum(self, state):
+        print("turtle state {}".format(state))
+        if state == TURTLE_ALIVE:
+            self.images = self.aliveImages
+            self.imageAmt = len(self.images)
+            self.image = self.images[self.imageIndex]
+        if state == TURTLE_DYING:
+            self.images = self.dyingImages
             self.imageAmt = len(self.images)
             self.image = self.images[self.imageIndex]
         else:
-            self.image = pygame.transform.scale((pygame.image.load("src/Turtle-die.png").convert_alpha()), (self.imageWidth ,self.imageHeight))
+            self.image = self.diedImage
             self.imageAmt = 1
