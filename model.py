@@ -6,7 +6,7 @@ class GameEngine(object):
     Tracks the game state.
     """
 
-    def __init__(self, evManager):
+    def __init__(self, event_manager):
         """
         evManager (EventManager): Allows posting messages to the event queue.
 
@@ -14,8 +14,8 @@ class GameEngine(object):
         running (bool): True while the engine is online. Changed via QuitEvent().
         """
 
-        self.evManager = evManager
-        evManager.RegisterListener(self)
+        self.event_manager = event_manager
+        event_manager.RegisterListener(self)
         self.running = False
         self.state = StateMachine()
 
@@ -31,7 +31,7 @@ class GameEngine(object):
             if not event.state:
                 # false if no more states are left
                 if not self.state.pop():
-                    self.evManager.Post(QuitEvent())
+                    self.event_manager.Post(QuitEvent())
             else:
                 # push a new state on the stack
                 self.state.push(event.state)
@@ -44,11 +44,11 @@ class GameEngine(object):
         The loop ends when this object hears a QuitEvent in notify().
         """
         self.running = True
-        self.evManager.Post(InitializeEvent())
+        self.event_manager.Post(InitializeEvent())
         self.state.push(STATE_INTRO)
         while self.running:
-            newTick = TickEvent()
-            self.evManager.Post(newTick)
+            new_tick = TickEvent()
+            self.event_manager.Post(new_tick)
 
 # State machine constants for the StateMachine class below
 STATE_INTRO = 1
@@ -56,6 +56,7 @@ STATE_MENU = 2
 STATE_HELP = 3
 STATE_OPTIONS  = 4
 STATE_PLAY = 5
+STATE_DIED = 6
 
 class StateMachine(object):
     """
@@ -65,7 +66,7 @@ class StateMachine(object):
     """
 
     def __init__ (self):
-        self.statestack = []
+        self.state_stack = []
 
     def peek(self):
         """
@@ -73,7 +74,7 @@ class StateMachine(object):
         Returns None if the stack is empty.
         """
         try:
-            return self.statestack[-1]
+            return self.state_stack[-1]
         except IndexError:
             # empty stack
             return None
@@ -84,8 +85,8 @@ class StateMachine(object):
         Returns None if the stack is empty.
         """
         try:
-            self.statestack.pop()
-            return len(self.statestack) > 0
+            self.state_stack.pop()
+            return len(self.state_stack) > 0
         except IndexError:
             # empty stack
             return None
@@ -95,5 +96,5 @@ class StateMachine(object):
         Push a new state onto the stack.
         Returns the pushed value.
         """
-        self.statestack.append(state)
+        self.state_stack.append(state)
         return state
