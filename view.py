@@ -224,9 +224,9 @@ class GraphicalView(object):
         # 新遊戲
         if self.menuNewGameButton.rect.collidepoint(self.menuButtonPos):
             print("按下「新遊戲」")
+            self.setTurtleState(self.creature.TURTLE_ALIVE)
             self.turtleScore = 1
             self.spawnTurtleHeart(2)
-            self.turtleDied = False
             self.evManager.Post(StateChangeEvent(model.STATE_PLAY))
             self.menuButtonPos = (0, 0)
 
@@ -325,11 +325,19 @@ class GraphicalView(object):
         # hitbox觸發
         strawsDamage = pygame.sprite.spritecollide(self.creature.hitBox, self.straws, False)
         if(strawsDamage):
-            if(len(self.hearts) == 0):
-                self.turtleDied = True
-                pass #gameover
+            currentHearts = len(self.hearts)
+            if currentHearts == 0:
+                print("game over")
+                self.setTurtleState(self.creature.TURTLE_DIED)
+                pass
+                 #gameover
+
+            elif currentHearts <= self.turtleHeart // 2:
+                self.setTurtleState(self.creature.TURTLE_DYING)
+                self.hearts.remove(self.hearts.sprites()[currentHearts - 1])
             else:
-                self.hearts.remove(self.hearts.sprites()[len(self.hearts) - 1])
+                self.hearts.remove(self.hearts.sprites()[currentHearts - 1])
+
             for straw in strawsDamage:
                 self.straws.remove(straw)
                 self.straws.add(Straw.Straw(self.windowWidth, self.windowHeight))
@@ -343,6 +351,18 @@ class GraphicalView(object):
         for i in range(heartNum):
             # self.hearts.add(Heart.Heart(0 + i * heartSize, self.windowHeight - heartSize, heartSize))
             self.hearts.add(Heart.Heart(i, self.windowWidth, self.windowHeight))
+
+    def setTurtleState(self, state):
+        if state == self.creature.TURTLE_ALIVE:
+            self.creature.setImageSetNum(self.creature.TURTLE_ALIVE)
+            self.turtleDied = False
+        elif state == self.creature.TURTLE_DYING:
+            self.creature.setImageSetNum(self.creature.TURTLE_DYING)
+            self.turtleDied = False
+        elif state == self.creature.TURTLE_DIED:
+            self.creature.setImageSetNum(self.creature.TURTLE_DIED)
+            self.turtleDied = True
+
 
     def initialize(self):
         """

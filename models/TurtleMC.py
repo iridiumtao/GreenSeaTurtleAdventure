@@ -28,13 +28,13 @@ class TurtleMC(pygame.sprite.Sprite):
         self.frame = 20
         self.rect = self.image.get_rect()
         self.rect.x = self.frame
-        self.rect.y = (windowHeight - self.imageHeight)/2    
+        self.rect.y = (windowHeight - self.imageHeight)/2
         self.step = 15
 
         # 新增頭部 hitBox sprite
-        self.hitBox = HitBox.HitBox(int(self.rect.x + self.imageWidth * (2/5)), 
+        self.hitBox = HitBox.HitBox(int(self.rect.x + self.imageWidth * (2/5)),
                 self.rect.y,
-                int(self.imageWidth * (3/7)), 
+                int(self.imageWidth * (3/7)),
                 int(self.imageHeight * (2/5)))
 
     # def move(self, direction):
@@ -56,9 +56,9 @@ class TurtleMC(pygame.sprite.Sprite):
     #         self.rect.y = self.rect.y
     #     self.chgImage()
     #     # hitBox sprite 跟隨 turtle sprite
-    #     self.hitBox.rect.update(int(self.rect.x + self.imageWidth * (2/5)), 
+    #     self.hitBox.rect.update(int(self.rect.x + self.imageWidth * (2/5)),
     #             self.rect.y,
-    #             int(self.imageWidth * (3/7)), 
+    #             int(self.imageWidth * (3/7)),
     #             int(self.imageHeight * (2/5)))
 
 
@@ -82,14 +82,17 @@ class TurtleMC(pygame.sprite.Sprite):
         self.chgImage()
 
         # hitBox sprite 跟隨 turtle sprite
-        self.hitBox.rect.update(int(self.rect.x + self.imageWidth * (2/5)), 
+        self.hitBox.rect.update(int(self.rect.x + self.imageWidth * (2/5)),
                 self.rect.y,
-                int(self.imageWidth * (3/7)), 
+                int(self.imageWidth * (3/7)),
                 int(self.imageHeight * (2/5)))
 
 
     def chgImage(self):
         # 換圖片
+        if self.imageAmt <= 1:
+            return
+
         self.chgImageCnter += 1
         if self.chgImageCnter >= self.chgImageThreshold:
             self.chgImageCnter = 0
@@ -97,3 +100,20 @@ class TurtleMC(pygame.sprite.Sprite):
             if self.imageIndex >= self.imageAmt:
                 self.imageIndex = 0
             self.image = self.images[self.imageIndex]
+
+    # num = 0 活好好的
+    # num = 1 插一根吸管
+    def setImageSetNum(self, num = 0):
+        print("turtle state {}".format(num))
+        if num == 0 or num == 1:
+            self.images = [pygame.transform.scale((pygame.image.load("src/Turtle-"+str(num)+"-down.png").convert_alpha()), (self.imageWidth ,self.imageHeight)),
+                    pygame.transform.scale((pygame.image.load("src/Turtle-"+str(num)+"-up.png").convert_alpha()), (self.imageWidth ,self.imageHeight))]
+            self.imageAmt = len(self.images)
+            self.image = self.images[self.imageIndex]
+        else:
+            self.image = pygame.transform.scale((pygame.image.load("src/Turtle-die.png").convert_alpha()), (self.imageWidth ,self.imageHeight))
+            self.imageAmt = 1
+
+    TURTLE_ALIVE = 0
+    TURTLE_DYING = 1
+    TURTLE_DIED = 2
