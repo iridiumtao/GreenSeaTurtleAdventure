@@ -72,8 +72,11 @@ class TurtleMC(pygame.sprite.Sprite):
     #             int(self.imageHeight * (2/5)))
 
 
-    def move(self, direction): # 以海龜頭部為hit box
-        # 移動
+    def move(self, direction):
+        """
+        移動
+        以海龜頭部為hit box
+        """
         if direction == "right":
             if self.hit_box.rect.x + self.hit_box.rect.width < self.window_width:
                 self.rect.x += self.step
@@ -97,8 +100,10 @@ class TurtleMC(pygame.sprite.Sprite):
                 int(self.image_width * (3/7)),
                 int(self.image_height * (2/5)))
 
-    # 換圖片
     def chg_image(self):
+        """
+        海龜移動時自動更換圖片
+        """
         # 如果 image amount 不足以換圖片則不執行
         if self.image_amt <= 1:
             return
@@ -111,9 +116,15 @@ class TurtleMC(pygame.sprite.Sprite):
                 self.image_index = 0
             self.image = self.images[self.image_index]
 
-    # num = 0 活好好的
-    # num = 1 插一根吸管
     def set_image(self, state):
+        """
+        Set image of turtle according to the state
+
+        Parameters:
+        state = 0: alive
+        state = 1: dying
+        state = 1: died
+        """
         print("turtle state {}".format(state))
         if state == TURTLE_ALIVE:
             self.images = self.alive_images

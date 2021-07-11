@@ -10,5 +10,6 @@ def run():
     graphics = view.GraphicalView(ev_mgr, game_model)
     game_model.run()
 
+
 if __name__ == '__main__':
     run()

@@ -6,6 +6,7 @@ class Event(object):
 
     def __init__(self):
         self.name = "Generic event"
+
     def __str__(self):
         return self.name
 
@@ -15,7 +16,7 @@ class QuitEvent(Event):
     Quit event.
     """
 
-    def __init__ (self):
+    def __init__(self):
         self.name = "Quit event"
 
 
@@ -24,7 +25,7 @@ class TickEvent(Event):
     Tick event.
     """
 
-    def __init__ (self):
+    def __init__(self):
         self.name = "Tick event"
 
 
@@ -37,6 +38,7 @@ class InputEvent(Event):
         self.name = "Input event"
         self.key = key
         self.click_pos = click_pos
+
     def __str__(self):
         return '%s, key=%s, clickpos=%s' % (self.name, self.key, self.click_pos)
 
@@ -63,6 +65,7 @@ class StateChangeEvent(Event):
     def __init__(self, state):
         self.name = "State change event"
         self.state = state
+
     def __str__(self):
         if self.state:
             return '%s pushed %s' % (self.name, self.state)

@@ -45,7 +45,7 @@ class Keyboard(object):
                             self.key_down_help(event)
                         if currentstate == model.STATE_PLAY:
                             self.key_down_play(event)
-                        #設定尚未放開方向鍵就改變方向
+                        # 設定尚未放開方向鍵就改變方向
 
                 # handle key up events
                 if event.type == pygame.KEYUP:
@@ -116,5 +116,7 @@ class Keyboard(object):
             self.event_manager.post(InputEvent(None, None))
 
     def mouse_button_up_menu(self, event):
-        # MENU 按下去之後傳送滑鼠位置
+        """
+        MENU 按下去之後傳送滑鼠位置
+        """
         self.event_manager.post(InputEvent(None, event.pos))

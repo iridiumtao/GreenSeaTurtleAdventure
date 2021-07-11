@@ -4,8 +4,8 @@ import src.model as model
 import random
 from src.event_manager import *
 import assests
-import configparser
 import os.path
+from src.local_config import LocalConfig
 from src.models import turtle_mc
 from src.models import straw_obj
 from src.models import heart_obj
@@ -52,7 +52,7 @@ class GraphicalView(object):
 
         self.key = 0
         self.first_time = True
-        self.turtle_died = False
+        self.isturtle_dead = False
 
 
     def notify(self, event):
@@ -159,6 +159,9 @@ class GraphicalView(object):
                 self.key = event.key
 
     def render_intro(self):
+        """
+        Render the intro page.
+        """
         self.screen.fill(DEFAULT_COLOR)
         self.screen.fill(BACKGROUND_COLOR)
         self.screen.blit(self.background_image, (0, 0))
@@ -194,7 +197,7 @@ class GraphicalView(object):
         mouse_focused_sprite = pygame.sprite.Group()
 
         # 繼續遊戲按鈕的顯示與否
-        if self.first_time or self.turtle_died:
+        if self.first_time or self.isturtle_dead:
             self.menu_buttons.remove(self.menu_continue_button)
         else:
             self.menu_buttons.add(self.menu_continue_button)
@@ -280,7 +283,7 @@ class GraphicalView(object):
 
         self.first_time = False
 
-        if not self.turtle_died:
+        if not self.isturtle_dead:
             if self.key == pygame.K_RIGHT:
                 self.creature.move("right")
             if self.key == pygame.K_LEFT:
@@ -303,7 +306,7 @@ class GraphicalView(object):
         self.hearts.draw(self.screen)
 
         # score counter
-        if not self.turtle_died:
+        if not self.isturtle_dead:
             self.turtle_score += 1
         score = self.small_font.render(str(self.turtle_score // 6), False, (0, 0, 0))
         score_rect = score.get_rect(topright = (self.window_width , 0))
@@ -320,16 +323,25 @@ class GraphicalView(object):
         pygame.display.flip()
 
     def spawn_turtle(self):
+        """
+        生成海龜
+        """
         self.creatures = pygame.sprite.Group()
         self.creature = turtle_mc.TurtleMC(1/5, self.window_width, self.window_height)
         self.creatures.add(self.creature)
 
     def spawn_straw(self, straw_num):
+        """
+        生成吸管們
+        """
         self.straws = pygame.sprite.Group()
         for i in range(straw_num):
             self.straws.add(straw_obj.Straw(self.window_width, self.window_height))
+
     def spawn_turtle_heart(self, heartNum):
-        # 生成心臟
+        """
+        生成心臟
+        """
         self.hearts = pygame.sprite.Group()
         # heartSize = 52
         for i in range(heartNum):
@@ -337,6 +349,9 @@ class GraphicalView(object):
             self.hearts.add(heart_obj.Heart(i, self.window_width, self.window_height))
 
     def straws_damage(self, straws_damage):
+        """
+        吸管物件造成傷害的處理
+        """
 
         for straw in straws_damage:
             self.straws.remove(straw)
@@ -347,7 +362,7 @@ class GraphicalView(object):
             print("game over")
             self.set_turtle_state(turtle_mc.TURTLE_DIED)
             pass
-             #gameover
+            # gameover
             return
 
         if current_hearts <= self.turtle_heart // 2:
@@ -357,15 +372,18 @@ class GraphicalView(object):
 
 
     def set_turtle_state(self, state):
+        """
+        Set turtle image and is turtle dead
+        """
         if state == turtle_mc.TURTLE_ALIVE:
             self.creature.set_image(turtle_mc.TURTLE_ALIVE)
-            self.turtle_died = False
+            self.isturtle_dead = False
         elif state == turtle_mc.TURTLE_DYING:
             self.creature.set_image(turtle_mc.TURTLE_DYING)
-            self.turtle_died = False
+            self.isturtle_dead = False
         elif state == turtle_mc.TURTLE_DIED:
             self.creature.set_image(turtle_mc.TURTLE_DIED)
-            self.turtle_died = True
+            self.isturtle_dead = True
 
 
     def initialize(self):
@@ -373,69 +391,18 @@ class GraphicalView(object):
         Set up the pygame graphical display and loads graphical resources.
         """
 
-        if not os.path.isfile('config.ini'):
-            resolution_width = 1280
-            resolution_height = 720
-            screen_flags = pygame.SCALED
-            display_index = 0
-            vsync = 1
-            self.generate_config()
-        else:
-            resolution_width, resolution_height, screen_flags, display_index, vsync = self.apply_config()
+        config = LocalConfig()
+        resolution_width, resolution_height, screen_flags, display_index, vsync = config.load_config()
 
-        result = pygame.init()
         pygame.init()
         pygame.font.init()
-        #pygame.display.init()
+        # pygame.display.init()
         pygame.display.set_caption('Green Sea Turtle Adventure')
         self.screen = pygame.display.set_mode((resolution_width, resolution_height),
-                                                screen_flags,
-                                                display = display_index,
-                                                vsync = vsync)
+                                              screen_flags,
+                                              display = display_index,
+                                              vsync = vsync)
         self.window_width, self.window_height = self.screen.get_size()
         self.clock = pygame.time.Clock()
         self.small_font = pygame.font.Font("assests/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
-
-    def generate_config(self):
-        config = configparser.ConfigParser(allow_no_value=True)
-        config['SCREEN'] = {'RESOLUTION_WIDTH' : '1280',
-                            'RESOLUTION_HEIGHT' : '720',
-                            '# 將全螢幕設為TRUE可能會造成系統解析度的問題' : None,
-                            '# Set fullscreen to TRUE may cause some problem on system resolution.' : None,
-                            'FULLSCREEN' : 'FALSE',
-                            'SCALED' : 'TRUE',
-                            'NOFRAME' : 'FALSE',
-                            'OPENGL' : 'FALSE',
-                            'display_index' : '0',
-                            '# 需要開啟OPENGL或SCALED使VSYNC有效' : None,
-                            '# VSYNC only works with the OPENGL or SCALED flags set TRUE' : None,
-                            'vsync' : '1'}
-
-        with open('config.ini', 'w') as config_file:
-            config.write(config_file)
-
-    def apply_config(self):
-        try:
-            config = configparser.ConfigParser()
-            config.read('config.ini')
-
-            screen = config['SCREEN']
-
-            resolution_width = int(screen['resolution_width'])
-            resolution_height = int(screen['resolution_height'])
-            screen_flags = 0
-            if screen.getboolean('fullscreen'):
-                screen_flags = pygame.FULLSCREEN
-            if screen.getboolean('scaled'):
-                screen_flags = screen_flags | pygame.SCALED
-            if screen.getboolean('noframe'):
-                screen_flags = screen_flags | pygame.NOFRAME
-            if screen.getboolean('opengl'):
-                screen_flags = screen_flags | pygame.OPENGL
-            display_index = int(screen['display_index'])
-            vsync = int(screen['vsync'])
-            return resolution_width, resolution_height, screen_flags, display_index, vsync
-        except:
-            self.generate_config()
-            return 1280, 720, pygame.SCALED, 0, 1
