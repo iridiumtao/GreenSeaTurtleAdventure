@@ -1,6 +1,6 @@
 import pygame
-import model
-from eventmanager import *
+import src.model as model
+from src.event_manager import *
 
 class Keyboard(object):
     """

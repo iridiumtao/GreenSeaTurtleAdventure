@@ -1,5 +1,5 @@
 import pygame
-from eventmanager import *
+from src.event_manager import *
 
 class GameEngine(object):
     """

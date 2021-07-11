@@ -1,7 +1,7 @@
 import pygame
-import src
-import view
-from models import hit_box
+import assests
+import src.view as view
+from src.models import hit_box
 
 TURTLE_ALIVE = 0
 TURTLE_DYING = 1
@@ -13,7 +13,7 @@ class TurtleMC(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         # 參考首張圖片的size
-        self.refImage = pygame.image.load("src/Turtle-0-down.png").convert_alpha()
+        self.refImage = pygame.image.load("assests/Turtle-0-down.png").convert_alpha()
         self.refImageWidth, self.refImageHeight = self.refImage.get_size()
         # 海龜height = 視窗height * Ratio
         # 海龜Width = 海龜height * refImageRatio
@@ -24,11 +24,11 @@ class TurtleMC(pygame.sprite.Sprite):
         self.chg_image_cnter = 0
         self.chg_image_threshold = 10
         self.image_index = 0
-        self.alive_images = [pygame.transform.scale((pygame.image.load("src/Turtle-0-down.png").convert_alpha()), (self.image_width ,self.image_height)),
-                pygame.transform.scale((pygame.image.load("src/Turtle-0-up.png").convert_alpha()), (self.image_width ,self.image_height))]
-        self.dying_images = [pygame.transform.scale((pygame.image.load("src/Turtle-1-down.png").convert_alpha()), (self.image_width ,self.image_height)),
-                pygame.transform.scale((pygame.image.load("src/Turtle-1-up.png").convert_alpha()), (self.image_width ,self.image_height))]
-        self.died_image = pygame.transform.scale((pygame.image.load("src/Turtle-die.png").convert_alpha()), (self.image_width ,self.image_height))
+        self.alive_images = [pygame.transform.scale((pygame.image.load("assests/Turtle-0-down.png").convert_alpha()), (self.image_width ,self.image_height)),
+                pygame.transform.scale((pygame.image.load("assests/Turtle-0-up.png").convert_alpha()), (self.image_width ,self.image_height))]
+        self.dying_images = [pygame.transform.scale((pygame.image.load("assests/Turtle-1-down.png").convert_alpha()), (self.image_width ,self.image_height)),
+                pygame.transform.scale((pygame.image.load("assests/Turtle-1-up.png").convert_alpha()), (self.image_width ,self.image_height))]
+        self.died_image = pygame.transform.scale((pygame.image.load("assests/Turtle-die.png").convert_alpha()), (self.image_width ,self.image_height))
         self.images = self.alive_images
         self.image_amt = len(self.images)
         self.image = self.images[self.image_index]

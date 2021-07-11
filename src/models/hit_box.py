@@ -1,5 +1,5 @@
 import pygame
-import view
+import src.view as view
 
 class HitBox(pygame.sprite.Sprite):
     def __init__(self, left, top, width, height):

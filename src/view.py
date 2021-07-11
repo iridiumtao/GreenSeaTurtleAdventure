@@ -1,16 +1,16 @@
 import pygame
 import os, sys
-import model
+import src.model as model
 import random
-from eventmanager import *
-import src
+from src.event_manager import *
+import assests
 import configparser
 import os.path
-from models import turtle_mc
-from models import straw_obj
-from models import heart_obj
-from models import intro_object
-from models import menu_button
+from src.models import turtle_mc
+from src.models import straw_obj
+from src.models import heart_obj
+from src.models import intro_object
+from src.models import menu_button
 
 
 BACKGROUND_COLOR = (93, 189, 245)
@@ -63,73 +63,76 @@ class GraphicalView(object):
         if isinstance(event, InitializeEvent):
             self.initialize()
 
-            self.background_image = pygame.image.load("src/background.png").convert_alpha()
-            self.background_image = pygame.transform.scale(self.background_image, (self.window_width, self.window_height))
+            self.background_image = pygame.image.load("assests/background.png").convert_alpha()
+            self.background_image = pygame.transform.scale(self.background_image,
+                                                           (self.window_width, self.window_height))
 
-            self.help_background_image = pygame.image.load("src/help-inside.jpg").convert_alpha()
-            self.help_background_image = pygame.transform.scale(self.help_background_image, (self.window_width, self.window_height))
+            self.help_background_image = pygame.image.load("assests/help-inside.jpg").convert_alpha()
+            self.help_background_image = pygame.transform.scale(
+                                            self.help_background_image,
+                                            (self.window_width, self.window_height))
 
 
             # add intro page objects
             self.big_turtle = intro_object.IntroObject(self.window_width, self.window_height, w=858, h=672, x=-1000, y=150, stopX=-400, rate=8, turn=-15)
-            self.big_straw1 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="src/straw.png")
-            self.big_straw2 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="src/straw.png")
-            self.big_straw3 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="src/straw.png")
+            self.big_straw1 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=390, stopX=900, rate=-8, turn=-60, flip=True, image="assests/straw.png")
+            self.big_straw2 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=350, stopX=950, rate=-8, turn=-50, flip=True, image="assests/straw.png")
+            self.big_straw3 = intro_object.IntroObject(self.window_width, self.window_height, w=200, h=700, x=1100, y=300, stopX=900, rate=-8, turn=-40, flip=True, image="assests/straw.png")
 
             # 生成 menu 按鈕
             self.menu_continue_button = menu_button.MenuButton(x = self.window_width * 0.34,
-                                                            y = self.window_height * 0.235,
-                                                            w = self.window_width * 0.32,
-                                                            h = self.window_height * 0.135,
-                                                            image = "src/continue-button.png")
+                                                               y = self.window_height * 0.235,
+                                                               w = self.window_width * 0.32,
+                                                               h = self.window_height * 0.135,
+                                                               image = "assests/continue-button.png")
             self.menu_new_game_button = menu_button.MenuButton(x = self.window_width * 0.34,
-                                                           y = self.window_height * 0.42,
-                                                           w = self.window_width * 0.32,
-                                                           h = self.window_height * 0.135,
-                                                           image = "src/start-button.png")
+                                                               y = self.window_height * 0.42,
+                                                               w = self.window_width * 0.32,
+                                                               h = self.window_height * 0.135,
+                                                               image = "assests/start-button.png")
             self.menu_option_button = menu_button.MenuButton(x = self.window_width * 0.34,
-                                                          y = self.window_height * 0.605,
-                                                          w = self.window_width * 0.135,
-                                                          h = self.window_height * 0.135,
-                                                          image = "src/option-button.png")
+                                                             y = self.window_height * 0.605,
+                                                             w = self.window_width * 0.135,
+                                                             h = self.window_height * 0.135,
+                                                             image = "assests/option-button.png")
             self.menu_help_button = menu_button.MenuButton(x = self.window_width * 0.525,
-                                                        y = self.window_height * 0.605,
-                                                        w = self.window_width * 0.135,
-                                                        h = self.window_height * 0.135,
-                                                        image = "src/help-button.png")
+                                                           y = self.window_height * 0.605,
+                                                           w = self.window_width * 0.135,
+                                                           h = self.window_height * 0.135,
+                                                           image = "assests/help-button.png")
 
             self.menu_big_continue_button = menu_button.MenuButton(x = self.window_width * 0.32,
-                                                            y = self.window_height * 0.225,
-                                                            w = self.window_width * 0.36,
-                                                            h = self.window_height * 0.155,
-                                                            image = "src/continue-button.png")
+                                                                   y = self.window_height * 0.225,
+                                                                   w = self.window_width * 0.36,
+                                                                   h = self.window_height * 0.155,
+                                                                   image = "assests/continue-button.png")
             self.menu_big_game_button = menu_button.MenuButton(x = self.window_width * 0.32,
-                                                           y = self.window_height * 0.41,
-                                                           w = self.window_width * 0.36,
-                                                           h = self.window_height * 0.155,
-                                                           image = "src/start-button.png")
+                                                               y = self.window_height * 0.41,
+                                                               w = self.window_width * 0.36,
+                                                               h = self.window_height * 0.155,
+                                                               image = "assests/start-button.png")
             self.menu_big_option_button = menu_button.MenuButton(x = self.window_width * 0.33,
-                                                          y = self.window_height * 0.600,
-                                                          w = self.window_width * 0.155,
-                                                          h = self.window_height * 0.145,
-                                                          image = "src/option-button.png")
+                                                                 y = self.window_height * 0.600,
+                                                                 w = self.window_width * 0.155,
+                                                                 h = self.window_height * 0.145,
+                                                                 image = "assests/option-button.png")
             self.menu_big_help_button = menu_button.MenuButton(x = self.window_width * 0.515,
-                                                        y = self.window_height * 0.600,
-                                                        w = self.window_width * 0.155,
-                                                        h = self.window_height * 0.145,
-                                                        image = "src/help-button.png")
+                                                               y = self.window_height * 0.600,
+                                                               w = self.window_width * 0.155,
+                                                               h = self.window_height * 0.145,
+                                                               image = "assests/help-button.png")
 
-            self.menu_buttons = pygame.sprite.Group((self.menu_continue_button,) +
-                                                   (self.menu_new_game_button,) +
-                                                   (self.menu_option_button,) +
-                                                   (self.menu_help_button,))
+            self.menu_buttons = pygame.sprite.Group((self.menu_continue_button,)
+                                                    + (self.menu_new_game_button,)
+                                                    + (self.menu_option_button,)
+                                                    + (self.menu_help_button,))
 
         elif isinstance(event, QuitEvent):
             # shut down the pygame graphics
             self.isinitialized = False
             pygame.quit()
         elif isinstance(event, TickEvent):
-             # Called for each game tick. We check our keyboard presses here.
+            # Called for each game tick. We check our keyboard presses here.
             if not self.isinitialized:
                 return
             # 切換頁面
@@ -391,7 +394,7 @@ class GraphicalView(object):
                                                 vsync = vsync)
         self.window_width, self.window_height = self.screen.get_size()
         self.clock = pygame.time.Clock()
-        self.small_font = pygame.font.Font("src/jf-openhuninn-1.1.ttf", 40)
+        self.small_font = pygame.font.Font("assests/jf-openhuninn-1.1.ttf", 40)
         self.isinitialized = True
 
     def generate_config(self):

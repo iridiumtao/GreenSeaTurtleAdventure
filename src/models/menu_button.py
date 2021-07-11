@@ -1,11 +1,11 @@
 import pygame
 import random
 import time
-import src
-import view
+import assests
+import src.view as view
 
 class MenuButton(pygame.sprite.Sprite):
-    def __init__(self, x = 0, y = 0, w = 0, h = 0, image="src/start-button.png"):
+    def __init__(self, x = 0, y = 0, w = 0, h = 0, image="assests/start-button.png"):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.transform.scale(pygame.image.load(image).convert_alpha(), (int(w), int(h)))

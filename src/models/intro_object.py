@@ -1,8 +1,8 @@
 import pygame
 import random
 import time
-import src
-import view
+import assests
+import src.view as view
 
 class IntroObject(pygame.sprite.Sprite):
     '''
@@ -24,7 +24,7 @@ class IntroObject(pygame.sprite.Sprite):
         turn = -60, -50, -40
         flip = True
     '''
-    def __init__(self, screenWidth, screenHight, w, h, x, y, stopX, rate, turn=0, flip=False, image="src/Turtle-menu.png"):
+    def __init__(self, screenWidth, screenHight, w, h, x, y, stopX, rate, turn=0, flip=False, image="assests/Turtle-menu.png"):
         pygame.sprite.Sprite.__init__(self)
 
         self.w = int(w*(screenWidth/1280))
