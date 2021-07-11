@@ -1,10 +1,7 @@
 import pygame
-import os, sys
 import src.model as model
-import random
 from src.event_manager import *
 import assests
-import os.path
 from src.local_config import LocalConfig
 from src.models import turtle_mc
 from src.models import straw_obj
