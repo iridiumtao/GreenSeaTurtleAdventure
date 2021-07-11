@@ -7,9 +7,10 @@ class LocalConfig(object):
     Ues configparser to generate or load config from config.ini file
     """
 
-    def generate_config(self):
+    def generate_default_config(self):
         """
         生成 config.ini
+        回傳預設 config
         """
         config = configparser.ConfigParser(allow_no_value=True)
         config['SCREEN'] = {'RESOLUTION_WIDTH' : '1280',
@@ -27,6 +28,7 @@ class LocalConfig(object):
 
         with open('config.ini', 'w') as config_file:
             config.write(config_file)
+        return 1280, 720, pygame.SCALED, 0, 1
 
     def load_config(self):
         """
@@ -35,7 +37,7 @@ class LocalConfig(object):
         try:
             if not os.path.isfile('config.ini'):
                 print("No local config. Loading default.")
-                return self.load_default_config()
+                return self.generate_default_config()
 
             config = configparser.ConfigParser()
             config.read('config.ini')
@@ -58,8 +60,4 @@ class LocalConfig(object):
             return resolution_width, resolution_height, screen_flags, display_index, vsync
         except:
             print("Error reading local config. Loading default.")
-            return self.load_default_config()
-
-    def load_default_config(self):
-        self.generate_config()
-        return 1280, 720, pygame.SCALED, 0, 1
+            return self.generate_default_config()
